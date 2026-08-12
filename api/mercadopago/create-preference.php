@@ -108,15 +108,16 @@ try {
     $discountAmount = 0.00;
     $couponCode = strtoupper(trim($input['couponCode'] ?? ''));
 
-    if (!empty($couponCode)) {
-        $isBlackFriday = (date('m') === '11' && date('d') >= '20' && date('d') <= '30');
-        $isDoubleDate = (date('d') === date('m'));
+    $isBlackFriday = (date('m') === '11' && date('d') >= '20' && date('d') <= '30');
+    $isDoubleDate = (date('d') === date('m'));
 
-        if ($couponCode === 'BLACK20' && $isBlackFriday) {
-            $discountAmount = ($subtotal + $shippingAmount) * 0.20;
-        } elseif ($couponCode === 'LOVELY15' && $isDoubleDate) {
-            $discountAmount = ($subtotal + $shippingAmount) * 0.15;
-        } else {
+    if ($isBlackFriday) {
+        $discountAmount = ($subtotal + $shippingAmount) * 0.20;
+    } elseif ($isDoubleDate) {
+        $discountAmount = ($subtotal + $shippingAmount) * 0.15;
+    } else {
+        // Only process typed coupons if there is NO automatic seasonal discount
+        if (!empty($couponCode)) {
             $userId = null;
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();

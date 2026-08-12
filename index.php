@@ -18,6 +18,19 @@ try {
 $promoSinglePrice = (float)($config['promo_single_price'] ?? 49.90);
 $promoComboPrice = (float)($config['promo_combo_price'] ?? 99.99);
 
+$isDoubleDate = (date('d') === date('m'));
+$isBlackFriday = (date('m') === '11' && date('d') >= '20' && date('d') <= '30');
+$activePromoType = '';
+$activePromoDiscount = 0;
+
+if ($isBlackFriday) {
+    $activePromoType = 'Black Friday';
+    $activePromoDiscount = 20;
+} elseif ($isDoubleDate) {
+    $activePromoType = 'Data Dupla Especial';
+    $activePromoDiscount = 15;
+}
+
 $formatPrice = function($price) {
     return number_format($price, 2, ',', '.');
 };
@@ -1018,6 +1031,33 @@ $formatPrice = function($price) {
             </form>
         </div>
     </div>
+
+    <!-- Promo Modal -->
+    <?php if ($activePromoDiscount > 0): ?>
+    <div id="promoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+        <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-3xl w-full max-w-md p-8 relative shadow-2xl text-center transform transition-all scale-95 opacity-0 duration-300" id="promoModalContent">
+            <button onclick="closePromoModal()" class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors bg-black/20 hover:bg-black/40 p-2 rounded-full">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+                <i data-lucide="tag" class="w-8 h-8 text-white"></i>
+            </div>
+            
+            <h3 class="font-serif text-3xl font-bold text-white mb-2"><?= $activePromoType ?>!</h3>
+            <p class="text-rose-100 text-sm mb-6">Aproveite hoje para garantir suas fragrâncias favoritas com um desconto especial. O desconto será aplicado <strong class="text-white uppercase font-bold">automaticamente</strong> no final da compra!</p>
+            
+            <div class="bg-white rounded-2xl py-4 px-6 mb-6 shadow-inner">
+                <span class="block text-rose-600 font-bold text-5xl tracking-tighter">-<?= $activePromoDiscount ?>%</span>
+                <span class="block text-neutral-500 text-xs font-semibold uppercase tracking-wider mt-1">Válido somente hoje</span>
+            </div>
+            
+            <button onclick="closePromoModal()" class="w-full py-4 rounded-xl bg-white hover:bg-rose-50 text-rose-600 font-bold text-sm transition-colors shadow-lg">
+                EU QUERO APROVEITAR
+            </button>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <!-- Customer Orders History Modal -->
     <div id="userOrdersModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -2329,6 +2369,16 @@ $formatPrice = function($price) {
         };
 
 
+        window.closePromoModal = function() {
+            const modal = document.getElementById('promoModal');
+            if (modal) {
+                document.getElementById('promoModalContent').classList.remove('scale-100', 'opacity-100');
+                document.getElementById('promoModalContent').classList.add('scale-95', 'opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+                sessionStorage.setItem('promoSeen', 'true');
+            }
+        };
+
         window.onload = function() {
             // Check for reset_token in URL
             const urlParams = new URLSearchParams(window.location.search);
@@ -2343,6 +2393,20 @@ $formatPrice = function($price) {
             checkCustomerSession();
             loadProducts();
             lucide.createIcons();
+
+            // Show Promo Modal if active
+            <?php if ($activePromoDiscount > 0): ?>
+            if (!sessionStorage.getItem('promoSeen')) {
+                const promoModal = document.getElementById('promoModal');
+                if (promoModal) {
+                    promoModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        document.getElementById('promoModalContent').classList.remove('scale-95', 'opacity-0');
+                        document.getElementById('promoModalContent').classList.add('scale-100', 'opacity-100');
+                    }, 50);
+                }
+            }
+            <?php endif; ?>
         };
     </script>
 </body>
