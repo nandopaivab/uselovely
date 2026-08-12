@@ -208,16 +208,16 @@ $formatPrice = function($price) {
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-brand-softBg via-rose-50/40 to-brand-softBg">
-        <div class="absolute top-1/4 left-10 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
-        <div class="absolute top-1/3 right-10 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow" style="animation-delay: 2s"></div>
+    <section id="hero" class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-brand-softBg via-rose-50/40 to-brand-softBg transition-colors duration-500">
+        <div id="heroBlob1" class="absolute top-1/4 left-10 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-colors duration-500"></div>
+        <div id="heroBlob2" class="absolute top-1/3 right-10 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-colors duration-500" style="animation-delay: 2s"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
                 <div class="lg:col-span-6 text-center lg:text-left space-y-6">
                     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-rose-200/80 shadow-xs text-xs md:text-sm font-semibold text-neutral-700 backdrop-blur-sm">
-                        <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
+                        <span id="heroPing" class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
                         <span id="heroTagline" class="font-serif italic text-base text-rose-600">Floral Gourmand & Elegante</span>
                         <span class="text-neutral-300">•</span>
                         <span>Longa Fixação 236 mL</span>
@@ -270,7 +270,7 @@ $formatPrice = function($price) {
                 </div>
 
                 <div class="lg:col-span-6 relative flex items-center justify-center">
-                    <div class="relative w-full max-w-md lg:max-w-none h-[440px] sm:h-[480px] flex flex-col items-center justify-between p-6 rounded-3xl bg-gradient-to-tr from-pink-100/60 via-rose-50/50 to-purple-50/60 backdrop-blur-md border border-white/80 shadow-2xl overflow-hidden">
+                    <div id="heroImageBox" class="relative w-full max-w-md lg:max-w-none h-[440px] sm:h-[480px] flex flex-col items-center justify-between p-6 rounded-3xl bg-gradient-to-tr from-pink-100/60 via-rose-50/50 to-purple-50/60 backdrop-blur-md border border-white/80 shadow-2xl overflow-hidden transition-all duration-500">
                         
                         <div class="w-full flex items-center justify-between z-10">
                             <span class="text-xs font-semibold uppercase tracking-wider text-neutral-500">Aromas Signature</span>
@@ -1191,26 +1191,51 @@ $formatPrice = function($price) {
             lucide.createIcons();
         }
 
+        const THEME_MAP = {
+            'rose': { border: 'border-rose-500', bg: 'bg-rose-50', text: 'text-rose-600', badge: 'bg-rose-100/80 text-rose-700 border-rose-200', ping: 'bg-rose-400', section: 'via-rose-50/40', box: 'from-pink-100/60 via-rose-50/50 to-purple-50/60', blob1: 'bg-pink-200/40', blob2: 'bg-purple-200/30' },
+            'purple': { border: 'border-purple-500', bg: 'bg-purple-50', text: 'text-purple-600', badge: 'bg-purple-100/80 text-purple-700 border-purple-200', ping: 'bg-purple-400', section: 'via-purple-50/40', box: 'from-purple-100/60 via-fuchsia-50/50 to-indigo-50/60', blob1: 'bg-fuchsia-200/40', blob2: 'bg-indigo-200/30' },
+            'gold': { border: 'border-amber-500', bg: 'bg-amber-50', text: 'text-amber-600', badge: 'bg-amber-100/80 text-amber-700 border-amber-200', ping: 'bg-amber-400', section: 'via-orange-50/40', box: 'from-amber-100/60 via-orange-50/50 to-yellow-50/60', blob1: 'bg-amber-200/40', blob2: 'bg-yellow-200/30' },
+            'mint': { border: 'border-teal-500', bg: 'bg-teal-50', text: 'text-teal-600', badge: 'bg-teal-100/80 text-teal-700 border-teal-200', ping: 'bg-teal-400', section: 'via-emerald-50/40', box: 'from-teal-100/60 via-emerald-50/50 to-cyan-50/60', blob1: 'bg-teal-200/40', blob2: 'bg-cyan-200/30' },
+            'navy': { border: 'border-slate-500', bg: 'bg-slate-50', text: 'text-slate-600', badge: 'bg-slate-200/80 text-slate-800 border-slate-300', ping: 'bg-slate-400', section: 'via-slate-100/40', box: 'from-slate-200/60 via-slate-100/50 to-blue-100/60', blob1: 'bg-slate-300/40', blob2: 'bg-blue-200/30' }
+        };
+
         // Hero Switcher
         window.switchHeroScent = function(index) {
             if (!PRODUCTS || PRODUCTS.length === 0) return;
             const p = PRODUCTS[index] || PRODUCTS[0];
+            const theme = THEME_MAP[p.colorTheme] || THEME_MAP['rose'];
+            
+            document.getElementById('hero').className = `relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-brand-softBg ${theme.section} to-brand-softBg transition-colors duration-500`;
+            document.getElementById('heroBlob1').className = `absolute top-1/4 left-10 w-72 h-72 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-colors duration-500 ${theme.blob1}`;
+            document.getElementById('heroBlob2').className = `absolute top-1/3 right-10 w-80 h-80 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-colors duration-500 ${theme.blob2}`;
+            document.getElementById('heroImageBox').className = `relative w-full max-w-md lg:max-w-none h-[440px] sm:h-[480px] flex flex-col items-center justify-between p-6 rounded-3xl bg-gradient-to-tr ${theme.box} backdrop-blur-md border border-white/80 shadow-2xl overflow-hidden transition-all duration-500`;
+            
+            document.getElementById('heroPing').className = `w-2 h-2 rounded-full animate-ping ${theme.ping}`;
             
             document.getElementById('heroTagline').textContent = p.tagline;
+            document.getElementById('heroTagline').className = `font-serif italic text-base ${theme.text}`;
+            
             document.getElementById('heroTitle').textContent = p.name;
+            
             document.getElementById('heroRefBadge').textContent = `✨ Referência Olfativa: ${p.olfactoryReference || 'Importada'}`;
+            document.getElementById('heroRefBadge').className = `inline-block px-3.5 py-1.5 rounded-full text-xs font-bold border ${theme.badge}`;
+            
             document.getElementById('heroDescription').textContent = p.description;
             document.getElementById('heroPrice').textContent = `R$ ${(p.price || SINGLE_PRICE).toFixed(2).replace('.', ',')}`;
             document.getElementById('heroImage').src = p.image;
-            document.getElementById('heroBuyBtn').onclick = () => addToCart(p.id);
+            
+            const buyBtn = document.getElementById('heroBuyBtn');
+            buyBtn.onclick = () => addToCart(p.id);
+            // Re-apply btn background based on the DB value or theme
+            buyBtn.className = `w-full sm:w-auto inline-flex items-center justify-center gap-3 ${p.btnBg} px-8 py-4 rounded-full font-medium text-sm transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5`;
 
+            // Update thumbnails
             document.querySelectorAll('.hero-thumb').forEach((btn, i) => {
+                const btnTheme = THEME_MAP[PRODUCTS[i].colorTheme] || THEME_MAP['rose'];
                 if (i === index) {
-                    btn.classList.add('border-rose-500', 'scale-105', 'bg-rose-50');
-                    btn.classList.remove('border-transparent');
+                    btn.className = `hero-thumb p-1.5 rounded-xl transition-all border-2 scale-105 ${btnTheme.border} ${btnTheme.bg}`;
                 } else {
-                    btn.classList.remove('border-rose-500', 'scale-105', 'bg-rose-50');
-                    btn.classList.add('border-transparent');
+                    btn.className = `hero-thumb p-1.5 rounded-xl transition-all border-2 border-transparent hover:${btnTheme.border.replace('border-', 'border-opacity-50 border-')}`;
                 }
             });
         };
