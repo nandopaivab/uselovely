@@ -358,10 +358,12 @@
             <!-- Filter Tabs -->
             <div class="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3" id="scentFilters">
                 <button onclick="filterProducts('all', event)" class="filter-btn active px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all bg-neutral-900 text-white shadow-xs">Todos (5)</button>
+                <button onclick="filterProducts('feminino', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Femininos</button>
+                <button onclick="filterProducts('masculino-unisex', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Masculinos & Unisex</button>
                 <button onclick="filterProducts('floral', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Florais</button>
-                <button onclick="filterProducts('doce', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Adocicados & Sensuais</button>
+                <button onclick="filterProducts('doce', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Adocicados</button>
                 <button onclick="filterProducts('ensolarado', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Ensolarados</button>
-                <button onclick="filterProducts('fresco', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Refrescantes & Aquáticos</button>
+                <button onclick="filterProducts('fresco', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Refrescantes</button>
             </div>
 
             <!-- Products Grid Container -->
@@ -1069,6 +1071,9 @@
                 id: 'velvet-bloom',
                 name: 'Velvet Bloom',
                 category: 'floral',
+                genderGroup: 'feminino',
+                genderTag: 'Feminino',
+                genderBadge: 'bg-pink-100 text-pink-700 font-semibold',
                 tagline: 'Floral Delicado & Aveludado',
                 description: 'Uma explosão romântica de pétalas de rosa aveludadas entrelaçadas com notas doces de baunilha em flor.',
                 price: 49.90,
@@ -1091,6 +1096,9 @@
                 id: 'purple-kiss',
                 name: 'Purple Kiss',
                 category: 'doce',
+                genderGroup: 'feminino',
+                genderTag: 'Feminino & Envolvente',
+                genderBadge: 'bg-purple-100 text-purple-700 font-semibold',
                 tagline: 'Enchanting & Misterioso',
                 description: 'Uma combinação envolvente de orquídea negra, amoras doces e um toque cremoso de madeira de cashmere.',
                 price: 49.90,
@@ -1113,6 +1121,9 @@
                 id: 'golden-glow',
                 name: 'Golden Glow',
                 category: 'ensolarado',
+                genderGroup: 'masculino-unisex',
+                genderTag: 'Unisex / Compartilhável',
+                genderBadge: 'bg-amber-100 text-amber-800 font-semibold',
                 tagline: 'Luminoso & Sun-Kissed',
                 description: 'A calidez radiante do sol traduzida em notas de nectarina dourada, âmbar solar e flor de laranjeira.',
                 price: 49.90,
@@ -1135,6 +1146,9 @@
                 id: 'fresh-muse',
                 name: 'Fresh Muse',
                 category: 'fresco',
+                genderGroup: 'masculino-unisex',
+                genderTag: 'Masculino & Unisex',
+                genderBadge: 'bg-teal-100 text-teal-800 font-semibold',
                 tagline: 'Refrescante & Brizante',
                 description: 'A energia revitalizante da brisa marinha com flor de lótus aquática e chá verde refrescante.',
                 price: 49.90,
@@ -1157,6 +1171,9 @@
                 id: 'midnight-pulse',
                 name: 'Midnight Pulse',
                 category: 'doce',
+                genderGroup: 'masculino-unisex',
+                genderTag: 'Masculino & Unisex Noturno',
+                genderBadge: 'bg-slate-200 text-slate-800 font-semibold',
                 tagline: 'Sensual & Noturno',
                 description: 'Uma fragrância intensa e sedutora com notas de figo escuro, íris noturna e baunilha defumada.',
                 price: 49.90,
@@ -1291,13 +1308,21 @@
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
 
-            const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
+            const filtered = filter === 'all' 
+                ? PRODUCTS 
+                : PRODUCTS.filter(p => p.category === filter || p.genderGroup === filter);
 
             filtered.forEach(p => {
                 const card = document.createElement('div');
                 card.className = `glass-card rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between border border-rose-100/70 relative group`;
                 
                 card.innerHTML = `
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border border-black/5 shadow-2xs ${p.genderBadge}">
+                            ${p.genderTag}
+                        </span>
+                    </div>
+
                     <div class="absolute top-4 right-4 z-10">
                         <button onclick="openNotesModal('${p.id}')" class="p-2.5 rounded-full bg-white/90 hover:bg-white text-neutral-700 shadow-md backdrop-blur-md transition-all hover:scale-110" title="Ver Pirâmide Olfativa">
                             <i data-lucide="info" class="w-4 h-4 text-brand-purple"></i>
