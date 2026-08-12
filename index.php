@@ -198,7 +198,7 @@ require_once __DIR__ . '/config/env.php';
                 <div class="lg:col-span-6 text-center lg:text-left space-y-6">
                     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-rose-200/80 shadow-xs text-xs md:text-sm font-semibold text-neutral-700 backdrop-blur-sm">
                         <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
-                        <span id="heroTagline" class="font-serif italic text-base text-rose-600">Floral Delicado & Aveludado</span>
+                        <span id="heroTagline" class="font-serif italic text-base text-rose-600">Floral Gourmand & Elegante</span>
                         <span class="text-neutral-300">•</span>
                         <span>Longa Fixação 236 mL</span>
                     </div>
@@ -208,11 +208,11 @@ require_once __DIR__ . '/config/env.php';
                     </h1>
 
                     <div id="heroRefBadge" class="inline-block px-3.5 py-1.5 rounded-full bg-rose-100/80 text-rose-700 text-xs font-bold border border-rose-200">
-                        ✨ Referência Olfativa: Miss Dior (Dior)
+                        ✨ Referência Olfativa: La Vie Est Belle (Lancôme)
                     </div>
 
                     <p id="heroDescription" class="text-neutral-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
-                        Uma explosão romântica de pétalas de rosa aveludadas entrelaçadas com notas doces de baunilha em flor.
+                        Floral gourmand, feminino, doce e elegante. Com notas de íris, flores brancas, baunilha, praliné e fundo envolvente.
                     </p>
 
                     <div class="flex items-baseline justify-center lg:justify-start gap-3">
@@ -575,7 +575,7 @@ require_once __DIR__ . '/config/env.php';
                             </span>
                         </div>
                         <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
-                            "Comprei o Velvet Bloom e o Purple Kiss. O aroma de Velvet Bloom é simplesmente perfeito! Lembra muito o Miss Dior, todo mundo me pergunta qual perfume estou usando."
+                            "Comprei o Velvet Bloom e o Purple Kiss. O aroma de Velvet Bloom é simplesmente perfeito! Lembra muito o La Vie Est Belle, todo mundo me pergunta qual perfume estou usando."
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
@@ -598,7 +598,7 @@ require_once __DIR__ . '/config/env.php';
                             </span>
                         </div>
                         <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
-                            "Golden Glow é amor à primeira borrifada! Idêntico ao Cheirosa 62 da Sol de Janeiro, muito elegante. A névoa é super fina e dura o dia todinho."
+                            "Golden Glow é amor à primeira borrifada! Lembra o Erba Pura de Xerjoff, muito elegante. A névoa é super fina e dura o dia todinho."
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
@@ -621,7 +621,7 @@ require_once __DIR__ . '/config/env.php';
                             </span>
                         </div>
                         <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
-                            "Aproveitei o Kit com 3 por R$ 99,99 e peguei Fresh Muse, Midnight Pulse e Golden Glow. A inspiração do 212 VIP Black no Midnight Pulse ficou sensacional!"
+                            "Aproveitei o Kit com 3 por R$ 99,99 e peguei Fresh Muse, Midnight Pulse e Golden Glow. A inspiração do Bleu de Chanel no Midnight Pulse ficou sensacional!"
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
