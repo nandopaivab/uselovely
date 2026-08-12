@@ -1063,10 +1063,26 @@
         </div>
     </div>
 
-    <!-- Application Script Engine -->
-    <script>
+    <!-- Application Script Engine with Firebase Realtime Sync -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDhtQmSm-ERQKoEyVheeCfmXj_j1LGBgH0",
+            authDomain: "uselovelybr-d213e.firebaseapp.com",
+            projectId: "uselovelybr-d213e",
+            storageBucket: "uselovelybr-d213e.firebasestorage.app",
+            messagingSenderId: "909064598174",
+            appId: "1:909064598174:web:6027f3eb3f38a41f72018f",
+            measurementId: "G-4ESW88LQYS"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         // Data structure for the 5 signature body splashes with REAL HIGH-RES PRODUCT IMAGES
-        const PRODUCTS = [
+        let PRODUCTS = [
             {
                 id: 'velvet-bloom',
                 name: 'Velvet Bloom',
@@ -1878,7 +1894,37 @@
             document.getElementById('lgpdModal').classList.add('hidden');
         }
 
-        // Initialization
+        // Global bindings for inline HTML event handlers in ES Modules
+        window.switchHeroScent = switchHeroScent;
+        window.filterProducts = filterProducts;
+        window.openNotesModal = openNotesModal;
+        window.closeNotesModal = closeNotesModal;
+        window.addScentToBundle = addScentToBundle;
+        window.removeScentFromBundle = removeScentFromBundle;
+        window.addBundleToCart = addBundleToCart;
+        window.answerQuiz = answerQuiz;
+        window.resetQuiz = resetQuiz;
+        window.toggleQuizModal = toggleQuizModal;
+        window.openAddReviewModal = openAddReviewModal;
+        window.closeAddReviewModal = closeAddReviewModal;
+        window.submitReview = submitReview;
+        window.addToCart = addToCart;
+        window.updateCartQuantity = updateCartQuantity;
+        window.applyCoupon = applyCoupon;
+        window.openCart = openCart;
+        window.closeCart = closeCart;
+        window.openCheckoutModal = openCheckoutModal;
+        window.closeCheckoutModal = closeCheckoutModal;
+        window.simulatePixPayment = simulatePixPayment;
+        window.copyPixKey = copyPixKey;
+        window.simulateOrderSuccess = simulateOrderSuccess;
+        window.closeMobileMenu = closeMobileMenu;
+        window.acceptCookies = acceptCookies;
+        window.resetCookieConsent = resetCookieConsent;
+        window.openLgpdModal = openLgpdModal;
+        window.closeLgpdModal = closeLgpdModal;
+
+        // Initialization & Firebase Sync
         window.onload = function() {
             switchHeroScent(0);
             renderProductsGrid();
@@ -1889,6 +1935,28 @@
             updateCartUI();
             checkLgpdConsent();
             lucide.createIcons();
+
+            // Firebase Live Sync
+            try {
+                onSnapshot(collection(db, "products"), (snapshot) => {
+                    if (!snapshot.empty) {
+                        let firebaseItems = [];
+                        snapshot.forEach(docSnap => {
+                            firebaseItems.push({ id: docSnap.id, ...docSnap.data() });
+                        });
+                        if (firebaseItems.length > 0) {
+                            PRODUCTS = firebaseItems;
+                            switchHeroScent(0);
+                            renderProductsGrid();
+                            renderBundlePicker();
+                        }
+                    }
+                }, (error) => {
+                    console.log("Using local default dataset.");
+                });
+            } catch (e) {
+                console.log("Firebase sync fallback.");
+            }
         };
     </script>
 </body>
