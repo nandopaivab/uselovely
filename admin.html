@@ -98,103 +98,101 @@
 
             <!-- Tab Buttons Bar -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-2 border-t border-slate-100 pt-2">
-                <button onclick="switchTab('crm')" id="tabBtnCrm" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600 flex items-center gap-2">
+                <button id="tabBtnCrm" onclick="switchTab('crm')" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600 flex items-center gap-2">
                     <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
                     <span>Relatórios & CRM Clientes</span>
                 </button>
-                <button onclick="switchTab('orders')" id="tabBtnOrders" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
-                    <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                <button id="tabBtnOrders" onclick="switchTab('orders')" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                     <span>Consulta de Pedidos</span>
                 </button>
-                <button onclick="switchTab('products')" id="tabBtnProducts" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
-                    <i data-lucide="package" class="w-4 h-4"></i>
+                <button id="tabBtnProducts" onclick="switchTab('products')" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                    <i data-lucide="box" class="w-4 h-4"></i>
                     <span>Estoque & Produtos</span>
                 </button>
-                <button onclick="switchTab('config')" id="tabBtnConfig" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                <button id="tabBtnConfig" onclick="switchTab('config')" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
                     <i data-lucide="settings" class="w-4 h-4"></i>
                     <span>Mercado Pago Config</span>
                 </button>
             </div>
         </header>
 
-        <!-- Main Content View -->
-        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Main Content Container -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
             
             <!-- TAB 1: CRM & RELATÓRIOS -->
             <div id="tabContentCrm" class="space-y-8">
-                <!-- Metrics Summary Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-slate-500 font-semibold uppercase">Faturamento Total</span>
-                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                                <i data-lucide="dollar-sign" class="w-5 h-5"></i>
+                <!-- Executive Metrics Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-2">
+                        <div class="flex items-center justify-between text-slate-500">
+                            <span class="text-xs font-semibold uppercase tracking-wider">Faturamento Total</span>
+                            <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                                <i data-lucide="dollar-sign" class="w-4 h-4"></i>
                             </div>
                         </div>
-                        <h3 id="statTotalRevenue" class="font-serif text-3xl font-bold text-slate-900">R$ 0,00</h3>
-                        <span class="text-[11px] text-emerald-600 font-medium">Acumulado em pedidos pagos</span>
+                        <p id="statTotalRevenue" class="font-serif text-3xl font-bold text-slate-900">R$ 0,00</p>
+                        <span class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+                            <i data-lucide="trending-up" class="w-3 h-3"></i> Vendas Confirmadas
+                        </span>
                     </div>
 
-                    <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-slate-500 font-semibold uppercase">Total de Pedidos</span>
-                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
-                                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-2">
+                        <div class="flex items-center justify-between text-slate-500">
+                            <span class="text-xs font-semibold uppercase tracking-wider">Total de Pedidos</span>
+                            <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
                             </div>
                         </div>
-                        <h3 id="statTotalOrders" class="font-serif text-3xl font-bold text-slate-900">0</h3>
-                        <span id="statPaidOrdersRatio" class="text-[11px] text-blue-600 font-medium">0 pagos</span>
+                        <p id="statTotalOrders" class="font-serif text-3xl font-bold text-slate-900">0</p>
+                        <span id="statPaidOrdersRatio" class="text-[11px] text-slate-500 font-medium">0 pedidos pagos</span>
                     </div>
 
-                    <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-slate-500 font-semibold uppercase">Ticket Médio</span>
-                            <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
-                                <i data-lucide="trending-up" class="w-5 h-5"></i>
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-2">
+                        <div class="flex items-center justify-between text-slate-500">
+                            <span class="text-xs font-semibold uppercase tracking-wider">Ticket Médio</span>
+                            <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                                <i data-lucide="award" class="w-4 h-4"></i>
                             </div>
                         </div>
-                        <h3 id="statAvgTicket" class="font-serif text-3xl font-bold text-slate-900">R$ 0,00</h3>
-                        <span class="text-[11px] text-purple-600 font-medium">Média por pedido concluído</span>
+                        <p id="statAvgTicket" class="font-serif text-3xl font-bold text-slate-900">R$ 0,00</p>
+                        <span class="text-[11px] text-slate-500 font-medium">Média por pedido</span>
                     </div>
 
-                    <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-slate-500 font-semibold uppercase">Alertas de Estoque</span>
-                            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
-                                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-2">
+                        <div class="flex items-center justify-between text-slate-500">
+                            <span class="text-xs font-semibold uppercase tracking-wider">Alerta de Estoque</span>
+                            <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                                <i data-lucide="alert-triangle" class="w-4 h-4"></i>
                             </div>
                         </div>
-                        <h3 id="statLowStockCount" class="font-serif text-3xl font-bold text-slate-900">0</h3>
-                        <span class="text-[11px] text-amber-600 font-medium">Produtos com estoque < 10 un.</span>
+                        <p id="statLowStockCount" class="font-serif text-3xl font-bold text-slate-900">0</p>
+                        <span class="text-[11px] text-amber-600 font-semibold">Produtos com estoque &lt; 10 un.</span>
                     </div>
                 </div>
 
-                <!-- CRM Customer Base Table -->
+                <!-- Customer Base Table -->
                 <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex items-center justify-between">
                         <div>
-                            <h2 class="font-serif text-2xl font-bold text-slate-900">CRM - Base de Clientes</h2>
-                            <p class="text-xs text-slate-500">Histórico acumulado e valor total gasto por cada cliente (Lifetime Value)</p>
+                            <h2 class="font-serif text-2xl font-bold text-slate-900">Base de Clientes & CRM</h2>
+                            <p class="text-xs text-slate-500">Histórico de compras e contatos de clientes cadastrados</p>
                         </div>
-                        <button onclick="loadCrmStats()" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-all flex items-center gap-1.5">
-                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                            <span>Atualizar CRM</span>
-                        </button>
                     </div>
 
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                                    <th class="py-3.5 px-6">Cliente</th>
-                                    <th class="py-3.5 px-4">Contato / CPF</th>
+                                    <th class="py-3.5 px-6">Cliente / E-mail</th>
+                                    <th class="py-3.5 px-4">Telefone / CPF</th>
                                     <th class="py-3.5 px-4 text-center">Total Pedidos</th>
-                                    <th class="py-3.5 px-4">Faturamento (LTV)</th>
-                                    <th class="py-3.5 px-6">Última Atividade</th>
+                                    <th class="py-3.5 px-4">Total Gasto</th>
+                                    <th class="py-3.5 px-6">Última Compra</th>
                                 </tr>
                             </thead>
                             <tbody id="crmCustomersTable" class="divide-y divide-slate-100 text-xs">
-                                <!-- Injected via JS -->
+                                <!-- Injected dynamically -->
                             </tbody>
                         </table>
                     </div>
@@ -203,21 +201,24 @@
 
             <!-- TAB 2: CONSULTA DE PEDIDOS -->
             <div id="tabContentOrders" class="hidden space-y-6">
-                <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden p-6 space-y-4">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+                    
+                    <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
-                            <h2 class="font-serif text-2xl font-bold text-slate-900">Consulta de Pedidos dos Clientes</h2>
-                            <p class="text-xs text-slate-500">Pesquise por nº do pedido, nome, e-mail, CPF ou filtre por status</p>
+                            <h2 class="font-serif text-2xl font-bold text-slate-900">Consulta de Pedidos Online</h2>
+                            <p class="text-xs text-slate-500">Gerencie todos os pedidos efetuados pelo site e atualize status de envio</p>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <input type="text" id="orderSearchInput" onkeyup="filterOrdersTable()" placeholder="Buscar por pedido, nome, CPF..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs w-64 focus:outline-none focus:border-rose-500">
-                            <select id="orderStatusFilter" onchange="filterOrdersTable()" class="px-3 py-2 rounded-xl border border-slate-300 text-xs font-semibold bg-white focus:outline-none">
+
+                        <div class="flex items-center gap-3">
+                            <input type="text" id="orderSearchInput" onkeyup="filterOrdersTable()" placeholder="Buscar por número, nome, email ou CPF..." class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-rose-500 w-64">
+                            
+                            <select id="orderStatusFilter" onchange="filterOrdersTable()" class="px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-semibold bg-white focus:outline-none focus:border-rose-500">
                                 <option value="all">Todos os Status</option>
                                 <option value="awaiting_payment">Aguardando Pagamento</option>
-                                <option value="paid">Pago / Em Preparação</option>
-                                <option value="shipped">Enviado</option>
-                                <option value="delivered">Entregue</option>
-                                <option value="cancelled">Cancelado</option>
+                                <option value="paid">Pagos / Em Preparação</option>
+                                <option value="shipped">Enviados</option>
+                                <option value="delivered">Entregues</option>
+                                <option value="cancelled">Cancelados</option>
                             </select>
                         </div>
                     </div>
@@ -226,11 +227,11 @@
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                                    <th class="py-3.5 px-6">Pedido / Data</th>
+                                    <th class="py-3.5 px-6">Nº do Pedido / Data</th>
                                     <th class="py-3.5 px-4">Cliente / Contato</th>
                                     <th class="py-3.5 px-4">Endereço de Entrega</th>
-                                    <th class="py-3.5 px-4">Pagamento & Total</th>
-                                    <th class="py-3.5 px-4">Status Logístico</th>
+                                    <th class="py-3.5 px-4">Valor & Pagamento</th>
+                                    <th class="py-3.5 px-4">Status do Pedido</th>
                                 </tr>
                             </thead>
                             <tbody id="adminOrdersTable" class="divide-y divide-slate-100 text-xs">
@@ -241,18 +242,24 @@
                 </div>
             </div>
 
-            <!-- TAB 3: GESTÃO DE ESTOQUE & PRODUTOS -->
+            <!-- TAB 3: ESTOQUE & PRODUTOS -->
             <div id="tabContentProducts" class="hidden space-y-6">
                 <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
                             <h2 class="font-serif text-2xl font-bold text-slate-900">Controle de Estoque e Fragrâncias</h2>
-                            <p class="text-xs text-slate-500">Gerencie referências olfativas, estoque e faça upload de imagens do seu computador</p>
+                            <p class="text-xs text-slate-500">Adicione novos produtos, gerencie referências olfativas, estoque e faça upload de imagens</p>
                         </div>
-                        <button id="seedLocalDbBtn" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs rounded-xl transition-all border border-rose-200 flex items-center gap-2">
-                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                            <span>Restaurar 5 Produtos com Referências</span>
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openCreateProductModal()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl transition-all shadow-md flex items-center gap-1.5">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                <span>+ Novo Produto</span>
+                            </button>
+                            <button id="seedLocalDbBtn" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs rounded-xl transition-all border border-rose-200 flex items-center gap-1.5">
+                                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                                <span>Restaurar 5 Padrões</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -312,21 +319,21 @@
         </main>
     </div>
 
-    <!-- Edit Product & Image Upload Modal -->
+    <!-- Edit & Add Product Modal -->
     <div id="editProductModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
             <button id="closeEditModalBtn" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
 
-            <h3 class="font-serif text-2xl font-bold text-slate-900 mb-1">Editar Produto & Upload de Imagem</h3>
-            <p class="text-xs text-slate-500 mb-6">Atualize preço, referência olfativa, quantidade em estoque e foto do computador.</p>
+            <h3 id="editModalTitle" class="font-serif text-2xl font-bold text-slate-900 mb-1">Editar Produto</h3>
+            <p id="editModalSubtitle" class="text-xs text-slate-500 mb-6">Atualize preço, referência olfativa, quantidade em estoque e foto do computador.</p>
 
             <!-- Image Upload Section -->
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 mb-6 space-y-3">
-                <span class="font-bold text-slate-800 text-xs block">1. Alterar Foto enviando do seu Computador</span>
+            <div id="imageUploadSection" class="p-4 rounded-2xl bg-slate-50 border border-slate-200 mb-6 space-y-3">
+                <span class="font-bold text-slate-800 text-xs block">1. Foto do Produto (Upload do seu Computador)</span>
                 <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <img id="editProductImagePreview" src="" class="w-16 h-20 object-contain mix-blend-multiply border rounded-lg bg-white p-1">
+                    <img id="editProductImagePreview" src="assets/images/velvet_bloom.jpg" class="w-16 h-20 object-contain mix-blend-multiply border rounded-lg bg-white p-1">
                     <div class="flex-1 w-full space-y-2">
                         <input type="file" id="uploadFileImage" accept="image/*" class="text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100">
                         <button type="button" onclick="uploadComputerImage()" class="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs rounded-xl transition-all flex items-center gap-1.5">
@@ -337,28 +344,28 @@
                 </div>
             </div>
 
-            <!-- Edit Fields Form -->
+            <!-- Edit / Add Fields Form -->
             <form id="editProductForm" class="space-y-4 text-xs">
                 <input type="hidden" id="editProductId">
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">Nome da Fragrância</label>
-                        <input type="text" id="editProductName" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="editProductName" placeholder="Ex: Velvet Bloom" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">Subtítulo / Tagline</label>
-                        <input type="text" id="editProductTagline" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="editProductTagline" placeholder="Ex: Floral Gourmand & Elegante" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Referência Olfativa (Inspirado em / Contratipo)</label>
-                        <input type="text" id="editProductOlfactoryRef" placeholder="Ex: Miss Dior, 212 VIP Black..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 font-medium text-rose-700">
+                        <label class="block font-semibold text-slate-700 mb-1">Referência Olfativa (Inspiração / Contratipo)</label>
+                        <input type="text" id="editProductOlfactoryRef" placeholder="Ex: La Vie Est Belle (Lancôme)" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 font-medium text-rose-700">
                     </div>
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Classificação</label>
+                        <label class="block font-semibold text-slate-700 mb-1">Classificação / Gênero</label>
                         <select id="editProductGenderTag" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 bg-white">
                             <option value="Feminino">Feminino</option>
                             <option value="Feminino & Envolvente">Feminino & Envolvente</option>
@@ -371,41 +378,48 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">Preço Unitário (R$)</label>
-                        <input type="number" step="0.01" id="editProductPrice" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                        <input type="number" step="0.01" id="editProductPrice" value="49.90" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">Quantidade em Estoque</label>
-                        <input type="number" id="editProductStock" required min="0" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                        <input type="number" id="editProductStock" value="100" required min="0" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
                     </div>
                 </div>
 
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">Caminho da Imagem no Servidor</label>
-                    <input type="text" id="editProductImage" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 font-mono text-[11px]">
+                    <input type="text" id="editProductImage" placeholder="assets/images/exemplo.jpg" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 font-mono text-[11px]">
                 </div>
 
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Descrição</label>
-                    <textarea id="editProductDescription" rows="2" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500"></textarea>
+                    <label class="block font-semibold text-slate-700 mb-1">Descrição Detalhada</label>
+                    <textarea id="editProductDescription" rows="2" placeholder="Descreva as características sensoriais da fragrância..." required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500"></textarea>
                 </div>
 
                 <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                     <span class="font-bold text-slate-800 text-xs block">Pirâmide Olfativa</span>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <input type="text" id="editNotesTop" placeholder="Notas de Topo" required class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-rose-500">
-                        <input type="text" id="editNotesHeart" placeholder="Notas de Coração" required class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-rose-500">
-                        <input type="text" id="editNotesBase" placeholder="Notas de Fundo" required class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="editNotesTop" placeholder="Notas de Topo (Saída)" required class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="editNotesHeart" placeholder="Notas de Coração (Corpo)" required class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="editNotesBase" placeholder="Notas de Fundo (Fixação)" required class="px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-rose-500">
                     </div>
                 </div>
 
-                <div class="pt-2 flex justify-end gap-3">
-                    <button type="button" id="cancelEditBtn" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">
-                        Cancelar
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+                    <button type="button" id="modalDeleteBtn" onclick="confirmDeleteFromModal()" class="hidden px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 font-semibold text-xs flex items-center gap-1.5">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        <span>Excluir Produto</span>
                     </button>
-                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold flex items-center gap-2 shadow-md">
-                        <i data-lucide="save" class="w-4 h-4"></i>
-                        <span>Salvar Produto & Estoque</span>
-                    </button>
+
+                    <div class="flex items-center gap-3 ml-auto">
+                        <button type="button" id="cancelEditBtn" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">
+                            Cancelar
+                        </button>
+                        <button type="submit" id="saveProductBtn" class="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold flex items-center gap-2 shadow-md">
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                            <span id="saveProductBtnText">Salvar Produto</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -668,10 +682,16 @@
 
         function renderAdminProductsTable() {
             const tbody = document.getElementById('adminProductsTable');
+            if (!loadedProducts || loadedProducts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400">Nenhum produto cadastrado. Clique em "+ Novo Produto" acima para adicionar.</td></tr>`;
+                return;
+            }
+
             tbody.innerHTML = loadedProducts.map(p => {
                 const stock = p.stockQuantity || 100;
                 const isLowStock = stock < 10;
                 const stockBadgeClass = isLowStock ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-emerald-100 text-emerald-800 border-emerald-300';
+                const safeName = p.name.replace(/'/g, "\\'");
 
                 return `
                     <tr class="hover:bg-slate-50 transition-colors">
@@ -699,10 +719,14 @@
                                 ${stock} un. ${isLowStock ? '(Baixo!)' : ''}
                             </span>
                         </td>
-                        <td class="py-4 px-6 text-right">
-                            <button onclick="openEditModal('${p.id}')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-all shadow-xs inline-flex items-center gap-1.5">
+                        <td class="py-4 px-6 text-right space-x-2">
+                            <button onclick="openEditModal('${p.id}')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-all shadow-xs inline-flex items-center gap-1">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>Editar / Foto</span>
+                                <span>Editar</span>
+                            </button>
+                            <button onclick="deleteProduct('${p.id}', '${safeName}')" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 font-semibold text-xs transition-all inline-flex items-center gap-1">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                <span>Excluir</span>
                             </button>
                         </td>
                     </tr>
@@ -711,10 +735,38 @@
             lucide.createIcons();
         }
 
-        // Open Edit Modal
+        // Open Modal to Create New Product
+        window.openCreateProductModal = function() {
+            document.getElementById('editModalTitle').textContent = 'Adicionar Novo Produto';
+            document.getElementById('editModalSubtitle').textContent = 'Preencha as informações da nova fragrância para disponibilizá-la na loja online.';
+
+            document.getElementById('editProductId').value = '';
+            document.getElementById('editProductName').value = '';
+            document.getElementById('editProductTagline').value = '';
+            document.getElementById('editProductOlfactoryRef').value = '';
+            document.getElementById('editProductPrice').value = '49.90';
+            document.getElementById('editProductStock').value = '100';
+            document.getElementById('editProductGenderTag').value = 'Feminino';
+            document.getElementById('editProductImage').value = 'assets/images/velvet_bloom.jpg';
+            document.getElementById('editProductImagePreview').src = 'assets/images/velvet_bloom.jpg';
+            document.getElementById('editProductDescription').value = '';
+            document.getElementById('editNotesTop').value = '';
+            document.getElementById('editNotesHeart').value = '';
+            document.getElementById('editNotesBase').value = '';
+
+            document.getElementById('modalDeleteBtn').classList.add('hidden');
+            document.getElementById('saveProductBtnText').textContent = 'Cadastrar Produto';
+
+            document.getElementById('editProductModal').classList.remove('hidden');
+        };
+
+        // Open Modal to Edit Existing Product
         window.openEditModal = function(id) {
             const p = loadedProducts.find(item => item.id === id);
             if (!p) return;
+
+            document.getElementById('editModalTitle').textContent = `Editar: ${p.name}`;
+            document.getElementById('editModalSubtitle').textContent = 'Atualize preço, referência olfativa, quantidade em estoque e foto do produto.';
 
             document.getElementById('editProductId').value = p.id;
             document.getElementById('editProductName').value = p.name;
@@ -726,9 +778,12 @@
             document.getElementById('editProductImage').value = p.image;
             document.getElementById('editProductImagePreview').src = p.image;
             document.getElementById('editProductDescription').value = p.description;
-            document.getElementById('editNotesTop').value = p.notes ? p.notes.top : '';
-            document.getElementById('editNotesHeart').value = p.notes ? p.notes.heart : '';
-            document.getElementById('editNotesBase').value = p.notes ? p.notes.base : '';
+            document.getElementById('editNotesTop').value = p.notes ? p.notes.top : (p.notes_top || '');
+            document.getElementById('editNotesHeart').value = p.notes ? p.notes.heart : (p.notes_heart || '');
+            document.getElementById('editNotesBase').value = p.notes ? p.notes.base : (p.notes_base || '');
+
+            document.getElementById('modalDeleteBtn').classList.remove('hidden');
+            document.getElementById('saveProductBtnText').textContent = 'Salvar Alterações';
 
             document.getElementById('editProductModal').classList.remove('hidden');
         };
@@ -740,9 +795,44 @@
             document.getElementById('editProductModal').classList.add('hidden');
         }
 
+        // Delete Product API call
+        window.deleteProduct = async function(id, name) {
+            if (!confirm(`Tem certeza de que deseja excluir permanentemente o produto "${name}"?`)) {
+                return;
+            }
+
+            try {
+                const res = await fetch('api/delete_product.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: id })
+                });
+
+                const result = await res.json();
+                if (result.status === 'success') {
+                    alert(result.message);
+                    fetchLocalData();
+                    loadCrmStats();
+                } else {
+                    alert('Erro ao excluir: ' + result.message);
+                }
+            } catch (err) {
+                alert('Erro ao conectar ao servidor para excluir produto.');
+            }
+        };
+
+        window.confirmDeleteFromModal = function() {
+            const id = document.getElementById('editProductId').value;
+            const name = document.getElementById('editProductName').value;
+            if (id) {
+                closeEditModal();
+                deleteProduct(id, name);
+            }
+        };
+
         // Upload Computer Image
         window.uploadComputerImage = async function() {
-            const productId = document.getElementById('editProductId').value;
+            const productId = document.getElementById('editProductId').value || 'new-product';
             const fileInput = document.getElementById('uploadFileImage');
 
             if (!fileInput.files || fileInput.files.length === 0) {
@@ -764,8 +854,7 @@
                 if (result.status === 'success') {
                     document.getElementById('editProductImage').value = result.imagePath;
                     document.getElementById('editProductImagePreview').src = result.imagePath;
-                    alert('Imagem enviada e atualizada com sucesso no servidor e banco MySQL!');
-                    fetchLocalData();
+                    alert('Imagem enviada e carregada com sucesso!');
                 } else {
                     alert('Erro no upload: ' + result.message);
                 }
@@ -774,12 +863,12 @@
             }
         };
 
-        // Submit Edit Form
+        // Submit Form for Add or Edit Product
         document.getElementById('editProductForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const id = document.getElementById('editProductId').value;
+            const id = document.getElementById('editProductId').value.trim();
 
-            const updatedData = {
+            const productPayload = {
                 id: id,
                 name: document.getElementById('editProductName').value,
                 tagline: document.getElementById('editProductTagline').value,
@@ -796,20 +885,26 @@
                 }
             };
 
-            const res = await fetch('api/update_product.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...updatedData })
-            });
+            const endpoint = id ? 'api/update_product.php' : 'api/add_product.php';
 
-            const result = await res.json();
-            if (result.status === 'success') {
-                closeEditModal();
-                alert('Produto, referência olfativa e quantidade em estoque salvos com sucesso!');
-                fetchLocalData();
-                loadCrmStats();
-            } else {
-                alert('Erro ao atualizar: ' + result.message);
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productPayload)
+                });
+
+                const result = await res.json();
+                if (result.status === 'success') {
+                    closeEditModal();
+                    alert(result.message);
+                    fetchLocalData();
+                    loadCrmStats();
+                } else {
+                    alert('Erro ao salvar produto: ' + result.message);
+                }
+            } catch (err) {
+                alert('Erro na comunicação com o servidor MySQL.');
             }
         });
 
