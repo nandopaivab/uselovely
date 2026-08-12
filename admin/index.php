@@ -112,7 +112,7 @@
                 </button>
                 <button id="tabBtnConfig" onclick="switchTab('config')" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
                     <i data-lucide="settings" class="w-4 h-4"></i>
-                    <span>Mercado Pago Config</span>
+                    <span>Configurações da Loja</span>
                 </button>
             </div>
         </header>
@@ -283,6 +283,38 @@
 
             <!-- TAB 4: MERCADO PAGO CONFIG -->
             <div id="tabContentConfig" class="hidden space-y-6">
+                <!-- Promo Pricing Block -->
+                <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-lg">
+                                <i data-lucide="tag" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-serif text-xl font-bold text-slate-900">Preços e Promoções</h2>
+                                <p class="text-xs text-slate-500">Configure os valores exibidos na loja para a compra de produtos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="promoConfigForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Preço Unitário Padrão (R$)</label>
+                            <input type="text" id="promoSinglePrice" placeholder="Ex: 49,90" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Preço Combo Trio (R$)</label>
+                            <input type="text" id="promoComboPrice" placeholder="Ex: 99,99" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                        </div>
+                        <div class="sm:col-span-2 flex justify-end">
+                            <button type="submit" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition-all shadow-md flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                <span>Salvar Preços</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- MP Block -->
                 <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 space-y-4">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                         <div class="flex items-center gap-3">
@@ -670,13 +702,21 @@
 
                 const cfgRes = await fetch('../api/get_config.php');
                 const cfgResult = await cfgRes.json();
-                if (cfgResult.status === 'success' && cfgResult.data.publicKey) {
-                    document.getElementById('mpPublicKey').value = cfgResult.data.publicKey;
-                    document.getElementById('mpStatusBadge').textContent = 'Conectado ✓';
-                    document.getElementById('mpStatusBadge').className = 'text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700';
+                if (cfgResult.status === 'success') {
+                    if (cfgResult.data.publicKey) {
+                        document.getElementById('mpPublicKey').value = cfgResult.data.publicKey;
+                        document.getElementById('mpStatusBadge').textContent = 'Conectado ✓';
+                        document.getElementById('mpStatusBadge').className = 'text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700';
+                    }
+                    if (cfgResult.data.promoSinglePrice) {
+                        document.getElementById('promoSinglePrice').value = cfgResult.data.promoSinglePrice.replace('.', ',');
+                    }
+                    if (cfgResult.data.promoComboPrice) {
+                        document.getElementById('promoComboPrice').value = cfgResult.data.promoComboPrice.replace('.', ',');
+                    }
                 }
             } catch (e) {
-                console.error("Erro ao carregar dados dos produtos:", e);
+                console.error("Erro ao carregar dados locais:", e);
             }
         }
 
@@ -909,6 +949,27 @@
                 }
             } catch (err) {
                 alert('Erro na comunicação com o servidor MySQL.');
+            }
+        });
+
+        // Save Promo Config
+        document.getElementById('promoConfigForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const promoSinglePrice = document.getElementById('promoSinglePrice').value.trim();
+            const promoComboPrice = document.getElementById('promoComboPrice').value.trim();
+
+            const res = await fetch('../api/save_config.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ promoSinglePrice, promoComboPrice })
+            });
+
+            const result = await res.json();
+            if (result.status === 'success') {
+                alert('Preços salvos com sucesso!');
+                fetchLocalData();
+            } else {
+                alert('Erro: ' + result.message);
             }
         });
 

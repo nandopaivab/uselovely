@@ -113,6 +113,14 @@ function init_db_tables($pdo) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
+    // Insert default pricing configs if missing
+    try {
+        $pdo->exec("INSERT INTO site_config (config_key, config_value) VALUES ('promo_single_price', '49.90')");
+    } catch (Exception $e) {}
+    try {
+        $pdo->exec("INSERT INTO site_config (config_key, config_value) VALUES ('promo_combo_price', '99.99')");
+    } catch (Exception $e) {}
+
     // Create orders table with Mercado Pago & Stock Idempotency fields
     $pdo->exec("CREATE TABLE IF NOT EXISTS orders (
         id VARCHAR(50) PRIMARY KEY,

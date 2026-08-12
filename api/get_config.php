@@ -18,7 +18,9 @@ try {
         'status' => 'success',
         'data' => [
             'publicKey' => $config['mp_public_key'] ?? '',
-            'accessToken' => $config['mp_access_token'] ?? ''
+            'accessToken' => $config['mp_access_token'] ?? '',
+            'promoSinglePrice' => $config['promo_single_price'] ?? '49.90',
+            'promoComboPrice' => $config['promo_combo_price'] ?? '99.99'
         ]
     ], JSON_UNESCAPED_UNICODE);
 } catch (Exception $e) {
