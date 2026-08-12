@@ -106,7 +106,65 @@ try {
     }
 
     $discountAmount = 0.00;
+    $couponCode = strtoupper(trim($input['couponCode'] ?? ''));
+
+    if (!empty($couponCode)) {
+        $isBlackFriday = (date('m') === '11' && date('d') >= '20' && date('d') <= '30');
+        $isDoubleDate = (date('d') === date('m'));
+
+        if ($couponCode === 'BLACK20' && $isBlackFriday) {
+            $discountAmount = ($subtotal + $shippingAmount) * 0.20;
+        } elseif ($couponCode === 'LOVELY15' && $isDoubleDate) {
+            $discountAmount = ($subtotal + $shippingAmount) * 0.15;
+        } else {
+            $userId = null;
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $userId = $_SESSION['user']['id'] ?? null;
+
+            $stmt = $pdo->prepare("SELECT * FROM coupons WHERE code = :code");
+            $stmt->execute([':code' => $couponCode]);
+            $coupon = $stmt->fetch();
+
+            if (!$coupon && $userId && ($couponCode === 'BEMVINDO12' || $couponCode === 'CASHBACK10' || $couponCode === 'BEMVINDO' || $couponCode === 'CASHBACK')) {
+                $prefix = str_replace(['12', '10'], '', $couponCode) . '%';
+                $stmt = $pdo->prepare("SELECT * FROM coupons WHERE user_id = :user_id AND used_count < usage_limit AND code LIKE :prefix ORDER BY id ASC LIMIT 1");
+                $stmt->execute([':user_id' => $userId, ':prefix' => $prefix]);
+                $coupon = $stmt->fetch();
+            }
+
+            if ($coupon && $coupon['used_count'] < $coupon['usage_limit']) {
+                $isValid = true;
+                if (!empty($coupon['expires_at']) && strtotime($coupon['expires_at']) < time()) $isValid = false;
+                if (!empty($coupon['user_id']) && $coupon['user_id'] != $userId) $isValid = false;
+
+                if ($isValid) {
+                    if ($coupon['type'] === 'percentage') {
+                        $discountAmount = ($subtotal + $shippingAmount) * ((float)$coupon['value'] / 100);
+                    } else {
+                        $discountAmount = (float)$coupon['value'];
+                    }
+                    // Mark as used
+                    $pdo->prepare("UPDATE coupons SET used_count = used_count + 1 WHERE id = :id")->execute([':id' => $coupon['id']]);
+                }
+            }
+        }
+    }
+
     $totalAmount = $subtotal + $shippingAmount - $discountAmount;
+    $totalAmount = max(0, $totalAmount); // Prevent negative total
+
+    // Se tiver desconto, adicionar um item negativo no Mercado Pago
+    if ($discountAmount > 0) {
+        $mpItems[] = [
+            'id' => 'desconto-cupom',
+            'title' => 'Desconto (Cupom)',
+            'quantity' => 1,
+            'currency_id' => 'BRL',
+            'unit_price' => -$discountAmount
+        ];
+    }
 
     // 2. GERAR IDENTIFICADOR ÚNICO DO PEDIDO
     $orderNumber = 'PEDIDO-' . rand(1000, 9999);

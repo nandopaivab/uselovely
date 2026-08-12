@@ -1,27 +1,3 @@
-<?php
-// index.php - useLOVELY E-Commerce Landing Page
-require_once __DIR__ . '/config/env.php';
-require_once __DIR__ . '/config/database.php';
-
-try {
-    $pdo = get_db_connection();
-    $stmt = $pdo->query("SELECT * FROM site_config WHERE config_key IN ('promo_single_price', 'promo_combo_price')");
-    $rows = $stmt->fetchAll();
-    $config = [];
-    foreach ($rows as $r) {
-        $config[$r['config_key']] = $r['config_value'];
-    }
-} catch (Exception $e) {
-    $config = [];
-}
-
-$promoSinglePrice = (float)($config['promo_single_price'] ?? 49.90);
-$promoComboPrice = (float)($config['promo_combo_price'] ?? 99.99);
-
-$formatPrice = function($price) {
-    return number_format($price, 2, ',', '.');
-};
-?>
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
@@ -119,7 +95,7 @@ $formatPrice = function($price) {
     <!-- Top Announcement Bar -->
     <div class="bg-gradient-to-r from-[#e7b8c8] via-[#a888b5] to-[#7dbfb8] text-white text-xs md:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-sm flex items-center justify-center gap-2">
         <i data-lucide="sparkles" class="w-4 h-4 animate-spin-slow"></i>
-        <span><strong>Oferta Especial:</strong> 1 Body Splash por <strong>R$ <?= $formatPrice($promoSinglePrice) ?></strong> ou leve <strong>3 por R$ <?= $formatPrice($promoComboPrice) ?></strong> • Entrega via Correios (PAC e SEDEX)</span>
+        <span><strong>Oferta Especial:</strong> 1 Body Splash por <strong>R$ 49,90</strong> ou leve <strong>3 por R$ 99,99</strong> • Entrega via Correios (PAC e SEDEX)</span>
         <i data-lucide="sparkles" class="w-4 h-4"></i>
     </div>
 
@@ -171,7 +147,7 @@ $formatPrice = function($price) {
                     <i data-lucide="wand2" class="w-4 h-4 text-brand-rose"></i>
                     <span>Perfume Finder</span>
                 </a>
-                <a href="#combo" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors font-bold text-rose-600">Monte Seu Kit (R$ <?= $formatPrice($promoComboPrice) ?>)</a>
+                <a href="#combo" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors font-bold text-rose-600">Monte Seu Kit (R$ 99,99)</a>
                 <a href="#diferenciais" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors">Diferenciais</a>
                 <a href="#avaliacoes" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors">Avaliações</a>
             </nav>
@@ -200,7 +176,7 @@ $formatPrice = function($price) {
                     <span>Perfume Finder (Quiz)</span>
                     <span class="bg-rose-100 text-rose-700 text-xs px-2 py-0.5 rounded-full">Novo</span>
                 </a>
-                <a href="#combo" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100">Monte Seu Kit (R$ <?= $formatPrice($promoComboPrice) ?>)</a>
+                <a href="#combo" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100">Monte Seu Kit (R$ 99,99)</a>
                 <a href="#diferenciais" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100">Diferenciais & Fixação</a>
                 <a href="#avaliacoes" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2">Avaliações das Clientes</a>
             </nav>
@@ -208,16 +184,16 @@ $formatPrice = function($price) {
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-brand-softBg via-rose-50/40 to-brand-softBg transition-colors duration-500">
-        <div id="heroBlob1" class="absolute top-1/4 left-10 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-colors duration-500"></div>
-        <div id="heroBlob2" class="absolute top-1/3 right-10 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-colors duration-500" style="animation-delay: 2s"></div>
+    <section id="hero" class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-brand-softBg via-rose-50/40 to-brand-softBg">
+        <div class="absolute top-1/4 left-10 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
+        <div class="absolute top-1/3 right-10 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow" style="animation-delay: 2s"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
                 <div class="lg:col-span-6 text-center lg:text-left space-y-6">
                     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-rose-200/80 shadow-xs text-xs md:text-sm font-semibold text-neutral-700 backdrop-blur-sm">
-                        <span id="heroPing" class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
+                        <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
                         <span id="heroTagline" class="font-serif italic text-base text-rose-600">Floral Gourmand & Elegante</span>
                         <span class="text-neutral-300">•</span>
                         <span>Longa Fixação 236 mL</span>
@@ -237,19 +213,19 @@ $formatPrice = function($price) {
 
                     <div class="flex items-baseline justify-center lg:justify-start gap-3">
                         <span class="text-xs uppercase font-medium text-neutral-400">Preço Especial:</span>
-                        <span id="heroPrice" class="font-serif text-3xl font-bold text-neutral-900">R$ <?= $formatPrice($promoSinglePrice) ?></span>
-                        <span class="text-xs text-rose-600 font-bold bg-rose-50 px-2.5 py-1 rounded-full border border-rose-100">Leve 3 por R$ <?= $formatPrice($promoComboPrice) ?></span>
+                        <span id="heroPrice" class="font-serif text-3xl font-bold text-neutral-900">R$ 49,90</span>
+                        <span class="text-xs text-rose-600 font-bold bg-rose-50 px-2.5 py-1 rounded-full border border-rose-100">Leve 3 por R$ 99,99</span>
                     </div>
 
                     <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                         <button id="heroBuyBtn" onclick="addToCart('velvet-bloom')" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-neutral-900 text-white px-8 py-4 rounded-full font-medium text-sm hover:bg-neutral-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
                             <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                            <span>Adicionar por R$ <?= $formatPrice($promoSinglePrice) ?></span>
+                            <span>Adicionar por R$ 49,90</span>
                         </button>
 
                         <a href="#combo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/90 text-neutral-800 border border-neutral-300/80 px-7 py-4 rounded-full font-medium text-sm hover:bg-white hover:border-neutral-400 transition-all shadow-xs">
                             <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
-                            <span>Montar Trio por R$ <?= $formatPrice($promoComboPrice) ?></span>
+                            <span>Montar Trio por R$ 99,99</span>
                         </a>
                     </div>
 
@@ -270,7 +246,7 @@ $formatPrice = function($price) {
                 </div>
 
                 <div class="lg:col-span-6 relative flex items-center justify-center">
-                    <div id="heroImageBox" class="relative w-full max-w-md lg:max-w-none h-[440px] sm:h-[480px] flex flex-col items-center justify-between p-6 rounded-3xl bg-gradient-to-tr from-pink-100/60 via-rose-50/50 to-purple-50/60 backdrop-blur-md border border-white/80 shadow-2xl overflow-hidden transition-all duration-500">
+                    <div class="relative w-full max-w-md lg:max-w-none h-[440px] sm:h-[480px] flex flex-col items-center justify-between p-6 rounded-3xl bg-gradient-to-tr from-pink-100/60 via-rose-50/50 to-purple-50/60 backdrop-blur-md border border-white/80 shadow-2xl overflow-hidden">
                         
                         <div class="w-full flex items-center justify-between z-10">
                             <span class="text-xs font-semibold uppercase tracking-wider text-neutral-500">Aromas Signature</span>
@@ -315,7 +291,7 @@ $formatPrice = function($price) {
                     Encontre a fragrância que conta a sua história
                 </h2>
                 <p class="text-neutral-600 text-base leading-relaxed font-light">
-                    Cada fórmula foi desenhada para se fundir harmoniosamente à sua pele, exalando notas olfativas inspiradas nos grandes clássicos mundiais. Leve 1 por R$ <?= $formatPrice($promoSinglePrice) ?> ou leve 3 por R$ <?= $formatPrice($promoComboPrice) ?>.
+                    Cada fórmula foi desenhada para se fundir harmoniosamente à sua pele, exalando notas olfativas inspiradas nos grandes clássicos mundiais. Leve 1 por R$ 49,90 ou leve 3 por R$ 99,99.
                 </p>
             </div>
 
@@ -394,7 +370,7 @@ $formatPrice = function($price) {
                 <div class="flex items-center gap-3">
                     <button id="modalAddToCartBtn" class="flex-1 py-3.5 rounded-2xl bg-rose-500 text-white font-medium text-sm hover:bg-rose-600 transition-all shadow-md flex items-center justify-center gap-2">
                         <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                        <span>Adicionar por R$ <?= $formatPrice($promoSinglePrice) ?></span>
+                        <span>Adicionar por R$ 49,90</span>
                     </button>
                 </div>
             </div>
@@ -425,7 +401,7 @@ $formatPrice = function($price) {
         </div>
     </section>
 
-    <!-- Custom Bundle Section (Monte Seu Trio R$ <?= $formatPrice($promoComboPrice) ?>) -->
+    <!-- Custom Bundle Section (Monte Seu Trio R$ 99,99) -->
     <section id="combo" class="py-20 bg-brand-softBg relative border-t border-rose-100/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -436,24 +412,23 @@ $formatPrice = function($price) {
                     </span>
 
                     <h2 class="font-serif text-3xl sm:text-4xl font-normal text-neutral-900 leading-tight">
-                        Monte Seu Trio por R$ <?= $formatPrice($promoComboPrice) ?>
-                    </h2>
+                        Monte Seu Trio por R$ 99,99                    </h2>
 
                     <p class="text-neutral-600 text-sm sm:text-base leading-relaxed font-light">
-                        Ao selecionar 3 unidades do seu Body Splash favorito (ou combinando aromas diferentes), você economiza <strong>R$ <?= $formatPrice(($promoSinglePrice * 3) - $promoComboPrice) ?></strong> com Caixa de Presente inclusa.
+                        Ao selecionar 3 unidades do seu Body Splash favorito (ou combinando aromas diferentes), você economiza <strong>R$ 49,71</strong> com Caixa de Presente inclusa.
                     </p>
 
                     <div class="p-4 rounded-2xl bg-white border border-rose-100 shadow-xs space-y-3">
                         <div class="flex items-center justify-between text-sm">
                             <span class="text-neutral-600"> Preço unitário individual:</span>
-                            <span class="line-through text-neutral-400">3x R$ <?= $formatPrice($promoSinglePrice) ?> = R$ 149,70</span>
+                            <span class="line-through text-neutral-400">3x R$ 49,90 = R$ 149,70</span>
                         </div>
                         <div class="flex items-center justify-between text-base font-bold text-neutral-900 border-t border-neutral-100 pt-2">
                             <span class="flex items-center gap-1.5 text-rose-600">
                                 <i data-lucide="tag" class="w-4 h-4"></i>
                                 Valor do Kit Promo Trio:
                             </span>
-                            <span class="text-xl text-rose-600 font-serif">R$ <?= $formatPrice($promoComboPrice) ?> <span class="text-xs font-sans text-neutral-500 font-normal">(Economia de R$ <?= $formatPrice(($promoSinglePrice * 3) - $promoComboPrice) ?>)</span></span>
+                            <span class="text-xl text-rose-600 font-serif">R$ 99,99 <span class="text-xs font-sans text-neutral-500 font-normal">(Economia de R$ 49,71)</span></span>
                         </div>
                     </div>
 
@@ -494,7 +469,7 @@ $formatPrice = function($price) {
                     <div class="mt-8 pt-6 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div>
                             <span class="text-xs text-neutral-500 block">Total do Kit (3 Itens):</span>
-                            <span class="font-serif text-2xl font-bold text-neutral-900">R$ <?= $formatPrice($promoComboPrice) ?></span>
+                            <span class="font-serif text-2xl font-bold text-neutral-900">R$ 99,99</span>
                         </div>
                         <button id="addBundleBtn" onclick="addBundleToCart()" disabled class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-neutral-300 text-neutral-500 font-medium text-sm transition-all flex items-center justify-center gap-2 cursor-not-allowed">
                             <i data-lucide="package-plus" class="w-4 h-4"></i>
@@ -641,7 +616,7 @@ $formatPrice = function($price) {
                             </span>
                         </div>
                         <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
-                            "Aproveitei o Kit com 3 por R$ <?= $formatPrice($promoComboPrice) ?> e peguei Fresh Muse, Midnight Pulse e Golden Glow. A inspiração do Bleu de Chanel no Midnight Pulse ficou sensacional!"
+                            "Aproveitei o Kit com 3 por R$ 99,99 e peguei Fresh Muse, Midnight Pulse e Golden Glow. A inspiração do Bleu de Chanel no Midnight Pulse ficou sensacional!"
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
@@ -946,12 +921,6 @@ $formatPrice = function($price) {
                         <span id="cepStatusMsg" class="text-[10px] font-semibold text-rose-500"></span>
                     </div>
 
-                    <div id="checkoutSavedAddressesContainer" class="hidden mb-1">
-                        <select id="checkoutSavedAddresses" onchange="fillSavedAddress(this.value)" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 text-sm bg-white cursor-pointer hover:border-rose-300 transition-colors">
-                            <option value="">Usar um endereço salvo...</option>
-                        </select>
-                    </div>
-
                     <div class="flex gap-2">
                         <input type="text" id="chkCep" required placeholder="CEP (ex: 01001-000)" maxlength="9" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 font-mono">
                         <button type="button" onclick="lookupCep()" class="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold shrink-0">Buscar CEP</button>
@@ -979,16 +948,6 @@ $formatPrice = function($price) {
                     <div id="checkoutShippingOptions" class="space-y-2">
                         <p class="text-neutral-500 text-[11px]">Informe o CEP acima para visualizar as opções dos Correios.</p>
                     </div>
-                </div>
-
-                <!-- Cupom de Desconto Section -->
-                <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-3">
-                    <span class="font-bold text-rose-900 block text-xs">4. Cupom de Desconto</span>
-                    <div class="flex gap-2">
-                        <input type="text" id="chkCoupon" placeholder="Insira seu código" class="w-full px-3.5 py-2.5 rounded-xl border border-rose-300 focus:outline-none focus:border-rose-500 font-mono text-sm uppercase">
-                        <button type="button" onclick="applyCoupon()" class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold shrink-0 text-sm">Aplicar</button>
-                    </div>
-                    <div id="couponMessage" class="text-xs font-semibold hidden"></div>
                 </div>
 
                 <!-- Mercado Pago Info -->
@@ -1035,10 +994,12 @@ $formatPrice = function($price) {
         </div>
     </div>
 
-    <!-- Floating Email Contact Button -->
-    <a href="mailto:contato@uselovely.com.br" class="fixed bottom-6 right-6 z-40 bg-neutral-800 hover:bg-neutral-900 text-white p-3.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center gap-2 group" title="Falar por E-mail">
-        <i data-lucide="mail" class="w-6 h-6"></i>
-        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out text-xs font-bold pl-1">E-mail de Contato</span>
+    <!-- Floating WhatsApp Contact Button -->
+    <a href="https://wa.me/5527996968825?text=Olá!%20Gostaria%20de%20tirar%20uma%20dúvida%20sobre%20os%20Body%20Splashes%20da%20useLOVELY." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center gap-2 group" title="Falar no WhatsApp (27) 99696-8825">
+        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out text-xs font-bold pl-1">WhatsApp (27) 99696-8825</span>
     </a>
 
     <!-- Footer Section -->
@@ -1074,11 +1035,11 @@ $formatPrice = function($price) {
                 </div>
 
                 <div class="space-y-3">
-                    <h4 class="font-serif text-lg font-semibold text-rose-200">Atendimento</h4>
+                    <h4 class="font-serif text-lg font-semibold text-rose-200">Atendimento WhatsApp</h4>
                     <ul class="space-y-2 text-xs text-neutral-400 font-light">
                         <li>
-                            <a href="mailto:contato@uselovely.com.br" class="hover:text-white transition-colors text-rose-300 font-semibold flex items-center gap-1.5">
-                                <i data-lucide="mail" class="w-4 h-4"></i> contato@uselovely.com.br
+                            <a href="https://wa.me/5527996968825?text=Olá!%20Gostaria%20de%20tirar%20uma%20dúvida%20sobre%20os%20Body%20Splashes%20da%20useLOVELY." target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors text-emerald-400 font-semibold flex items-center gap-1.5">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp: (27) 99696-8825
                             </a>
                         </li>
                         <li><a href="#" class="hover:text-white transition-colors">Central de Ajuda</a></li>
@@ -1116,9 +1077,8 @@ $formatPrice = function($price) {
     <!-- 100% PHP & MySQL Engine with Correios API -->
     <script>
         window.CONFIG = {
-            singlePrice: <?= json_encode($promoSinglePrice) ?>,
-            comboPrice: <?= json_encode($promoComboPrice) ?>
-        };
+            singlePrice: 49.9,
+            comboPrice: 99.99        };
         const SINGLE_PRICE = window.CONFIG.singlePrice;
         const COMBO_PRICE = window.CONFIG.comboPrice;
         let PRODUCTS = [];
@@ -1179,7 +1139,6 @@ $formatPrice = function($price) {
                 document.getElementById('chkEmail').value = currentUser.email;
                 if (currentUser.name) document.getElementById('chkName').value = currentUser.name;
                 if (currentUser.phone) document.getElementById('chkPhone').value = currentUser.phone;
-                if (currentUser.cpf) document.getElementById('chkCpf').value = currentUser.cpf;
 
                 container.innerHTML = `
                     <div class="flex items-center gap-2">
@@ -1206,51 +1165,26 @@ $formatPrice = function($price) {
             lucide.createIcons();
         }
 
-        const THEME_MAP = {
-            'rose': { border: 'border-rose-500', bg: 'bg-rose-50', text: 'text-rose-600', badge: 'bg-rose-100/80 text-rose-700 border-rose-200', ping: 'bg-rose-400', section: 'via-rose-50/40', box: 'from-pink-100/60 via-rose-50/50 to-purple-50/60', blob1: 'bg-pink-200/40', blob2: 'bg-purple-200/30' },
-            'purple': { border: 'border-purple-500', bg: 'bg-purple-50', text: 'text-purple-600', badge: 'bg-purple-100/80 text-purple-700 border-purple-200', ping: 'bg-purple-400', section: 'via-purple-50/40', box: 'from-purple-100/60 via-fuchsia-50/50 to-indigo-50/60', blob1: 'bg-fuchsia-200/40', blob2: 'bg-indigo-200/30' },
-            'gold': { border: 'border-amber-500', bg: 'bg-amber-50', text: 'text-amber-600', badge: 'bg-amber-100/80 text-amber-700 border-amber-200', ping: 'bg-amber-400', section: 'via-orange-50/40', box: 'from-amber-100/60 via-orange-50/50 to-yellow-50/60', blob1: 'bg-amber-200/40', blob2: 'bg-yellow-200/30' },
-            'mint': { border: 'border-teal-500', bg: 'bg-teal-50', text: 'text-teal-600', badge: 'bg-teal-100/80 text-teal-700 border-teal-200', ping: 'bg-teal-400', section: 'via-emerald-50/40', box: 'from-teal-100/60 via-emerald-50/50 to-cyan-50/60', blob1: 'bg-teal-200/40', blob2: 'bg-cyan-200/30' },
-            'navy': { border: 'border-slate-500', bg: 'bg-slate-50', text: 'text-slate-600', badge: 'bg-slate-200/80 text-slate-800 border-slate-300', ping: 'bg-slate-400', section: 'via-slate-100/40', box: 'from-slate-200/60 via-slate-100/50 to-blue-100/60', blob1: 'bg-slate-300/40', blob2: 'bg-blue-200/30' }
-        };
-
         // Hero Switcher
         window.switchHeroScent = function(index) {
             if (!PRODUCTS || PRODUCTS.length === 0) return;
             const p = PRODUCTS[index] || PRODUCTS[0];
-            const theme = THEME_MAP[p.colorTheme] || THEME_MAP['rose'];
-            
-            document.getElementById('hero').className = `relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-brand-softBg ${theme.section} to-brand-softBg transition-colors duration-500`;
-            document.getElementById('heroBlob1').className = `absolute top-1/4 left-10 w-72 h-72 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-colors duration-500 ${theme.blob1}`;
-            document.getElementById('heroBlob2').className = `absolute top-1/3 right-10 w-80 h-80 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-colors duration-500 ${theme.blob2}`;
-            document.getElementById('heroImageBox').className = `relative w-full max-w-md lg:max-w-none h-[440px] sm:h-[480px] flex flex-col items-center justify-between p-6 rounded-3xl bg-gradient-to-tr ${theme.box} backdrop-blur-md border border-white/80 shadow-2xl overflow-hidden transition-all duration-500`;
-            
-            document.getElementById('heroPing').className = `w-2 h-2 rounded-full animate-ping ${theme.ping}`;
             
             document.getElementById('heroTagline').textContent = p.tagline;
-            document.getElementById('heroTagline').className = `font-serif italic text-base ${theme.text}`;
-            
             document.getElementById('heroTitle').textContent = p.name;
-            
             document.getElementById('heroRefBadge').textContent = `✨ Referência Olfativa: ${p.olfactoryReference || 'Importada'}`;
-            document.getElementById('heroRefBadge').className = `inline-block px-3.5 py-1.5 rounded-full text-xs font-bold border ${theme.badge}`;
-            
             document.getElementById('heroDescription').textContent = p.description;
             document.getElementById('heroPrice').textContent = `R$ ${(p.price || SINGLE_PRICE).toFixed(2).replace('.', ',')}`;
             document.getElementById('heroImage').src = p.image;
-            
-            const buyBtn = document.getElementById('heroBuyBtn');
-            buyBtn.onclick = () => addToCart(p.id);
-            // Re-apply btn background based on the DB value or theme
-            buyBtn.className = `w-full sm:w-auto inline-flex items-center justify-center gap-3 ${p.btnBg} px-8 py-4 rounded-full font-medium text-sm transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5`;
+            document.getElementById('heroBuyBtn').onclick = () => addToCart(p.id);
 
-            // Update thumbnails
             document.querySelectorAll('.hero-thumb').forEach((btn, i) => {
-                const btnTheme = THEME_MAP[PRODUCTS[i].colorTheme] || THEME_MAP['rose'];
                 if (i === index) {
-                    btn.className = `hero-thumb p-1.5 rounded-xl transition-all border-2 scale-105 ${btnTheme.border} ${btnTheme.bg}`;
+                    btn.classList.add('border-rose-500', 'scale-105', 'bg-rose-50');
+                    btn.classList.remove('border-transparent');
                 } else {
-                    btn.className = `hero-thumb p-1.5 rounded-xl transition-all border-2 border-transparent hover:${btnTheme.border.replace('border-', 'border-opacity-50 border-')}`;
+                    btn.classList.remove('border-rose-500', 'scale-105', 'bg-rose-50');
+                    btn.classList.add('border-transparent');
                 }
             });
         };
@@ -1351,7 +1285,7 @@ $formatPrice = function($price) {
             document.getElementById('notesModal').classList.add('hidden');
         };
 
-        // Custom Kit Builder (Trio R$ <?= $formatPrice($promoComboPrice) ?>)
+        // Custom Kit Builder (Trio R$ 99,99)
         function renderBuilderUI() {
             const slotsContainer = document.getElementById('builderSlots');
             const availableContainer = document.getElementById('builderAvailableGrid');
@@ -1398,7 +1332,7 @@ $formatPrice = function($price) {
             if (selectedCount === 3) {
                 addBundleBtn.disabled = false;
                 addBundleBtn.className = 'w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer';
-                addBundleBtn.innerHTML = `<i data-lucide="shopping-bag" class="w-4 h-4"></i><span>Adicionar Trio ao Carrinho (R$ <?= $formatPrice($promoComboPrice) ?>)</span>`;
+                addBundleBtn.innerHTML = `<i data-lucide="shopping-bag" class="w-4 h-4"></i><span>Adicionar Trio ao Carrinho (R$ 99,99)</span>`;
             } else {
                 addBundleBtn.disabled = true;
                 addBundleBtn.className = 'w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-neutral-200 text-neutral-400 font-medium text-sm transition-all flex items-center justify-center gap-2 cursor-not-allowed';
@@ -1795,10 +1729,8 @@ $formatPrice = function($price) {
             renderCartUI();
         };
 
-        let checkoutSavedAddressesList = [];
-
         // Checkout Modal & Mercado Pago Preference Generation
-        window.openCheckoutModal = async function() {
+        window.openCheckoutModal = function() {
             if (cart.length === 0) {
                 alert('Sua sacola está vazia.');
                 return;
@@ -1806,89 +1738,10 @@ $formatPrice = function($price) {
             closeCart();
             renderCheckoutShippingOptions();
             document.getElementById('checkoutModal').classList.remove('hidden');
-
-            if (currentUser) {
-                try {
-                    const res = await fetch('api/get_user_addresses.php');
-                    const result = await res.json();
-                    const container = document.getElementById('checkoutSavedAddressesContainer');
-                    const select = document.getElementById('checkoutSavedAddresses');
-                    
-                    if (result.status === 'success' && result.data.length > 0) {
-                        checkoutSavedAddressesList = result.data;
-                        
-                        select.innerHTML = '<option value="">Usar um endereço salvo...</option>' + 
-                            result.data.map((addr, idx) => 
-                                `<option value="${idx}">${addr.street}, ${addr.number} - ${addr.neighborhood}</option>`
-                            ).join('');
-                        
-                        container.classList.remove('hidden');
-                    } else {
-                        container.classList.add('hidden');
-                    }
-                } catch (e) {
-                    console.error("Erro ao buscar endereços no checkout:", e);
-                }
-            }
-        };
-
-        window.fillSavedAddress = function(indexStr) {
-            if (indexStr === "") return;
-            const idx = parseInt(indexStr);
-            const addr = checkoutSavedAddressesList[idx];
-            if (addr) {
-                document.getElementById('chkCep').value = addr.cep || '';
-                document.getElementById('chkStreet').value = addr.street || '';
-                document.getElementById('chkNumber').value = addr.number || '';
-                document.getElementById('chkComplement').value = addr.complement || '';
-                document.getElementById('chkNeighborhood').value = addr.neighborhood || '';
-                document.getElementById('chkCity').value = addr.city || '';
-                document.getElementById('chkState').value = addr.state || '';
-                lookupCep(); // Recalculate shipping based on new CEP
-            }
         };
 
         window.closeCheckoutModal = function() {
             document.getElementById('checkoutModal').classList.add('hidden');
-        };
-
-        window.applyCoupon = async function() {
-            const codeInput = document.getElementById('chkCoupon');
-            const code = codeInput.value.trim().toUpperCase();
-            const msgEl = document.getElementById('couponMessage');
-            
-            if (!code) {
-                msgEl.textContent = 'Digite um código de cupom.';
-                msgEl.className = 'text-xs font-semibold text-rose-600 block mt-2';
-                return;
-            }
-            
-            msgEl.textContent = 'Validando cupom...';
-            msgEl.className = 'text-xs font-semibold text-neutral-500 block mt-2';
-            
-            try {
-                const res = await fetch('api/validate_coupon.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code })
-                });
-                const data = await res.json();
-                
-                if (data.status === 'success') {
-                    const c = data.coupon;
-                    msgEl.textContent = `Cupom aplicado! ${c.type === 'percentage' ? c.value + '% de desconto.' : 'R$ ' + c.value + ' de desconto.'}`;
-                    msgEl.className = 'text-xs font-semibold text-emerald-600 block mt-2';
-                    codeInput.disabled = true;
-                    // Note: Actual calculation happens on the backend, 
-                    // but we could visually update a total here if we want.
-                } else {
-                    msgEl.textContent = data.message || 'Cupom inválido.';
-                    msgEl.className = 'text-xs font-semibold text-rose-600 block mt-2';
-                }
-            } catch (err) {
-                msgEl.textContent = 'Erro ao validar o cupom.';
-                msgEl.className = 'text-xs font-semibold text-rose-600 block mt-2';
-            }
         };
 
         document.getElementById('checkoutFullForm').addEventListener('submit', async (e) => {
@@ -1920,7 +1773,6 @@ $formatPrice = function($price) {
                 },
                 shippingCost: currentShippingCost,
                 shippingMethod: currentShippingMethod || 'Correios',
-                couponCode: document.getElementById('chkCoupon').value.trim(),
                 items: cart
             };
 
@@ -2209,16 +2061,16 @@ $formatPrice = function($price) {
                         list.innerHTML = `<div class="text-center text-neutral-500 py-4">Nenhum endereço cadastrado.</div>`;
                     } else {
                         list.innerHTML = result.data.map(addr => `
-                            <div class="p-3 border ${addr.is_default == 1 ? 'border-rose-300 bg-rose-50' : 'border-neutral-200'} rounded-xl relative group">
-                                ${addr.is_default == 1 ? '<span class="absolute top-3 right-3 text-[10px] font-bold text-rose-600 bg-rose-100 px-2 py-0.5 rounded-full">Padrão</span>' : ''}
+                            <div class="p-3 border \${addr.is_default == 1 ? 'border-rose-300 bg-rose-50' : 'border-neutral-200'} rounded-xl relative group">
+                                \${addr.is_default == 1 ? '<span class="absolute top-3 right-3 text-[10px] font-bold text-rose-600 bg-rose-100 px-2 py-0.5 rounded-full">Padrão</span>' : ''}
                                 <div class="text-xs text-neutral-800 pr-16">
-                                    <p class="font-bold">${addr.street}, ${addr.number} ${addr.complement ? '- ' + addr.complement : ''}</p>
-                                    <p>${addr.neighborhood}, ${addr.city} - ${addr.state}</p>
-                                    <p class="text-neutral-500 mt-1">CEP: ${addr.cep}</p>
+                                    <p class="font-bold">\${addr.street}, \${addr.number} \${addr.complement ? '- ' + addr.complement : ''}</p>
+                                    <p>\${addr.neighborhood}, \${addr.city} - \${addr.state}</p>
+                                    <p class="text-neutral-500 mt-1">CEP: \${addr.cep}</p>
                                 </div>
                                 <div class="flex gap-3 mt-3 pt-3 border-t border-neutral-100">
-                                    ${addr.is_default == 0 ? `<button onclick="setDefaultAddress(${addr.id})" class="text-blue-600 hover:text-blue-800 font-semibold">Tornar Padrão</button>` : ''}
-                                    <button onclick="deleteAddress(${addr.id})" class="text-rose-600 hover:text-rose-800 font-semibold">Excluir</button>
+                                    \${addr.is_default == 0 ? \`<button onclick="setDefaultAddress(\${addr.id})" class="text-blue-600 hover:text-blue-800 font-semibold">Tornar Padrão</button>\` : ''}
+                                    <button onclick="deleteAddress(\${addr.id})" class="text-rose-600 hover:text-rose-800 font-semibold">Excluir</button>
                                 </div>
                             </div>
                         `).join('');
@@ -2242,7 +2094,7 @@ $formatPrice = function($price) {
             let cep = document.getElementById('addCep').value.replace(/\\D/g, '');
             if (cep.length === 8) {
                 try {
-                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const response = await fetch(\`https://viacep.com.br/ws/\${cep}/json/\`);
                     const data = await response.json();
                     if (!data.erro) {
                         document.getElementById('addStreet').value = data.logradouro;

@@ -118,6 +118,40 @@ try {
         }
 
         $stockReduced = 1;
+
+        // LOYALTY CASHBACK SYSTEM: 10% coupon for every R$150 spent
+        if (!$isAlreadyPaid) {
+            $stmtUser = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+            $stmtUser->execute([':email' => $order['customer_email']]);
+            $u = $stmtUser->fetch();
+            if ($u) {
+                $uid = $u['id'];
+                
+                // Sum of all PREVIOUS paid orders
+                $stmtSum = $pdo->prepare("SELECT SUM(total_amount) FROM orders WHERE customer_email = :email AND payment_status = 'paid' AND id != :order_id");
+                $stmtSum->execute([':email' => $order['customer_email'], ':order_id' => $order['id']]);
+                $pastTotal = (float)$stmtSum->fetchColumn();
+                
+                $newTotal = $pastTotal + (float)$order['total_amount'];
+                $threshold = 150.00;
+                
+                $pastMultiples = floor($pastTotal / $threshold);
+                $newMultiples = floor($newTotal / $threshold);
+                
+                if ($newMultiples > $pastMultiples) {
+                    $couponsToGenerate = $newMultiples - $pastMultiples;
+                    for ($i = 0; $i < $couponsToGenerate; $i++) {
+                        $couponCode = 'CASHBACK10-' . strtoupper(substr(uniqid(), -5));
+                        $stmtCoupon = $pdo->prepare("INSERT INTO coupons (code, type, value, user_id, usage_limit) VALUES (:code, 'percentage', 10, :user_id, 1)");
+                        $stmtCoupon->execute([
+                            ':code' => $couponCode,
+                            ':user_id' => $uid
+                        ]);
+                        log_webhook("Gerado cupom de CASHBACK 10% ({$couponCode}) para usuário {$uid}.");
+                    }
+                }
+            }
+        }
     }
 
     // 5. ATUALIZAR PEDIDO NO BANCO MYSQL

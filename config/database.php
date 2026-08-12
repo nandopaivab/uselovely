@@ -219,6 +219,19 @@ function init_db_tables($pdo) {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
+    // Create coupons table for discounts and loyalty
+    $pdo->exec("CREATE TABLE IF NOT EXISTS coupons (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        code VARCHAR(50) NOT NULL UNIQUE,
+        type VARCHAR(20) NOT NULL DEFAULT 'percentage',
+        value DECIMAL(10,2) NOT NULL,
+        user_id INT DEFAULT NULL,
+        usage_limit INT DEFAULT 1,
+        used_count INT DEFAULT 0,
+        expires_at DATETIME DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+
     // Seed default admin user if not exists
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE role = 'admin'");
     $stmt->execute();

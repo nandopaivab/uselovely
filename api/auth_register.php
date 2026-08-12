@@ -48,6 +48,14 @@ try {
 
     $userId = $pdo->lastInsertId();
 
+    // Create a 12% welcome coupon for the new user
+    $couponCode = 'BEMVINDO12-' . strtoupper(substr(uniqid(), -5));
+    $stmt = $pdo->prepare("INSERT INTO coupons (code, type, value, user_id, usage_limit) VALUES (:code, 'percentage', 12, :user_id, 1)");
+    $stmt->execute([
+        ':code' => $couponCode,
+        ':user_id' => $userId
+    ]);
+
     $sessionData = [
         'id' => $userId,
         'name' => $name,
