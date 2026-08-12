@@ -149,10 +149,7 @@
                 </a>
                 <a href="#combo" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors font-bold text-rose-600">Monte Seu Kit (R$ 99,99)</a>
                 <a href="#diferenciais" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors">Diferenciais</a>
-                <a href="https://wa.me/5527996968825?text=Olá!%20Gostaria%20de%20tirar%20uma%20dúvida%20sobre%20os%20Body%20Splashes%20da%20useLOVELY." target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1.5">
-                    <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    <span>(27) 99696-8825</span>
-                </a>
+                <a href="#avaliacoes" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors">Avaliações</a>
             </nav>
 
             <!-- Customer Account & Cart Actions -->
@@ -180,10 +177,8 @@
                     <span class="bg-rose-100 text-rose-700 text-xs px-2 py-0.5 rounded-full">Novo</span>
                 </a>
                 <a href="#combo" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100">Monte Seu Kit (R$ 99,99)</a>
-                <a href="https://wa.me/5527996968825?text=Olá!%20Gostaria%20de%20tirar%20uma%20dúvida%20sobre%20os%20Body%20Splashes%20da%20useLOVELY." target="_blank" rel="noopener noreferrer" class="text-emerald-600 font-bold py-2 flex items-center gap-2">
-                    <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    <span>Contato WhatsApp: (27) 99696-8825</span>
-                </a>
+                <a href="#diferenciais" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100">Diferenciais & Fixação</a>
+                <a href="#avaliacoes" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2">Avaliações das Clientes</a>
             </nav>
         </div>
     </header>
@@ -1272,10 +1267,10 @@
 
                     selectShippingOption(availableShippingOptions[0].id);
                 } else {
-                    statusMsg.textContent = 'Erro ao consultar Correios.';
+                    statusMsg.textContent = data.message || 'Erro ao consultar Correios.';
                 }
             } catch (err) {
-                statusMsg.textContent = 'Erro de conexão.';
+                statusMsg.textContent = 'Erro ao consultar frete.';
             }
         };
 
