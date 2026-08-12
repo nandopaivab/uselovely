@@ -2087,16 +2087,16 @@ $formatPrice = function($price) {
                         list.innerHTML = `<div class="text-center text-neutral-500 py-4">Nenhum endereço cadastrado.</div>`;
                     } else {
                         list.innerHTML = result.data.map(addr => `
-                            <div class="p-3 border \${addr.is_default == 1 ? 'border-rose-300 bg-rose-50' : 'border-neutral-200'} rounded-xl relative group">
-                                \${addr.is_default == 1 ? '<span class="absolute top-3 right-3 text-[10px] font-bold text-rose-600 bg-rose-100 px-2 py-0.5 rounded-full">Padrão</span>' : ''}
+                            <div class="p-3 border ${addr.is_default == 1 ? 'border-rose-300 bg-rose-50' : 'border-neutral-200'} rounded-xl relative group">
+                                ${addr.is_default == 1 ? '<span class="absolute top-3 right-3 text-[10px] font-bold text-rose-600 bg-rose-100 px-2 py-0.5 rounded-full">Padrão</span>' : ''}
                                 <div class="text-xs text-neutral-800 pr-16">
-                                    <p class="font-bold">\${addr.street}, \${addr.number} \${addr.complement ? '- ' + addr.complement : ''}</p>
-                                    <p>\${addr.neighborhood}, \${addr.city} - \${addr.state}</p>
-                                    <p class="text-neutral-500 mt-1">CEP: \${addr.cep}</p>
+                                    <p class="font-bold">${addr.street}, ${addr.number} ${addr.complement ? '- ' + addr.complement : ''}</p>
+                                    <p>${addr.neighborhood}, ${addr.city} - ${addr.state}</p>
+                                    <p class="text-neutral-500 mt-1">CEP: ${addr.cep}</p>
                                 </div>
                                 <div class="flex gap-3 mt-3 pt-3 border-t border-neutral-100">
-                                    \${addr.is_default == 0 ? \`<button onclick="setDefaultAddress(\${addr.id})" class="text-blue-600 hover:text-blue-800 font-semibold">Tornar Padrão</button>\` : ''}
-                                    <button onclick="deleteAddress(\${addr.id})" class="text-rose-600 hover:text-rose-800 font-semibold">Excluir</button>
+                                    ${addr.is_default == 0 ? `<button onclick="setDefaultAddress(${addr.id})" class="text-blue-600 hover:text-blue-800 font-semibold">Tornar Padrão</button>` : ''}
+                                    <button onclick="deleteAddress(${addr.id})" class="text-rose-600 hover:text-rose-800 font-semibold">Excluir</button>
                                 </div>
                             </div>
                         `).join('');
@@ -2120,7 +2120,7 @@ $formatPrice = function($price) {
             let cep = document.getElementById('addCep').value.replace(/\\D/g, '');
             if (cep.length === 8) {
                 try {
-                    const response = await fetch(\`https://viacep.com.br/ws/\${cep}/json/\`);
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
                     const data = await response.json();
                     if (!data.erro) {
                         document.getElementById('addStreet').value = data.logradouro;
