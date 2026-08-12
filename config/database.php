@@ -166,7 +166,39 @@ function init_db_tables($pdo) {
         email VARCHAR(100) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         phone VARCHAR(50) DEFAULT '',
+        cpf VARCHAR(20) DEFAULT '',
         role VARCHAR(20) NOT NULL DEFAULT 'customer',
+        reset_token VARCHAR(100) DEFAULT NULL,
+        reset_expires DATETIME DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+
+    // Migration Check for users table columns
+    try {
+        $pdo->query("SELECT cpf FROM users LIMIT 1");
+    } catch (Exception $e) {
+        try { $pdo->exec("ALTER TABLE users ADD COLUMN cpf VARCHAR(20) DEFAULT ''"); } catch (Exception $ex) {}
+    }
+    try {
+        $pdo->query("SELECT reset_token FROM users LIMIT 1");
+    } catch (Exception $e) {
+        try { $pdo->exec("ALTER TABLE users ADD COLUMN reset_token VARCHAR(100) DEFAULT NULL"); } catch (Exception $ex) {}
+        try { $pdo->exec("ALTER TABLE users ADD COLUMN reset_expires DATETIME DEFAULT NULL"); } catch (Exception $ex) {}
+    }
+
+    // Create user_addresses table for multiple saved delivery addresses
+    $pdo->exec("CREATE TABLE IF NOT EXISTS user_addresses (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        recipient_name VARCHAR(100) NOT NULL,
+        cep VARCHAR(20) NOT NULL,
+        street VARCHAR(150) NOT NULL,
+        number VARCHAR(30) NOT NULL,
+        complement VARCHAR(100) DEFAULT '',
+        neighborhood VARCHAR(100) NOT NULL,
+        city VARCHAR(100) NOT NULL,
+        state VARCHAR(10) NOT NULL,
+        is_default TINYINT(1) DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 

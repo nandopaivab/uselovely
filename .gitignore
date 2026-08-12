@@ -3,3 +3,5 @@ database.sqlite
 logs/
 .DS_Store
 .env
+vendor/
+vendor/

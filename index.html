@@ -721,6 +721,9 @@
                 <button type="submit" class="w-full py-3 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold rounded-xl transition-all shadow-md">
                     Entrar na Minha Conta
                 </button>
+                <div class="text-center mt-2">
+                    <a href="#" onclick="openForgotPasswordModal(event)" class="text-rose-500 hover:text-rose-600 font-semibold underline decoration-transparent hover:decoration-rose-500 transition-all">Esqueci minha senha</a>
+                </div>
             </form>
 
             <form id="customerRegisterForm" class="hidden space-y-4 text-xs">
@@ -744,6 +747,144 @@
                     Criar Minha Conta
                 </button>
             </form>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeForgotPasswordModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="text-center mb-6">
+                <h3 class="font-serif text-2xl font-bold text-neutral-900">Recuperar Senha</h3>
+                <p class="text-xs text-neutral-500 mt-1">Digite seu e-mail para receber o link de recuperação</p>
+            </div>
+            <div id="forgotPasswordErrorMsg" class="hidden mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
+            <div id="forgotPasswordSuccessMsg" class="hidden mb-4 p-3 rounded-xl bg-green-50 border border-green-200 text-xs text-green-700 font-semibold"></div>
+            <form id="forgotPasswordForm" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">E-mail</label>
+                    <input type="email" id="forgotEmail" required placeholder="seu@email.com" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <button type="submit" class="w-full py-3 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold rounded-xl transition-all shadow-md">
+                    Enviar Link de Recuperação
+                </button>
+                <div class="text-center mt-2">
+                    <a href="#" onclick="backToLoginModal(event)" class="text-neutral-500 hover:text-neutral-700 font-semibold transition-all">Voltar para o Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div id="resetPasswordModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl">
+            <div class="text-center mb-6">
+                <h3 class="font-serif text-2xl font-bold text-neutral-900">Nova Senha</h3>
+                <p class="text-xs text-neutral-500 mt-1">Crie uma nova senha para sua conta</p>
+            </div>
+            <div id="resetPasswordErrorMsg" class="hidden mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
+            <div id="resetPasswordSuccessMsg" class="hidden mb-4 p-3 rounded-xl bg-green-50 border border-green-200 text-xs text-green-700 font-semibold"></div>
+            <form id="resetPasswordForm" class="space-y-4 text-xs">
+                <input type="hidden" id="resetTokenInput">
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">Nova Senha</label>
+                    <input type="password" id="resetNewPassword" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <button type="submit" class="w-full py-3 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-xl transition-all shadow-md">
+                    Salvar Nova Senha
+                </button>
+                <div class="text-center mt-2">
+                    <a href="#" onclick="window.location.href='/'" class="text-neutral-500 hover:text-neutral-700 font-semibold transition-all">Ir para o Início</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- My Account Modal -->
+    <div id="myAccountModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeMyAccountModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-neutral-100 text-neutral-600 rounded-2xl flex items-center justify-center mx-auto mb-1">
+                    <i data-lucide="user" class="w-6 h-6"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-neutral-900">Minha Conta</h3>
+                <p class="text-xs text-neutral-500">Gerencie seus dados e endereços</p>
+            </div>
+
+            <div class="flex border-b border-neutral-200 mb-6">
+                <button id="tabProfileBtn" onclick="switchAccountTab('profile')" class="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600">Meus Dados</button>
+                <button id="tabAddressesBtn" onclick="switchAccountTab('addresses')" class="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700">Meus Endereços</button>
+            </div>
+
+            <div id="accountErrorMsg" class="hidden mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
+            <div id="accountSuccessMsg" class="hidden mb-4 p-3 rounded-xl bg-green-50 border border-green-200 text-xs text-green-700 font-semibold"></div>
+
+            <!-- Profile Form -->
+            <form id="profileForm" class="space-y-4 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-neutral-700 mb-1">Nome Completo</label>
+                        <input type="text" id="accName" required class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-neutral-700 mb-1">CPF</label>
+                        <input type="text" id="accCpf" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-neutral-700 mb-1">Telefone</label>
+                        <input type="tel" id="accPhone" required class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-neutral-700 mb-1">E-mail (Apenas Leitura)</label>
+                        <input type="email" id="accEmail" readonly class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 bg-neutral-50 text-neutral-500">
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold rounded-xl transition-all shadow-md">
+                        Salvar Alterações
+                    </button>
+                </div>
+            </form>
+
+            <!-- Addresses Section -->
+            <div id="addressesSection" class="hidden space-y-4 text-xs">
+                <div class="flex justify-between items-center mb-2">
+                    <h4 class="font-bold text-neutral-800">Endereços Salvos</h4>
+                    <button onclick="openAddAddressForm()" class="text-rose-500 font-bold flex items-center hover:text-rose-600">
+                        <i data-lucide="plus" class="w-4 h-4 mr-1"></i> Adicionar
+                    </button>
+                </div>
+                
+                <div id="addressesList" class="space-y-3">
+                    <!-- Endereços carregados via JS -->
+                </div>
+
+                <!-- Add Address Form (Hidden by default) -->
+                <form id="addAddressForm" class="hidden mt-4 p-4 border border-neutral-200 rounded-2xl bg-neutral-50 space-y-3">
+                    <h5 class="font-bold text-neutral-700">Novo Endereço</h5>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="addCep" required placeholder="CEP" onblur="fetchAddressForNewAddress()" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="addStreet" required placeholder="Rua / Avenida" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="addNumber" required placeholder="Número" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="addComplement" placeholder="Complemento" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="addNeighborhood" required placeholder="Bairro" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <div class="flex gap-2">
+                            <input type="text" id="addCity" required placeholder="Cidade" class="flex-1 px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                            <input type="text" id="addState" required placeholder="UF" maxlength="2" class="w-16 px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 uppercase">
+                        </div>
+                    </div>
+                    <div class="flex gap-2 pt-2">
+                        <button type="button" onclick="closeAddAddressForm()" class="flex-1 py-2.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-800 font-semibold rounded-xl transition-all">Cancelar</button>
+                        <button type="submit" class="flex-1 py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-xl transition-all shadow-md">Salvar Endereço</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -997,8 +1138,12 @@
 
                 container.innerHTML = `
                     <div class="flex items-center gap-2">
-                        <button onclick="openUserOrdersModal()" class="px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold transition-all border border-rose-200">
-                            Meus Pedidos
+                        <button onclick="openUserOrdersModal()" class="px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold transition-all border border-rose-200" title="Meus Pedidos">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="openMyAccountModal()" class="px-3 py-1.5 rounded-full bg-white hover:bg-neutral-100 text-neutral-700 text-xs font-semibold transition-all border border-neutral-200 shadow-xs" title="Minha Conta">
+                            <i data-lucide="user" class="w-4 h-4 text-rose-600"></i>
+                            <span class="hidden sm:inline">Minha Conta</span>
                         </button>
                         <button onclick="logoutCustomer()" class="p-2 text-neutral-400 hover:text-neutral-700" title="Sair">
                             <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -1721,7 +1866,328 @@
             }
         }
 
+        // --- FORGOT & RESET PASSWORD LOGIC ---
+        window.openForgotPasswordModal = function(e) {
+            if (e) e.preventDefault();
+            closeAuthModal();
+            document.getElementById('forgotPasswordErrorMsg').classList.add('hidden');
+            document.getElementById('forgotPasswordSuccessMsg').classList.add('hidden');
+            document.getElementById('forgotEmail').value = '';
+            document.getElementById('forgotPasswordModal').classList.remove('hidden');
+        };
+
+        window.closeForgotPasswordModal = function() {
+            document.getElementById('forgotPasswordModal').classList.add('hidden');
+        };
+
+        window.backToLoginModal = function(e) {
+            if (e) e.preventDefault();
+            closeForgotPasswordModal();
+            openAuthModal('login');
+        };
+
+        document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const errorMsg = document.getElementById('forgotPasswordErrorMsg');
+            const successMsg = document.getElementById('forgotPasswordSuccessMsg');
+            btn.disabled = true;
+            btn.textContent = "Enviando...";
+            errorMsg.classList.add('hidden');
+            successMsg.classList.add('hidden');
+
+            try {
+                const res = await fetch('api/forgot_password.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: document.getElementById('forgotEmail').value })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    successMsg.textContent = result.message;
+                    successMsg.classList.remove('hidden');
+                    if(result.debug_link) {
+                        console.log("LINK DE RECUPERAÇÃO:", result.debug_link); // Apenas para dev
+                    }
+                } else {
+                    errorMsg.textContent = result.message || 'Erro ao solicitar recuperação.';
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorMsg.textContent = 'Erro de comunicação com o servidor.';
+                errorMsg.classList.remove('hidden');
+            }
+            btn.disabled = false;
+            btn.textContent = "Enviar Link de Recuperação";
+        });
+
+        document.getElementById('resetPasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const errorMsg = document.getElementById('resetPasswordErrorMsg');
+            const successMsg = document.getElementById('resetPasswordSuccessMsg');
+            btn.disabled = true;
+            btn.textContent = "Salvando...";
+            errorMsg.classList.add('hidden');
+            successMsg.classList.add('hidden');
+
+            try {
+                const res = await fetch('api/reset_password.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        token: document.getElementById('resetTokenInput').value,
+                        password: document.getElementById('resetNewPassword').value
+                    })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    successMsg.textContent = result.message;
+                    successMsg.classList.remove('hidden');
+                    setTimeout(() => {
+                        document.getElementById('resetPasswordModal').classList.add('hidden');
+                        openAuthModal('login');
+                    }, 2000);
+                } else {
+                    errorMsg.textContent = result.message || 'Erro ao redefinir senha.';
+                    errorMsg.classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.textContent = "Salvar Nova Senha";
+                }
+            } catch (err) {
+                errorMsg.textContent = 'Erro de comunicação com o servidor.';
+                errorMsg.classList.remove('hidden');
+                btn.disabled = false;
+                btn.textContent = "Salvar Nova Senha";
+            }
+        });
+
+        // --- MY ACCOUNT LOGIC ---
+        window.openMyAccountModal = async function() {
+            if (!currentUser) {
+                openAuthModal('login');
+                return;
+            }
+            document.getElementById('myAccountModal').classList.remove('hidden');
+            switchAccountTab('profile');
+            document.getElementById('accountErrorMsg').classList.add('hidden');
+            document.getElementById('accountSuccessMsg').classList.add('hidden');
+
+            // Load profile data
+            document.getElementById('accName').value = currentUser.name || '';
+            document.getElementById('accEmail').value = currentUser.email || '';
+            document.getElementById('accPhone').value = currentUser.phone || '';
+            document.getElementById('accCpf').value = currentUser.cpf || '';
+        };
+
+        window.closeMyAccountModal = function() {
+            document.getElementById('myAccountModal').classList.add('hidden');
+        };
+
+        window.switchAccountTab = function(tab) {
+            const profileBtn = document.getElementById('tabProfileBtn');
+            const addressesBtn = document.getElementById('tabAddressesBtn');
+            const profileForm = document.getElementById('profileForm');
+            const addressesSection = document.getElementById('addressesSection');
+
+            document.getElementById('accountErrorMsg').classList.add('hidden');
+            document.getElementById('accountSuccessMsg').classList.add('hidden');
+
+            if (tab === 'profile') {
+                profileBtn.className = "flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600";
+                addressesBtn.className = "flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700";
+                profileForm.classList.remove('hidden');
+                addressesSection.classList.add('hidden');
+            } else {
+                addressesBtn.className = "flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600";
+                profileBtn.className = "flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700";
+                profileForm.classList.add('hidden');
+                addressesSection.classList.remove('hidden');
+                loadAddresses();
+            }
+        };
+
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const errorMsg = document.getElementById('accountErrorMsg');
+            const successMsg = document.getElementById('accountSuccessMsg');
+            btn.disabled = true;
+            btn.textContent = "Salvando...";
+            errorMsg.classList.add('hidden');
+            successMsg.classList.add('hidden');
+
+            const payload = {
+                name: document.getElementById('accName').value,
+                phone: document.getElementById('accPhone').value,
+                cpf: document.getElementById('accCpf').value
+            };
+
+            try {
+                const res = await fetch('api/update_customer_profile.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    successMsg.textContent = 'Perfil atualizado com sucesso!';
+                    successMsg.classList.remove('hidden');
+                    checkCustomerSession(); // Reload session data
+                } else {
+                    errorMsg.textContent = result.message || 'Erro ao atualizar perfil.';
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorMsg.textContent = 'Erro ao salvar. Verifique sua conexão.';
+                errorMsg.classList.remove('hidden');
+            }
+            btn.disabled = false;
+            btn.textContent = "Salvar Alterações";
+        });
+
+        async function loadAddresses() {
+            const list = document.getElementById('addressesList');
+            list.innerHTML = `<div class="text-center text-neutral-400 py-4">Carregando endereços...</div>`;
+            try {
+                const res = await fetch('api/get_user_addresses.php');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    if (result.data.length === 0) {
+                        list.innerHTML = `<div class="text-center text-neutral-500 py-4">Nenhum endereço cadastrado.</div>`;
+                    } else {
+                        list.innerHTML = result.data.map(addr => `
+                            <div class="p-3 border \${addr.is_default == 1 ? 'border-rose-300 bg-rose-50' : 'border-neutral-200'} rounded-xl relative group">
+                                \${addr.is_default == 1 ? '<span class="absolute top-3 right-3 text-[10px] font-bold text-rose-600 bg-rose-100 px-2 py-0.5 rounded-full">Padrão</span>' : ''}
+                                <div class="text-xs text-neutral-800 pr-16">
+                                    <p class="font-bold">\${addr.street}, \${addr.number} \${addr.complement ? '- ' + addr.complement : ''}</p>
+                                    <p>\${addr.neighborhood}, \${addr.city} - \${addr.state}</p>
+                                    <p class="text-neutral-500 mt-1">CEP: \${addr.cep}</p>
+                                </div>
+                                <div class="flex gap-3 mt-3 pt-3 border-t border-neutral-100">
+                                    \${addr.is_default == 0 ? \`<button onclick="setDefaultAddress(\${addr.id})" class="text-blue-600 hover:text-blue-800 font-semibold">Tornar Padrão</button>\` : ''}
+                                    <button onclick="deleteAddress(\${addr.id})" class="text-rose-600 hover:text-rose-800 font-semibold">Excluir</button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                }
+            } catch (err) {
+                list.innerHTML = `<div class="text-center text-rose-500 py-4">Erro ao carregar endereços.</div>`;
+            }
+        }
+
+        window.openAddAddressForm = function() {
+            document.getElementById('addAddressForm').reset();
+            document.getElementById('addAddressForm').classList.remove('hidden');
+        };
+
+        window.closeAddAddressForm = function() {
+            document.getElementById('addAddressForm').classList.add('hidden');
+        };
+
+        window.fetchAddressForNewAddress = async function() {
+            let cep = document.getElementById('addCep').value.replace(/\\D/g, '');
+            if (cep.length === 8) {
+                try {
+                    const response = await fetch(\`https://viacep.com.br/ws/\${cep}/json/\`);
+                    const data = await response.json();
+                    if (!data.erro) {
+                        document.getElementById('addStreet').value = data.logradouro;
+                        document.getElementById('addNeighborhood').value = data.bairro;
+                        document.getElementById('addCity').value = data.localidade;
+                        document.getElementById('addState').value = data.uf;
+                        document.getElementById('addNumber').focus();
+                    }
+                } catch (e) {}
+            }
+        };
+
+        document.getElementById('addAddressForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = "Salvando...";
+
+            const payload = {
+                cep: document.getElementById('addCep').value,
+                street: document.getElementById('addStreet').value,
+                number: document.getElementById('addNumber').value,
+                complement: document.getElementById('addComplement').value,
+                neighborhood: document.getElementById('addNeighborhood').value,
+                city: document.getElementById('addCity').value,
+                state: document.getElementById('addState').value
+            };
+
+            try {
+                const res = await fetch('api/add_user_address.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    closeAddAddressForm();
+                    loadAddresses();
+                } else {
+                    alert(result.message || 'Erro ao adicionar endereço');
+                }
+            } catch (err) {
+                alert('Erro de comunicação.');
+            }
+            btn.disabled = false;
+            btn.textContent = "Salvar Endereço";
+        });
+
+        window.deleteAddress = async function(id) {
+            if(!confirm('Tem certeza que deseja excluir este endereço?')) return;
+            try {
+                const res = await fetch('api/delete_user_address.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    loadAddresses();
+                } else {
+                    alert(result.message || 'Erro ao excluir');
+                }
+            } catch (err) {
+                alert('Erro de comunicação.');
+            }
+        };
+
+        window.setDefaultAddress = async function(id) {
+            try {
+                const res = await fetch('api/set_default_address.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    loadAddresses();
+                } else {
+                    alert(result.message || 'Erro ao definir como padrão');
+                }
+            } catch (err) {
+                alert('Erro de comunicação.');
+            }
+        };
+
+
         window.onload = function() {
+            // Check for reset_token in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const resetToken = urlParams.get('reset_token');
+            if (resetToken) {
+                document.getElementById('resetTokenInput').value = resetToken;
+                document.getElementById('resetPasswordModal').classList.remove('hidden');
+                // Remove token from URL
+                history.replaceState(null, null, window.location.pathname);
+            }
+
             checkCustomerSession();
             loadProducts();
             lucide.createIcons();
