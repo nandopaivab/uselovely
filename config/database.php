@@ -83,9 +83,19 @@ function init_db_tables($pdo) {
         notes_heart TEXT NOT NULL,
         notes_base TEXT NOT NULL,
         sensation TEXT NOT NULL,
+        olfactory_reference VARCHAR(255) NOT NULL DEFAULT '',
         stock_quantity INT NOT NULL DEFAULT 100,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
+
+    // Migration Check for olfactory_reference column
+    try {
+        $pdo->query("SELECT olfactory_reference FROM products LIMIT 1");
+    } catch (Exception $e) {
+        try {
+            $pdo->exec("ALTER TABLE products ADD COLUMN olfactory_reference VARCHAR(255) NOT NULL DEFAULT ''");
+        } catch (Exception $ex) {}
+    }
 
     // Create site_config table
     $pdo->exec("CREATE TABLE IF NOT EXISTS site_config (
@@ -199,7 +209,8 @@ function seed_default_products($pdo) {
             'notes_top' => 'Frutas Vermelhas Silvestres, Peônia Rosa, Orvalho da Manhã',
             'notes_heart' => 'Rosas Aveludadas, Pétalas de Jasmin, Magnólia',
             'notes_base' => 'Baunilha em Flor, Âmbar Cremoso, Almíscar Macio',
-            'sensation' => 'Toque aveludado, feminino e levemente adocicado.'
+            'sensation' => 'Toque aveludado, feminino e levemente adocicado.',
+            'olfactory_reference' => 'Miss Dior (Dior)'
         ],
         [
             'id' => 'purple-kiss',
@@ -222,7 +233,8 @@ function seed_default_products($pdo) {
             'notes_top' => 'Amora Preta, Orquídea Negra, Toque de Ameixa',
             'notes_heart' => 'Flor de Lilás, Violeta Oriental, Jasmin da Noite',
             'notes_base' => 'Madeira de Cashmere, Açúcar Tostado, Âmbar Sensual',
-            'sensation' => 'Misterioso, marcante e irresistivelmente doce.'
+            'sensation' => 'Misterioso, marcante e irresistivelmente doce.',
+            'olfactory_reference' => "Pure Seduction (Victoria's Secret)"
         ],
         [
             'id' => 'golden-glow',
@@ -245,7 +257,8 @@ function seed_default_products($pdo) {
             'notes_top' => 'Nectarina Solar, Bergamota Dourada, Mandarina',
             'notes_heart' => 'Flor de Laranjeira, Jasmin Solar, Néctar de Pêssego',
             'notes_base' => 'Âmbar Dourado, Sândalo Quente, Baunilha Tropical',
-            'sensation' => 'Aconchegante, ensolarado e radiantemente iluminado.'
+            'sensation' => 'Aconchegante, ensolarado e radiantemente iluminado.',
+            'olfactory_reference' => 'Cheirosa 62 (Sol de Janeiro)'
         ],
         [
             'id' => 'fresh-muse',
@@ -268,7 +281,8 @@ function seed_default_products($pdo) {
             'notes_top' => 'Maçã Verde Crocante, Brisa Marinha, Flor de Lótus',
             'notes_heart' => 'Chá Verde Fresco, Lírio do Vale, Hortelã Suave',
             'notes_base' => 'Musk Limpo, Cedro Branco, Pepino Aquático',
-            'sensation' => 'Revigorante, ultra-fresco e energizante.'
+            'sensation' => 'Revigorante, ultra-fresco e energizante.',
+            'olfactory_reference' => 'Light Blue (Dolce & Gabbana)'
         ],
         [
             'id' => 'midnight-pulse',
@@ -291,16 +305,17 @@ function seed_default_products($pdo) {
             'notes_top' => 'Figo Escuro, Anís Estrelado, Pimenta Rosa',
             'notes_heart' => 'Íris Noturna, Jasmin da Meia-Noite, Orquídea',
             'notes_base' => 'Baunilha Defumada, Patchouli Suave, Âmbar Profundo',
-            'sensation' => 'Marcante, elegante e extremamente sedutor.'
+            'sensation' => 'Marcante, elegante e extremamente sedutor.',
+            'olfactory_reference' => '212 VIP Black (Carolina Herrera)'
         ]
     ];
 
     $sql = "INSERT INTO products (
         id, name, category, gender_group, gender_tag, gender_badge, tagline, description, price, volume, image,
-        color_theme, bg_gradient, btn_bg, shadow_class, accent_color, accent_text, notes_top, notes_heart, notes_base, sensation
+        color_theme, bg_gradient, btn_bg, shadow_class, accent_color, accent_text, notes_top, notes_heart, notes_base, sensation, olfactory_reference
     ) VALUES (
         :id, :name, :category, :gender_group, :gender_tag, :gender_badge, :tagline, :description, :price, :volume, :image,
-        :color_theme, :bg_gradient, :btn_bg, :shadow_class, :accent_color, :accent_text, :notes_top, :notes_heart, :notes_base, :sensation
+        :color_theme, :bg_gradient, :btn_bg, :shadow_class, :accent_color, :accent_text, :notes_top, :notes_heart, :notes_base, :sensation, :olfactory_reference
     )";
 
     $stmt = $pdo->prepare($sql);
@@ -326,7 +341,8 @@ function seed_default_products($pdo) {
             ':notes_top' => $p['notes_top'],
             ':notes_heart' => $p['notes_heart'],
             ':notes_base' => $p['notes_base'],
-            ':sensation' => $p['sensation']
+            ':sensation' => $p['sensation'],
+            ':olfactory_reference' => $p['olfactory_reference']
         ]);
     }
 }

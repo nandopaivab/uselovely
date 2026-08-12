@@ -34,7 +34,9 @@ try {
                 'heart' => $r['notes_heart'],
                 'base' => $r['notes_base']
             ],
-            'sensation' => $r['sensation']
+            'sensation' => $r['sensation'],
+            'olfactoryReference' => $r['olfactory_reference'] ?? '',
+            'stockQuantity' => (int)($r['stock_quantity'] ?? 100)
         ];
     }
 

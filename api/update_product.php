@@ -29,6 +29,7 @@ try {
     $stockQuantity = isset($input['stockQuantity']) ? (int)$input['stockQuantity'] : (isset($input['stock_quantity']) ? (int)$input['stock_quantity'] : 100);
     $genderTag = $input['genderTag'] ?? 'Feminino';
     $image = $input['image'] ?? '';
+    $olfactoryReference = $input['olfactoryReference'] ?? ($input['olfactory_reference'] ?? '');
     $notesTop = $input['notes']['top'] ?? '';
     $notesHeart = $input['notes']['heart'] ?? '';
     $notesBase = $input['notes']['base'] ?? '';
@@ -52,6 +53,7 @@ try {
         gender_tag = :gender_tag,
         gender_badge = :gender_badge,
         image = :image,
+        olfactory_reference = :olfactory_reference,
         notes_top = :notes_top,
         notes_heart = :notes_heart,
         notes_base = :notes_base
@@ -68,6 +70,7 @@ try {
         ':gender_tag' => $genderTag,
         ':gender_badge' => $genderBadge,
         ':image' => $image,
+        ':olfactory_reference' => $olfactoryReference,
         ':notes_top' => $notesTop,
         ':notes_heart' => $notesHeart,
         ':notes_base' => $notesBase,
@@ -76,7 +79,7 @@ try {
 
     echo json_encode([
         'status' => 'success',
-        'message' => 'Produto e estoque atualizados com sucesso.'
+        'message' => 'Produto, estoque e referência olfativa atualizados com sucesso.'
     ], JSON_UNESCAPED_UNICODE);
 } catch (Exception $e) {
     http_response_code(500);

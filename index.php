@@ -207,6 +207,10 @@ require_once __DIR__ . '/config/env.php';
                         Velvet Bloom
                     </h1>
 
+                    <div id="heroRefBadge" class="inline-block px-3.5 py-1.5 rounded-full bg-rose-100/80 text-rose-700 text-xs font-bold border border-rose-200">
+                        ✨ Referência Olfativa: Miss Dior (Dior)
+                    </div>
+
                     <p id="heroDescription" class="text-neutral-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
                         Uma explosão romântica de pétalas de rosa aveludadas entrelaçadas com notas doces de baunilha em flor.
                     </p>
@@ -291,7 +295,7 @@ require_once __DIR__ . '/config/env.php';
                     Encontre a fragrância que conta a sua história
                 </h2>
                 <p class="text-neutral-600 text-base leading-relaxed font-light">
-                    Cada fórmula foi desenhada para se fundir harmoniosamente à sua pele, exalando notas olfativas delicadas, sofisticadas e marcantes. Leve 1 por R$ 49,90 ou leve 3 por R$ 99,99.
+                    Cada fórmula foi desenhada para se fundir harmoniosamente à sua pele, exalando notas olfativas inspiradas nos grandes clássicos mundiais. Leve 1 por R$ 49,90 ou leve 3 por R$ 99,99.
                 </p>
             </div>
 
@@ -319,6 +323,7 @@ require_once __DIR__ . '/config/env.php';
                 <div id="modalCategoryBadge" class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/80 backdrop-blur-md mb-2 text-rose-700"></div>
                 <h3 id="modalProductName" class="font-serif text-3xl sm:text-4xl font-normal"></h3>
                 <p id="modalTagline" class="text-sm opacity-90 font-light mt-1"></p>
+                <div id="modalOlfactoryRef" class="mt-2 text-xs font-bold text-rose-700 bg-white/90 px-3 py-1 rounded-full inline-block border border-rose-200"></div>
             </div>
 
             <div class="p-6 sm:p-8 space-y-6">
@@ -570,7 +575,7 @@ require_once __DIR__ . '/config/env.php';
                             </span>
                         </div>
                         <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
-                            "Comprei o Velvet Bloom e o Purple Kiss. O aroma de Velvet Bloom é simplesmente perfeito! Floral, suave e todo mundo no meu trabalho me pergunta qual perfume estou usando."
+                            "Comprei o Velvet Bloom e o Purple Kiss. O aroma de Velvet Bloom é simplesmente perfeito! Lembra muito o Miss Dior, todo mundo me pergunta qual perfume estou usando."
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
@@ -593,7 +598,7 @@ require_once __DIR__ . '/config/env.php';
                             </span>
                         </div>
                         <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
-                            "Golden Glow é amor à primeira borrifada! Lembra um fim de tarde ensolarado na praia, muito elegante. A névoa é super fina e dura o dia todinho."
+                            "Golden Glow é amor à primeira borrifada! Idêntico ao Cheirosa 62 da Sol de Janeiro, muito elegante. A névoa é super fina e dura o dia todinho."
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
@@ -616,7 +621,7 @@ require_once __DIR__ . '/config/env.php';
                             </span>
                         </div>
                         <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
-                            "Aproveitei o Kit com 3 por R$ 99,99 e peguei Fresh Muse, Midnight Pulse e Golden Glow. Veio super bem embalado com um cheirinho delicioso na caixa!"
+                            "Aproveitei o Kit com 3 por R$ 99,99 e peguei Fresh Muse, Midnight Pulse e Golden Glow. A inspiração do 212 VIP Black no Midnight Pulse ficou sensacional!"
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
@@ -1010,6 +1015,7 @@ require_once __DIR__ . '/config/env.php';
             
             document.getElementById('heroTagline').textContent = p.tagline;
             document.getElementById('heroTitle').textContent = p.name;
+            document.getElementById('heroRefBadge').textContent = `✨ Referência Olfativa: ${p.olfactoryReference || 'Importada'}`;
             document.getElementById('heroDescription').textContent = p.description;
             document.getElementById('heroPrice').textContent = `R$ ${(p.price || 49.90).toFixed(2).replace('.', ',')}`;
             document.getElementById('heroImage').src = p.image;
@@ -1057,6 +1063,11 @@ require_once __DIR__ . '/config/env.php';
                         </div>
 
                         <h3 class="font-serif text-2xl font-semibold text-neutral-900">${p.name}</h3>
+
+                        <div class="inline-block px-3 py-1 rounded-full bg-rose-50 border border-rose-200/80 text-rose-700 text-xs font-bold">
+                            ✨ Ref: ${p.olfactoryReference || 'Importada'}
+                        </div>
+
                         <p class="text-xs text-neutral-600 line-clamp-2 leading-relaxed font-light">${p.description}</p>
 
                         <div class="pt-3 border-t border-neutral-100 flex items-center justify-between">
@@ -1097,6 +1108,7 @@ require_once __DIR__ . '/config/env.php';
             document.getElementById('modalCategoryBadge').textContent = p.tagline;
             document.getElementById('modalProductName').textContent = p.name;
             document.getElementById('modalTagline').textContent = p.description;
+            document.getElementById('modalOlfactoryRef').textContent = `✨ Referência Olfativa: ${p.olfactoryReference || 'Importada'}`;
 
             document.getElementById('modalTopNotes').textContent = p.notes ? p.notes.top : 'Notas Olfativas Selecionadas';
             document.getElementById('modalHeartNotes').textContent = p.notes ? p.notes.heart : 'Acordes Aromáticos';
@@ -1230,10 +1242,8 @@ require_once __DIR__ . '/config/env.php';
                     statusMsg.textContent = 'Frete calculado ✓';
                     optionsContainer.classList.remove('hidden');
 
-                    // Preencher campo do checkout também
                     document.getElementById('chkCep').value = cepInput;
 
-                    // Renderizar opções no carrinho
                     optionsContainer.innerHTML = availableShippingOptions.map((opt, i) => `
                         <label class="p-2.5 rounded-xl border border-neutral-200 bg-white flex items-center justify-between cursor-pointer hover:border-rose-300 transition-all">
                             <div class="flex items-center gap-2">
@@ -1247,7 +1257,6 @@ require_once __DIR__ . '/config/env.php';
                         </label>
                     `).join('');
 
-                    // Selecionar primeiro frete automaticamente
                     selectShippingOption(availableShippingOptions[0].id);
                 } else {
                     statusMsg.textContent = 'Erro ao consultar Correios.';
@@ -1334,6 +1343,7 @@ require_once __DIR__ . '/config/env.php';
 
                         <div>
                             <h3 class="font-serif text-3xl font-semibold text-white">${p.name}</h3>
+                            <p class="text-xs text-rose-200 font-bold mt-1">✨ Ref: ${p.olfactoryReference || 'Importada'}</p>
                             <p class="text-xs text-rose-100/80 max-w-md mx-auto mt-2 leading-relaxed">${p.description}</p>
                         </div>
 
@@ -1480,7 +1490,6 @@ require_once __DIR__ . '/config/env.php';
                 document.getElementById('chkState').value = data.uf || '';
                 msg.textContent = 'Endereço encontrado ✓';
 
-                // Preencher campo do carrinho e calcular frete Correios
                 document.getElementById('cartCepInput').value = cepInput;
                 calculateCartShipping();
             } catch (err) {
@@ -1665,7 +1674,7 @@ require_once __DIR__ . '/config/env.php';
                         <div class="text-neutral-600 space-y-1">
                             <p><strong>Entrega:</strong> ${o.address.street}, ${o.address.number} - ${o.address.neighborhood}, ${o.address.city}/${o.address.state} (CEP: ${o.address.cep})</p>
                             <p><strong>Pagamento:</strong> ${o.paymentMethod}</p>
-                            <p><strong>Total:</strong> R$ ${o.totalAmount.toFixed(2).replace('.', ',')}</p>
+                            <p><strong>Total:</strong> R$ ${o.totalAmount.toFixed(2).replace('.', me)}</p>
                         </div>
                     </div>
                 `).join('');
