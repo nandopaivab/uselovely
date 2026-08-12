@@ -5,22 +5,35 @@
  * with automatic fallback to local SQLite (database.sqlite).
  */
 
-$db_type = 'sqlite'; // Change to 'mysql' to use your local MySQL database
+$db_type = 'mysql'; // Configurado para MySQL de Hospedagem
 $db_host = 'localhost';
-$db_name = 'uselovely_db';
-$db_user = 'root';
-$db_pass = '';
+$db_name = 'fernandop_uselovely';
+$db_user = 'fernandop_uselovely';
+$db_pass = 'F3rn@nd0P190983';
 
 function get_db_connection() {
     global $db_type, $db_host, $db_name, $db_user, $db_pass;
 
     try {
         if ($db_type === 'mysql') {
-            $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
-            $pdo = new PDO($dsn, $db_user, $db_pass, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ]);
+            try {
+                $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
+                $pdo = new PDO($dsn, $db_user, $db_pass, [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                ]);
+            } catch (PDOException $e) {
+                // If database doesn't exist yet, try creating it
+                $dsn_no_db = "mysql:host={$db_host};charset=utf8mb4";
+                $pdo_temp = new PDO($dsn_no_db, $db_user, $db_pass);
+                $pdo_temp->exec("CREATE DATABASE IF NOT EXISTS `{$db_name}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+                
+                $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
+                $pdo = new PDO($dsn, $db_user, $db_pass, [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                ]);
+            }
         } else {
             // SQLite Local File Fallback
             $db_file = __DIR__ . '/../database.sqlite';
@@ -35,7 +48,7 @@ function get_db_connection() {
         init_db_tables($pdo);
         return $pdo;
     } catch (PDOException $e) {
-        // Fallback to SQLite if MySQL connection fails
+        // Fallback to SQLite if MySQL connection fails on local dev environment
         $db_file = __DIR__ . '/../database.sqlite';
         $pdo = new PDO("sqlite:{$db_file}", null, null, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

@@ -3,8 +3,8 @@
 -- Projeto: useLOVELY Cosmetics
 -- ===================================================
 
-CREATE DATABASE IF NOT EXISTS `uselovely_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `uselovely_db`;
+CREATE DATABASE IF NOT EXISTS `fernandop_uselovely` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `fernandop_uselovely`;
 
 -- --------------------------------------------------------
 -- Tabela `products`
