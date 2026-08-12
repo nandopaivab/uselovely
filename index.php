@@ -1171,6 +1171,7 @@ $formatPrice = function($price) {
                 document.getElementById('chkEmail').value = currentUser.email;
                 if (currentUser.name) document.getElementById('chkName').value = currentUser.name;
                 if (currentUser.phone) document.getElementById('chkPhone').value = currentUser.phone;
+                if (currentUser.cpf) document.getElementById('chkCpf').value = currentUser.cpf;
 
                 container.innerHTML = `
                     <div class="flex items-center gap-2">
