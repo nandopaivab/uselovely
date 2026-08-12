@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>useLOVELY | Painel Administrativo</title>
+    <title>useLOVELY | Painel Administrativo (PHP + Banco Local)</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,7 +39,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
 
-    <!-- Login View (Exclusively Login - No Registration, No Password Reset) -->
+    <!-- Login View (Exclusively Login - Firebase Auth for Access ONLY) -->
     <div id="loginView" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-rose-50 via-slate-100 to-purple-50">
         <div class="max-w-md w-full glass-card p-8 rounded-3xl shadow-2xl space-y-6">
             
@@ -48,7 +48,7 @@
                     <i data-lucide="lock" class="w-6 h-6"></i>
                 </div>
                 <h1 class="font-serif text-3xl font-bold text-slate-900">useLOVELY Admin</h1>
-                <p class="text-xs text-slate-500">Acesso exclusivo para administradores da loja</p>
+                <p class="text-xs text-slate-500">Login Firebase • Banco de Dados Local PHP</p>
             </div>
 
             <div id="loginErrorMsg" class="hidden p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs font-semibold text-rose-600"></div>
@@ -84,7 +84,7 @@
         <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <span class="font-serif text-xl font-bold text-slate-900">useLOVELY <span class="text-xs uppercase font-sans tracking-widest text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-100 ml-1">Painel ADM</span></span>
+                    <span class="font-serif text-xl font-bold text-slate-900">useLOVELY <span class="text-xs uppercase font-sans tracking-widest text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-100 ml-1">Painel ADM (PHP + Banco Local)</span></span>
                 </div>
                 
                 <div class="flex items-center gap-4">
@@ -107,7 +107,7 @@
                         <i data-lucide="package" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-500 font-medium">Fragrâncias Ativas</span>
+                        <span class="text-xs text-slate-500 font-medium">Fragrâncias no Banco</span>
                         <h3 id="statTotalProducts" class="font-serif text-2xl font-bold text-slate-900">5</h3>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                         <i data-lucide="tag" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-500 font-medium">Preço Unitário / Trio Promo</span>
+                        <span class="text-xs text-slate-500 font-medium">Preço Unitário / Promo Trio</span>
                         <h3 id="statPrices" class="font-serif text-2xl font-bold text-slate-900">R$ 49,90 / R$ 99,99</h3>
                     </div>
                 </div>
@@ -127,9 +127,9 @@
                         <i data-lucide="database" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-500 font-medium">Status do Banco</span>
+                        <span class="text-xs text-slate-500 font-medium">Banco de Dados Local</span>
                         <h3 id="statDatabase" class="text-sm font-semibold text-emerald-600 flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Firebase Firestore Conectado
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> PHP PDO Conectado
                         </h3>
                     </div>
                 </div>
@@ -143,8 +143,8 @@
                             MP
                         </div>
                         <div>
-                            <h2 class="font-serif text-xl font-bold text-slate-900">Configuração Mercado Pago</h2>
-                            <p class="text-xs text-slate-500">Conecte suas chaves do Mercado Pago para processar vendas de PIX e Cartão de Crédito</p>
+                            <h2 class="font-serif text-xl font-bold text-slate-900">Configuração Mercado Pago (Banco Local)</h2>
+                            <p class="text-xs text-slate-500">Salva suas chaves diretamente no banco de dados local via PHP</p>
                         </div>
                     </div>
                     <span id="mpStatusBadge" class="text-[11px] font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-600">Não configurado</span>
@@ -162,10 +162,41 @@
                     <div class="sm:col-span-2 flex justify-end">
                         <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-all shadow-md flex items-center gap-2">
                             <i data-lucide="check-circle" class="w-4 h-4"></i>
-                            <span>Salvar Chaves do Mercado Pago</span>
+                            <span>Salvar no Banco Local</span>
                         </button>
                     </div>
                 </form>
+            </div>
+
+            <!-- Customer Orders Management Section -->
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden space-y-4">
+                <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+                    <div>
+                        <h2 class="font-serif text-2xl font-bold text-slate-900">Gerenciador de Pedidos dos Clientes</h2>
+                        <p class="text-xs text-slate-500">Acompanhe e atualize os pedidos realizados no e-commerce</p>
+                    </div>
+                    <button onclick="fetchAdminOrders()" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-all flex items-center gap-1.5">
+                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                        <span>Atualizar Pedidos</span>
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                                <th class="py-3.5 px-6">Pedido / Data</th>
+                                <th class="py-3.5 px-4">Cliente / Contato</th>
+                                <th class="py-3.5 px-4">Endereço de Entrega</th>
+                                <th class="py-3.5 px-4">Pagamento & Total</th>
+                                <th class="py-3.5 px-4">Status do Envio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersTable" class="divide-y divide-slate-100 text-xs">
+                            <!-- Injected dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Products Management Section -->
@@ -173,11 +204,11 @@
                 <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                         <h2 class="font-serif text-2xl font-bold text-slate-900">Gerenciador de Fragrâncias e Preços</h2>
-                        <p class="text-xs text-slate-500">Altere preços, descrições, fotos e notas olfativas em tempo real na loja</p>
+                        <p class="text-xs text-slate-500">Altere no banco de dados local via PHP em tempo real</p>
                     </div>
-                    <button id="seedFirebaseBtn" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs rounded-xl transition-all border border-rose-200 flex items-center gap-2">
+                    <button id="seedLocalDbBtn" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs rounded-xl transition-all border border-rose-200 flex items-center gap-2">
                         <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                        <span>Restaurar Todos os 5 Produtos no Firebase</span>
+                        <span>Restaurar 5 Produtos no Banco Local</span>
                     </button>
                 </div>
 
@@ -194,7 +225,7 @@
                             </tr>
                         </thead>
                         <tbody id="adminProductsTable" class="divide-y divide-slate-100 text-xs">
-                            <!-- Injected dynamically via JS -->
+                            <!-- Injected dynamically via PHP API -->
                         </tbody>
                     </table>
                 </div>
@@ -210,8 +241,8 @@
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
 
-            <h3 class="font-serif text-2xl font-bold text-slate-900 mb-1">Editar Fragrância</h3>
-            <p class="text-xs text-slate-500 mb-6">As alterações efetuadas serão refletidas imediatamente na loja pública.</p>
+            <h3 class="font-serif text-2xl font-bold text-slate-900 mb-1">Editar Fragrância (Banco Local)</h3>
+            <p class="text-xs text-slate-500 mb-6">As alterações são salvas diretamente no seu banco de dados local em PHP.</p>
 
             <form id="editProductForm" class="space-y-4 text-xs">
                 <input type="hidden" id="editProductId">
@@ -276,180 +307,41 @@
                     </button>
                     <button type="submit" class="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold flex items-center gap-2 shadow-md">
                         <i data-lucide="save" class="w-4 h-4"></i>
-                        <span>Salvar Alterações</span>
+                        <span>Salvar no Banco Local</span>
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Firebase App & Modular Services SDK (v10) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs, doc, setDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // Provided User Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDhtQmSm-ERQKoEyVheeCfmXj_j1LGBgH0",
-            authDomain: "uselovelybr-d213e.firebaseapp.com",
-            projectId: "uselovelybr-d213e",
-            storageBucket: "uselovelybr-d213e.firebasestorage.app",
-            messagingSenderId: "909064598174",
-            appId: "1:909064598174:web:6027f3eb3f38a41f72018f",
-            measurementId: "G-4ESW88LQYS"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        // Initial 5 Default Products Data
-        const DEFAULT_PRODUCTS = [
-            {
-                id: 'velvet-bloom',
-                name: 'Velvet Bloom',
-                category: 'floral',
-                genderGroup: 'feminino',
-                genderTag: 'Feminino',
-                genderBadge: 'bg-pink-100 text-pink-700 font-semibold',
-                tagline: 'Floral Delicado & Aveludado',
-                description: 'Uma explosão romântica de pétalas de rosa aveludadas entrelaçadas com notas doces de baunilha em flor.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/velvet_bloom.jpg',
-                colorTheme: 'rose',
-                bgGradient: 'from-pink-100 via-rose-50 to-pink-200',
-                btnBg: 'bg-rose-500 hover:bg-rose-600 text-white',
-                shadowClass: 'shadow-glow-rose',
-                accentColor: '#E8A5B8',
-                accentText: 'text-rose-600',
-                notes: {
-                    top: 'Frutas Vermelhas Silvestres, Peônia Rosa, Orvalho da Manhã',
-                    heart: 'Rosas Aveludadas, Pétalas de Jasmin, Magnólia',
-                    base: 'Baunilha em Flor, Âmbar Cremoso, Almíscar Macio'
-                },
-                sensation: 'Toque aveludado, feminino e levemente adocicado.'
-            },
-            {
-                id: 'purple-kiss',
-                name: 'Purple Kiss',
-                category: 'doce',
-                genderGroup: 'feminino',
-                genderTag: 'Feminino & Envolvente',
-                genderBadge: 'bg-purple-100 text-purple-700 font-semibold',
-                tagline: 'Enchanting & Misterioso',
-                description: 'Uma combinação envolvente de orquídea negra, amoras doces e um toque cremoso de madeira de cashmere.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/purple_kiss.jpg',
-                colorTheme: 'purple',
-                bgGradient: 'from-purple-100 via-purple-50 to-indigo-100',
-                btnBg: 'bg-purple-600 hover:bg-purple-700 text-white',
-                shadowClass: 'shadow-glow-purple',
-                accentColor: '#9B72AA',
-                accentText: 'text-purple-600',
-                notes: {
-                    top: 'Amora Preta, Orquídea Negra, Toque de Ameixa',
-                    heart: 'Flor de Lilás, Violeta Oriental, Jasmin da Noite',
-                    base: 'Madeira de Cashmere, Açúcar Tostado, Âmbar Sensual'
-                },
-                sensation: 'Misterioso, marcante e irresistivelmente doce.'
-            },
-            {
-                id: 'golden-glow',
-                name: 'Golden Glow',
-                category: 'ensolarado',
-                genderGroup: 'masculino-unisex',
-                genderTag: 'Unisex / Compartilhável',
-                genderBadge: 'bg-amber-100 text-amber-800 font-semibold',
-                tagline: 'Luminoso & Sun-Kissed',
-                description: 'A calidez radiante do sol traduzida em notas de nectarina dourada, âmbar solar e flor de laranjeira.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/golden_glow.jpg',
-                colorTheme: 'gold',
-                bgGradient: 'from-amber-100 via-orange-50 to-yellow-100',
-                btnBg: 'bg-amber-600 hover:bg-amber-700 text-white',
-                shadowClass: 'shadow-glow-gold',
-                accentColor: '#E3A857',
-                accentText: 'text-amber-600',
-                notes: {
-                    top: 'Nectarina Solar, Bergamota Dourada, Mandarina',
-                    heart: 'Flor de Laranjeira, Jasmin Solar, Néctar de Pêssego',
-                    base: 'Âmbar Dourado, Sândalo Quente, Baunilha Tropical'
-                },
-                sensation: 'Aconchegante, ensolarado e radiantemente iluminado.'
-            },
-            {
-                id: 'fresh-muse',
-                name: 'Fresh Muse',
-                category: 'fresco',
-                genderGroup: 'masculino-unisex',
-                genderTag: 'Masculino & Unisex',
-                genderBadge: 'bg-teal-100 text-teal-800 font-semibold',
-                tagline: 'Refrescante & Brizante',
-                description: 'A energia revitalizante da brisa marinha com flor de lótus aquática e chá verde refrescante.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/fresh_muse.jpg',
-                colorTheme: 'mint',
-                bgGradient: 'from-teal-100 via-emerald-50 to-cyan-100',
-                btnBg: 'bg-teal-600 hover:bg-teal-700 text-white',
-                shadowClass: 'shadow-glow-mint',
-                accentColor: '#6FB3B0',
-                accentText: 'text-teal-600',
-                notes: {
-                    top: 'Maçã Verde Crocante, Brisa Marinha, Flor de Lótus',
-                    heart: 'Chá Verde Fresco, Lírio do Vale, Hortelã Suave',
-                    base: 'Musk Limpo, Cedro Branco, Pepino Aquático'
-                },
-                sensation: 'Revigorante, ultra-fresco e energizante.'
-            },
-            {
-                id: 'midnight-pulse',
-                name: 'Midnight Pulse',
-                category: 'doce',
-                genderGroup: 'masculino-unisex',
-                genderTag: 'Masculino & Unisex Noturno',
-                genderBadge: 'bg-slate-200 text-slate-800 font-semibold',
-                tagline: 'Sensual & Noturno',
-                description: 'Uma fragrância intensa e sedutora com notas de figo escuro, íris noturna e baunilha defumada.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/midnight_pulse.jpg',
-                colorTheme: 'navy',
-                bgGradient: 'from-slate-200 via-slate-100 to-blue-200',
-                btnBg: 'bg-slate-800 hover:bg-slate-900 text-white',
-                shadowClass: 'shadow-glow-navy',
-                accentColor: '#3B4861',
-                accentText: 'text-slate-800',
-                notes: {
-                    top: 'Figo Escuro, Anís Estrelado, Pimenta Rosa',
-                    heart: 'Íris Noturna, Jasmin da Meia-Noite, Orquídea',
-                    base: 'Baunilha Defumada, Patchouli Suave, Âmbar Profundo'
-                },
-                sensation: 'Marcante, elegante e extremamente sedutor.'
-            }
-        ];
-
+    <!-- 100% PHP & MySQL Engine (Zero Firebase Dependency) -->
+    <script>
         let loadedProducts = [];
+        let currentUser = null;
 
-        // Auth Listener
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('loginView').classList.add('hidden');
-                document.getElementById('dashboardView').classList.remove('hidden');
-                document.getElementById('userEmailBadge').textContent = user.email;
-                listenToProducts();
-            } else {
+        // Check PHP session on load
+        async function checkAdminSession() {
+            try {
+                const res = await fetch('api/auth_check.php');
+                const result = await res.json();
+                if (result.loggedIn && result.user) {
+                    currentUser = result.user;
+                    document.getElementById('loginView').classList.add('hidden');
+                    document.getElementById('dashboardView').classList.remove('hidden');
+                    document.getElementById('userEmailBadge').textContent = currentUser.email;
+                    fetchLocalData();
+                } else {
+                    document.getElementById('loginView').classList.remove('hidden');
+                    document.getElementById('dashboardView').classList.add('hidden');
+                }
+            } catch (e) {
+                console.error("Erro ao verificar sessão PHP:", e);
                 document.getElementById('loginView').classList.remove('hidden');
                 document.getElementById('dashboardView').classList.add('hidden');
             }
-        });
+        }
 
-        // Login Form Handler (Only Login - No Sign Up or Reset)
+        // Login Handler (100% MySQL Authentication via PHP API)
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
@@ -459,92 +351,168 @@
             errorMsg.classList.add('hidden');
 
             try {
-                await signInWithEmailAndPassword(auth, email, password);
+                const res = await fetch('api/auth_login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await res.json();
+                if (result.status === 'success') {
+                    currentUser = result.user;
+                    document.getElementById('loginView').classList.add('hidden');
+                    document.getElementById('dashboardView').classList.remove('hidden');
+                    document.getElementById('userEmailBadge').textContent = currentUser.email;
+                    fetchLocalData();
+                } else {
+                    errorMsg.textContent = result.message || 'Erro ao realizar login no MySQL.';
+                    errorMsg.classList.remove('hidden');
+                }
             } catch (err) {
-                errorMsg.textContent = 'Erro ao realizar login: Verifique seu e-mail e senha administrativa.';
+                errorMsg.textContent = 'Erro ao conectar ao servidor MySQL.';
                 errorMsg.classList.remove('hidden');
             }
         });
 
         // Logout Handler
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            signOut(auth);
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('api/auth_logout.php');
+            currentUser = null;
+            document.getElementById('loginView').classList.remove('hidden');
+            document.getElementById('dashboardView').classList.add('hidden');
         });
 
-        // Real-time Firestore Products listener with DEFAULT_PRODUCTS merge to guarantee all 5 products display
-        function listenToProducts() {
-            const productsRef = collection(db, "products");
-            
-            onSnapshot(productsRef, (snapshot) => {
-                let items = [];
-                snapshot.forEach(docSnap => {
-                    items.push({ id: docSnap.id, ...docSnap.data() });
-                });
-
-                loadedProducts = mergeWithDefaults(items);
-                renderAdminTable();
-            }, (error) => {
-                console.warn("Firestore access, falling back to local dataset:", error);
-                loadedProducts = DEFAULT_PRODUCTS;
-                renderAdminTable();
-            });
-
-            // Listen for Mercado Pago Config
-            onSnapshot(doc(db, "config", "mercadopago"), (docSnap) => {
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.publicKey) {
-                        document.getElementById('mpPublicKey').value = data.publicKey;
-                        document.getElementById('mpStatusBadge').textContent = 'Conectado ✓';
-                        document.getElementById('mpStatusBadge').className = 'text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700';
-                    }
+        // Fetch Data from Local PHP APIs
+        async function fetchLocalData() {
+            try {
+                const res = await fetch('api/get_products.php');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    loadedProducts = result.data;
+                    renderAdminTable();
                 }
-            });
+
+                const cfgRes = await fetch('api/get_config.php');
+                const cfgResult = await cfgRes.json();
+                if (cfgResult.status === 'success' && cfgResult.data.publicKey) {
+                    document.getElementById('mpPublicKey').value = cfgResult.data.publicKey;
+                    document.getElementById('mpStatusBadge').textContent = 'Conectado ✓';
+                    document.getElementById('mpStatusBadge').className = 'text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700';
+                }
+
+                fetchAdminOrders();
+            } catch (e) {
+                console.error("Erro ao buscar dados locais:", e);
+            }
         }
 
-        function mergeWithDefaults(firestoreItems) {
-            const map = new Map();
-            // Start with all 5 default products
-            DEFAULT_PRODUCTS.forEach(item => map.set(item.id, item));
-            // Merge Firestore documents
-            firestoreItems.forEach(item => {
-                const existing = map.get(item.id) || {};
-                map.set(item.id, { ...existing, ...item });
-            });
-            return Array.from(map.values());
+        window.fetchAdminOrders = async function() {
+            try {
+                const res = await fetch('api/get_all_orders.php');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    renderAdminOrdersTable(result.data);
+                }
+            } catch (err) {
+                console.error("Erro ao buscar pedidos:", err);
+            }
+        };
+
+        function renderAdminOrdersTable(orders) {
+            const tbody = document.getElementById('adminOrdersTable');
+            if (!orders || orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400">Nenhum pedido realizado ainda.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = orders.map(o => {
+                const isPaid = o.paymentStatus === 'paid';
+                const pBadgeClass = isPaid ? 'bg-emerald-100 text-emerald-800' : (o.paymentStatus === 'rejected' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800');
+                const pLabel = isPaid ? 'Pago ✓' : (o.paymentStatus === 'rejected' ? 'Recusado' : 'Aguardando Pagamento');
+
+                const addr = o.address || {};
+
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-4 px-6 font-medium text-slate-900">
+                            <span class="font-bold text-sm text-slate-900 block">${o.orderNumber || o.id}</span>
+                            <span class="text-[11px] text-slate-500">${new Date(o.createdAt).toLocaleString()}</span>
+                            ${o.paymentId ? `<span class="text-[10px] text-slate-400 font-mono block">MP ID: ${o.paymentId}</span>` : ''}
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="font-bold text-slate-900 block">${o.customerName || 'Cliente'}</span>
+                            <span class="text-slate-500 block">${o.customerEmail}</span>
+                            <span class="text-slate-500 block">${o.customerPhone}</span>
+                            ${o.customerCpf ? `<span class="text-slate-400 font-mono text-[10px]">CPF: ${o.customerCpf}</span>` : ''}
+                        </td>
+                        <td class="py-4 px-4 text-slate-700 max-w-xs">
+                            <p class="truncate">${addr.street || ''}, ${addr.number || ''} ${addr.complement || ''}</p>
+                            <p class="text-slate-500">${addr.neighborhood || ''} - ${addr.city || ''}/${addr.state || ''}</p>
+                            <p class="text-slate-400 font-mono text-[10px]">CEP: ${addr.cep || ''}</p>
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="font-bold text-slate-900 text-sm block">R$ ${o.totalAmount.toFixed(2).replace('.', ',')}</span>
+                            <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${pBadgeClass}">
+                                ${pLabel}
+                            </span>
+                        </td>
+                        <td class="py-4 px-4">
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="px-2.5 py-1 rounded-lg border border-slate-300 text-xs font-semibold bg-white text-slate-800 focus:outline-none">
+                                <option value="awaiting_payment" ${o.orderStatus === 'awaiting_payment' ? 'selected' : ''}>Aguardando Pagamento</option>
+                                <option value="paid" ${o.orderStatus === 'paid' ? 'selected' : ''}>Em Preparação / Pago</option>
+                                <option value="shipped" ${o.orderStatus === 'shipped' ? 'selected' : ''}>Enviado / Em Trânsito</option>
+                                <option value="delivered" ${o.orderStatus === 'delivered' ? 'selected' : ''}>Entregue</option>
+                                <option value="cancelled" ${o.orderStatus === 'cancelled' ? 'selected' : ''}>Cancelado</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            lucide.createIcons();
         }
 
-        // Save Mercado Pago Config
+        window.updateOrderStatus = async function(id, newStatus) {
+            const res = await fetch('api/update_order_status.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, orderStatus: newStatus })
+            });
+            const result = await res.json();
+            if (result.status === 'success') {
+                alert(`Status logístico do pedido atualizado para '${newStatus}'.`);
+            } else {
+                alert('Erro ao atualizar status do pedido.');
+            }
+        };
+
+        // Save Mercado Pago keys to local DB
         document.getElementById('mpConfigForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const publicKey = document.getElementById('mpPublicKey').value.trim();
             const accessToken = document.getElementById('mpAccessToken').value.trim();
 
-            try {
-                await setDoc(doc(db, "config", "mercadopago"), {
-                    publicKey: publicKey,
-                    accessToken: accessToken,
-                    updatedAt: new Date().toISOString()
-                }, { merge: true });
+            const res = await fetch('api/save_config.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ publicKey, accessToken })
+            });
 
-                alert('Chaves do Mercado Pago salvas no Firebase com sucesso!');
-            } catch (err) {
-                console.error("Erro ao salvar config Mercado Pago:", err);
-                alert('Chaves salvas localmente!');
+            const result = await res.json();
+            if (result.status === 'success') {
+                alert('Chaves salvas no banco local PHP com sucesso!');
+                fetchLocalData();
+            } else {
+                alert('Erro ao salvar no banco local: ' + result.message);
             }
         });
 
-        // Seed products helper
-        async function seedProducts() {
-            for (const item of DEFAULT_PRODUCTS) {
-                await setDoc(doc(db, "products", item.id), item);
-            }
-        }
-
-        document.getElementById('seedFirebaseBtn').addEventListener('click', async () => {
-            if (confirm('Deseja restaurar a lista inicial dos 5 produtos no Firebase?')) {
-                await seedProducts();
-                alert('Produtos restaurados com sucesso no Firebase!');
+        // Seed products in local DB
+        document.getElementById('seedLocalDbBtn').addEventListener('click', async () => {
+            if (confirm('Deseja restaurar os 5 produtos padrões no seu banco de dados local?')) {
+                const res = await fetch('api/seed_products.php');
+                const result = await res.json();
+                alert(result.message);
+                fetchLocalData();
             }
         });
 
@@ -614,12 +582,13 @@
             document.getElementById('editProductModal').classList.add('hidden');
         }
 
-        // Handle Edit Form Submit
+        // Handle Edit Form Submit -> Saves to PHP local DB via API
         document.getElementById('editProductForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('editProductId').value;
 
             const updatedData = {
+                id: id,
                 name: document.getElementById('editProductName').value,
                 tagline: document.getElementById('editProductTagline').value,
                 price: parseFloat(document.getElementById('editProductPrice').value),
@@ -633,33 +602,24 @@
                 }
             };
 
-            // Determine genderGroup and badge automatically
-            if (updatedData.genderTag.includes('Feminino')) {
-                updatedData.genderGroup = 'feminino';
-                updatedData.genderBadge = updatedData.genderTag.includes('Envolvente') ? 'bg-purple-100 text-purple-700 font-semibold' : 'bg-pink-100 text-pink-700 font-semibold';
-            } else {
-                updatedData.genderGroup = 'masculino-unisex';
-                updatedData.genderBadge = updatedData.genderTag.includes('Compartilhável') ? 'bg-amber-100 text-amber-800 font-semibold' : (updatedData.genderTag.includes('Noturno') ? 'bg-slate-200 text-slate-800 font-semibold' : 'bg-teal-100 text-teal-800 font-semibold');
-            }
+            const res = await fetch('api/update_product.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData)
+            });
 
-            try {
-                await setDoc(doc(db, "products", id), updatedData, { merge: true });
+            const result = await res.json();
+            if (result.status === 'success') {
                 closeEditModal();
-                alert('Fragrância atualizada com sucesso no Firebase!');
-            } catch (err) {
-                console.error("Erro ao atualizar produto no Firestore:", err);
-                // Local fallback update
-                const idx = loadedProducts.findIndex(x => x.id === id);
-                if (idx !== -1) {
-                    loadedProducts[idx] = { ...loadedProducts[idx], ...updatedData };
-                    renderAdminTable();
-                }
-                closeEditModal();
-                alert('Produto atualizado localmente com sucesso!');
+                alert('Fragrância atualizada com sucesso no seu banco de dados local PHP!');
+                fetchLocalData();
+            } else {
+                alert('Erro ao atualizar: ' + result.message);
             }
         });
 
         window.onload = () => {
+            checkAdminSession();
             lucide.createIcons();
         };
     </script>

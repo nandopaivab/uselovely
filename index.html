@@ -3,30 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>use LOVELY | Coleção Exclusiva de Body Splashes 236mL</title>
+    <title>use LOVELY | Coleção Exclusiva de Body Splashes</title>
     
-    <!-- Meta SEO -->
-    <meta name="description" content="Descubra a linha de Body Splashes useLOVELY. 5 fragrâncias marcantes, 100% veganas e com alta fixação. Monte seu trio com 15% OFF e Frete Grátis!">
-    <meta name="keywords" content="body splash, perfume corporal, use lovely, velvet bloom, purple kiss, golden glow, fresh muse, midnight pulse, perfumaria vegana">
-    
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://uselovely.com.br/">
-    <meta property="og:title" content="use LOVELY | Coleção Exclusiva de Body Splashes">
-    <meta property="og:description" content="O toque perfumado que envolve a sua essência. 5 fragrâncias marcantes com óleos essenciais e alta fixação.">
-    <meta property="og:image" content="assets/images/velvet_bloom.jpg">
-
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Cormorant Garamond for luxury serif headlines & Plus Jakarta Sans for body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <!-- Mercado Pago SDK v2 -->
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     
@@ -35,1942 +24,823 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        brand: {
+                            pink: '#FCE7F0',
+                            rose: '#E8A5B8',
+                            purple: '#9B72AA',
+                            gold: '#E3A857',
+                            mint: '#6FB3B0',
+                            navy: '#3B4861',
+                            dark: '#1C1917',
+                        }
+                    },
                     fontFamily: {
                         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
-                    colors: {
-                        brand: {
-                            rose: '#E8A5B8',
-                            roseDark: '#D87093',
-                            purple: '#9B72AA',
-                            purpleDark: '#7E22CE',
-                            gold: '#E3A857',
-                            goldDark: '#D97706',
-                            mint: '#6FB3B0',
-                            mintDark: '#0D9488',
-                            navy: '#3B4861',
-                            navyDark: '#1E293B',
-                            dark: '#1E1926',
-                            cream: '#FAF6F0',
-                            softBg: '#FCF8F5'
-                        }
-                    },
                     boxShadow: {
-                        'glow-rose': '0 12px 35px -5px rgba(232, 165, 184, 0.45)',
-                        'glow-purple': '0 12px 35px -5px rgba(155, 114, 170, 0.45)',
-                        'glow-gold': '0 12px 35px -5px rgba(227, 168, 87, 0.45)',
-                        'glow-mint': '0 12px 35px -5px rgba(111, 179, 176, 0.45)',
-                        'glow-navy': '0 12px 35px -5px rgba(59, 72, 97, 0.45)',
+                        'glow-rose': '0 20px 40px -15px rgba(232, 165, 184, 0.35)',
+                        'glow-purple': '0 20px 40px -15px rgba(155, 114, 170, 0.35)',
+                        'glow-gold': '0 20px 40px -15px rgba(227, 168, 87, 0.35)',
+                        'glow-mint': '0 20px 40px -15px rgba(111, 179, 176, 0.35)',
+                        'glow-navy': '0 20px 40px -15px rgba(59, 72, 97, 0.35)',
                     }
                 }
             }
         }
     </script>
-
     <style>
-        /* Custom Keyframe Animations */
-        @keyframes floatSlow {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(1deg); }
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.85; transform: scale(1.08); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-float {
-            animation: floatSlow 5s ease-in-out infinite;
-        }
-        .animate-pulse-glow {
-            animation: pulseGlow 4s ease-in-out infinite;
-        }
-        .animate-fadeIn {
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
         .glass-card {
-            background: rgba(255, 255, 255, 0.82);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
-        .glass-nav {
-            background: rgba(252, 248, 245, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FAF6F0;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #E8A5B8;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #D87093;
+        .hero-glow {
+            filter: blur(90px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
-
-    <!-- Schema.org Product Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org/",
-      "@type": "Product",
-      "name": "useLOVELY Body Splash Collection",
-      "image": "assets/images/velvet_bloom.jpg",
-      "description": "Linha exclusiva de Body Splashes 236mL com alta fixação e fórmulas veganas.",
-      "brand": {
-        "@type": "Brand",
-        "name": "useLOVELY"
-      },
-      "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "BRL",
-        "lowPrice": "49.90",
-        "highPrice": "99.99",
-        "offerCount": "5"
-      }
-    }
-    </script>
 </head>
-<body class="bg-brand-softBg text-neutral-800 font-sans antialiased selection:bg-brand-rose selection:text-white">
+<body class="bg-[#FAF8F5] text-neutral-800 font-sans antialiased overflow-x-hidden selection:bg-rose-200 selection:text-rose-900">
 
     <!-- Top Announcement Bar -->
-    <div class="bg-gradient-to-r from-[#e7b8c8] via-[#a888b5] to-[#7dbfb8] text-white text-xs md:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-sm flex items-center justify-center gap-2">
-        <i data-lucide="sparkles" class="w-4 h-4 animate-spin-slow"></i>
+    <div class="bg-neutral-900 text-white py-2.5 px-4 text-center text-xs font-medium tracking-wide flex items-center justify-center gap-2 shadow-sm">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         <span><strong>Super Oferta:</strong> 1 Body Splash por <strong>R$ 49,90</strong> ou leve <strong>3 por R$ 99,99 + Frete Grátis!</strong></span>
-        <i data-lucide="sparkles" class="w-4 h-4"></i>
     </div>
 
-    <!-- Main Navigation Bar -->
-    <header class="sticky top-0 z-40 glass-nav border-b border-rose-100/60 transition-all duration-300" id="mainHeader">
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-neutral-100 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
-            <!-- Mobile Menu Toggle -->
-            <button id="mobileMenuBtn" class="lg:hidden p-2 text-neutral-700 hover:text-brand-purple rounded-lg focus:outline-none" aria-label="Abrir menu">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
-
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-full flex items-center justify-center transition-transform group-hover:scale-105">
-                    <!-- Brand Lotus Petal SVG Icon -->
-                    <svg viewBox="0 0 100 100" class="w-10 h-10 drop-shadow-sm">
-                        <defs>
-                            <linearGradient id="petalPink" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#E8A5B8"/>
-                                <stop offset="100%" stop-color="#D87093"/>
-                            </linearGradient>
-                            <linearGradient id="petalPurple" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#C3A5E8"/>
-                                <stop offset="100%" stop-color="#8A51C7"/>
-                            </linearGradient>
-                            <linearGradient id="petalGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#FCD34D"/>
-                                <stop offset="100%" stop-color="#F59E0B"/>
-                            </linearGradient>
-                        </defs>
-                        <path d="M50,15 C45,35 25,45 15,55 C30,60 45,55 50,85 C55,55 70,60 85,55 C75,45 55,35 50,15 Z" fill="url(#petalPink)" opacity="0.85"/>
-                        <path d="M50,20 C35,38 18,32 10,48 C25,52 38,58 50,80 C62,58 75,52 90,48 C82,32 65,38 50,20 Z" fill="url(#petalPurple)" opacity="0.65"/>
-                        <path d="M50,28 C42,42 28,48 20,62 C32,64 42,68 50,82 C58,68 68,64 80,62 C72,48 58,42 50,28 Z" fill="url(#petalGold)" opacity="0.75"/>
-                        <ellipse cx="50" cy="62" rx="4" ry="7" fill="#FFF" opacity="0.95"/>
-                    </svg>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-serif text-2xl font-semibold tracking-wider text-neutral-800 leading-none">
-                        use<span class="font-bold text-neutral-900 uppercase tracking-widest text-xl ml-1">LOVELY</span>
-                    </span>
-                    <span class="text-[9px] uppercase tracking-[0.25em] text-neutral-500 font-medium">Body Splash Collection</span>
-                </div>
-            </a>
-
-            <!-- Desktop Navigation Links -->
-            <nav class="hidden lg:flex items-center gap-8">
-                <a href="#fragrances" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors">Coleção de Aromas</a>
-                <a href="#quiz" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors flex items-center gap-1.5">
-                    <i data-lucide="wand2" class="w-4 h-4 text-brand-rose"></i>
-                    <span>Perfume Finder</span>
+            <div class="flex items-center gap-8">
+                <a href="#" class="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 flex items-center gap-1.5 group">
+                    <span>use</span>
+                    <span class="text-rose-500 font-normal italic tracking-normal transition-transform group-hover:scale-105 inline-block">LOVELY</span>
                 </a>
-                <a href="#combo" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors">Monte Seu Kit</a>
-                <a href="#diferenciais" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors">Segredo das Notas</a>
-                <a href="#avaliacoes" class="text-sm font-medium text-neutral-700 hover:text-brand-purple transition-colors">Avaliações</a>
-            </nav>
 
-            <!-- Actions Header -->
-            <div class="flex items-center gap-4">
-                <button onclick="toggleQuizModal()" class="hidden sm:flex items-center gap-2 bg-rose-50 text-rose-700 px-4 py-2 rounded-full text-xs font-semibold hover:bg-rose-100 transition-all border border-rose-200">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                    <span>Descubra seu Scent</span>
-                </button>
+                <nav class="hidden md:flex items-center gap-6 text-xs font-semibold uppercase tracking-wider text-neutral-600">
+                    <a href="#hero" class="hover:text-rose-600 transition-colors">Destaque</a>
+                    <a href="#fragrances" class="hover:text-rose-600 transition-colors">Coleção</a>
+                    <a href="#builder" class="hover:text-rose-600 transition-colors flex items-center gap-1 text-rose-600 font-bold"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Monte seu Trio</a>
+                </nav>
+            </div>
 
-                <button id="cartBtn" onclick="openCart()" class="relative p-2.5 text-neutral-800 hover:text-brand-purple rounded-full hover:bg-white/80 transition-all shadow-sm border border-neutral-200/80">
-                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-brand-rose text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
+            <div class="flex items-center gap-3">
+                <!-- Customer Account Button -->
+                <div id="customerAuthContainer">
+                    <button onclick="openAuthModal('login')" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-semibold transition-all">
+                        <i data-lucide="user" class="w-4 h-4 text-rose-600"></i>
+                        <span class="hidden sm:inline">Entrar / Criar Conta</span>
+                    </button>
+                </div>
+
+                <button onclick="openCart()" class="relative p-2.5 rounded-full hover:bg-neutral-100 transition-colors" aria-label="Sacola de Compras">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-neutral-800"></i>
+                    <span id="cartCountBadge" class="absolute top-1 right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">0</span>
                 </button>
             </div>
-        </div>
-
-        <!-- Mobile Navigation Dropdown -->
-        <div id="mobileMenu" class="hidden lg:hidden bg-white/95 backdrop-blur-md border-b border-rose-100 px-6 py-6 transition-all">
-            <nav class="flex flex-col gap-4">
-                <a href="#fragrances" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100">Coleção de Aromas</a>
-                <a href="#quiz" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100 flex items-center justify-between">
-                    <span>Perfume Finder (Quiz)</span>
-                    <span class="bg-rose-100 text-rose-700 text-xs px-2.5 py-0.5 rounded-full font-semibold">Novo</span>
-                </a>
-                <a href="#combo" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100">Monte Seu Kit Exclusivo</a>
-                <a href="#diferenciais" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2 border-b border-neutral-100">Diferenciais & Fixação</a>
-                <a href="#avaliacoes" onclick="closeMobileMenu()" class="text-neutral-800 font-medium py-2">Avaliações das Clientes</a>
-            </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden py-12 lg:py-20 bg-gradient-to-b from-brand-softBg via-rose-50/40 to-brand-softBg">
-        <!-- Background Ambient Glow Orbs -->
-        <div id="heroBgGlow1" class="absolute top-1/4 left-10 w-80 h-80 bg-pink-200/40 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-all duration-700"></div>
-        <div id="heroBgGlow2" class="absolute top-1/3 right-10 w-96 h-96 bg-purple-200/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow transition-all duration-700" style="animation-delay: 2s"></div>
+    <!-- Main Container -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-[85vh] flex items-center justify-center py-12 lg:py-20 overflow-hidden">
+            <div id="heroGlow" class="hero-glow absolute w-[450px] h-[450px] rounded-full bg-pink-200/60 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                <!-- Hero Text Left Column -->
-                <div class="lg:col-span-6 text-center lg:text-left space-y-6">
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-rose-200/80 shadow-xs text-xs md:text-sm font-semibold text-neutral-700 backdrop-blur-sm">
-                        <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
-                        <span class="font-serif italic text-base text-rose-600">5 Fragrâncias Exclusivas</span>
-                        <span class="text-neutral-300">•</span>
-                        <span>Longa Fixação 236 mL</span>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-5 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-neutral-200 shadow-xs text-xs font-semibold text-neutral-700">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+                            <span id="heroTagline">Floral Delicado & Aveludado</span>
+                        </div>
+
+                        <h1 id="heroTitle" class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-neutral-900 leading-tight">
+                            Velvet Bloom
+                        </h1>
+
+                        <p id="heroDescription" class="text-sm sm:text-base text-neutral-600 font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
+                            Uma explosão romântica de pétalas de rosa aveludadas entrelaçadas com notas doces de baunilha em flor.
+                        </p>
+
+                        <div class="flex items-baseline justify-center lg:justify-start gap-3">
+                            <span class="text-xs uppercase font-medium text-neutral-400">Preço Especial:</span>
+                            <span id="heroPrice" class="font-serif text-3xl font-bold text-neutral-900">R$ 49,90</span>
+                            <span class="text-xs text-rose-600 font-bold bg-rose-50 px-2.5 py-1 rounded-full border border-rose-100">Leve 3 por R$ 99,99</span>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <button id="heroBuyBtn" onclick="addToCart('velvet-bloom')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-rose-500 hover:bg-rose-600 text-white font-semibold text-sm shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2">
+                                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                                <span>Adicionar por R$ 49,90</span>
+                            </button>
+
+                            <a href="#builder" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-200 font-semibold text-sm shadow-xs transition-all text-center">
+                                Montar Trio por R$ 99,99
+                            </a>
+                        </div>
                     </div>
 
-                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-neutral-900 leading-[1.15] tracking-tight">
-                        O toque perfumado que envolve a sua <span class="italic font-serif bg-gradient-to-r from-rose-500 via-purple-600 to-amber-600 bg-clip-text text-transparent font-medium">essência.</span>
-                    </h1>
+                    <!-- Hero Render Image -->
+                    <div class="lg:col-span-7 flex flex-col items-center justify-center">
+                        <div class="relative w-full max-w-md h-[400px] sm:h-[460px] flex items-center justify-center p-6 rounded-3xl bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200/90 shadow-2xl border border-pink-200/60 overflow-hidden group">
+                            <div id="heroImageBgGlow" class="absolute inset-0 bg-rose-200/50 rounded-full blur-2xl pointer-events-none transition-all duration-700"></div>
+                            <img id="heroImage" src="assets/images/velvet_bloom.jpg" alt="Velvet Bloom" class="relative z-10 max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-2xl transition-all duration-500 group-hover:scale-105">
+                        </div>
 
-                    <p class="text-neutral-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
-                        Descubra a linha de Body Splashes <strong>useLOVELY</strong>. Criadas com óleos essenciais nobres para prolongar a sensação de frescor, hidratação e sofisticação na sua pele durante todo o dia.
-                    </p>
+                        <!-- Scent Selector Miniatures -->
+                        <div class="mt-6 flex items-center justify-center gap-3 flex-wrap">
+                            <button onclick="switchHeroScent(0)" class="scent-thumb-btn active border-2 border-rose-500 p-1.5 rounded-2xl bg-white shadow-md transition-all scale-110" title="Velvet Bloom">
+                                <img src="assets/images/velvet_bloom.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
+                            </button>
+                            <button onclick="switchHeroScent(1)" class="scent-thumb-btn border-2 border-transparent p-1.5 rounded-2xl bg-white shadow-xs hover:border-purple-300 transition-all" title="Purple Kiss">
+                                <img src="assets/images/purple_kiss.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
+                            </button>
+                            <button onclick="switchHeroScent(2)" class="scent-thumb-btn border-2 border-transparent p-1.5 rounded-2xl bg-white shadow-xs hover:border-amber-300 transition-all" title="Golden Glow">
+                                <img src="assets/images/golden_glow.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
+                            </button>
+                            <button onclick="switchHeroScent(3)" class="scent-thumb-btn border-2 border-transparent p-1.5 rounded-2xl bg-white shadow-xs hover:border-teal-300 transition-all" title="Fresh Muse">
+                                <img src="assets/images/fresh_muse.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
+                            </button>
+                            <button onclick="switchHeroScent(4)" class="scent-thumb-btn border-2 border-transparent p-1.5 rounded-2xl bg-white shadow-xs hover:border-slate-300 transition-all" title="Midnight Pulse">
+                                <img src="assets/images/midnight_pulse.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
+                            </button>
+                        </div>
+                    </div>
 
-                    <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                        <a href="#fragrances" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-neutral-900 text-white px-8 py-4 rounded-full font-medium text-sm hover:bg-neutral-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                            <span>Explorar a Coleção</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </a>
+                </div>
+            </div>
+        </section>
 
-                        <button onclick="toggleQuizModal()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/90 text-neutral-800 border border-neutral-300/80 px-7 py-4 rounded-full font-medium text-sm hover:bg-white hover:border-neutral-400 transition-all shadow-xs">
-                            <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
-                            <span>Descubra seu Perfume Ideal</span>
+        <!-- Products Collection Grid -->
+        <section id="fragrances" class="py-20 bg-white border-t border-neutral-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="text-xs uppercase font-bold tracking-widest text-rose-500">Coleção de Fragrâncias</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-neutral-900">Nossa Linha Signature</h2>
+                    <p class="text-sm text-neutral-500 font-light">Body Splashes de 236 mL com alta fixação e acordes marcantes. Leve individualmente por R$ 49,90 ou 3 por R$ 99,99.</p>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3" id="scentFilters">
+                    <button onclick="filterProducts('all', event)" class="filter-btn active px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all bg-neutral-900 text-white shadow-xs">Todos (5)</button>
+                    <button onclick="filterProducts('feminino', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Femininos</button>
+                    <button onclick="filterProducts('masculino-unisex', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Masculinos & Unisex</button>
+                </div>
+
+                <!-- Products Grid Container -->
+                <div id="productsGrid" class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Injected dynamically via PHP REST API -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Custom Kit Builder Section (Monte Seu Trio R$ 99,99) -->
+        <section id="builder" class="py-20 bg-gradient-to-b from-[#FAF8F5] to-rose-50/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="text-xs uppercase font-bold tracking-widest text-rose-600 bg-rose-100 px-3 py-1 rounded-full">Oferta Promocional</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-neutral-900">Monte Seu Trio por R$ 99,99</h2>
+                    <p class="text-sm text-neutral-600 font-light">Escolha 3 fragrâncias da sua preferência. Economize <strong>R$ 49,71</strong> com <strong>Frete Grátis</strong> e Caixa de Presente inclusa.</p>
+                </div>
+
+                <div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div class="lg:col-span-8 bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200 shadow-sm space-y-6">
+                        <h3 class="font-serif text-xl font-bold text-neutral-900 flex items-center gap-2">
+                            <span>Seus 3 Frascos Selecionados</span>
+                            <span id="selectedCountBadge" class="text-xs font-sans font-semibold bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full">0/3 selecionados</span>
+                        </h3>
+
+                        <div class="grid grid-cols-3 gap-4" id="builderSlots">
+                            <!-- Injected dynamically -->
+                        </div>
+
+                        <div class="pt-4 border-t border-neutral-100">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-4">Clique para adicionar ao seu Trio:</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="builderAvailableGrid">
+                                <!-- Injected dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 bg-neutral-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl space-y-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-rose-400">Resumo da Promoção</span>
+                            <h3 class="font-serif text-3xl font-semibold mt-1">Trio useLOVELY</h3>
+                        </div>
+
+                        <div class="space-y-3 text-xs border-y border-neutral-800 py-4">
+                            <div class="flex justify-between text-neutral-400">
+                                <span>Preço unitário individual (3x R$ 49,90):</span>
+                                <span class="line-through">R$ 149,70</span>
+                            </div>
+                            <div class="flex justify-between text-emerald-400 font-semibold">
+                                <span>Desconto do Kit Trio:</span>
+                                <span>- R$ 49,71</span>
+                            </div>
+                            <div class="flex justify-between text-neutral-300">
+                                <span>Frete:</span>
+                                <span class="text-emerald-400 font-bold">GRÁTIS</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="text-xs text-neutral-400 block mb-1">Valor do Combo:</span>
+                            <span class="font-serif text-4xl font-bold text-white">R$ 99,99</span>
+                        </div>
+
+                        <button id="addBundleBtn" onclick="addBundleToCart()" disabled class="w-full py-4 rounded-2xl bg-rose-500 hover:bg-rose-600 disabled:bg-neutral-800 disabled:text-neutral-500 text-white font-semibold text-sm transition-all shadow-md flex items-center justify-center gap-2">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span>Adicionar Trio ao Carrinho</span>
                         </button>
                     </div>
-
-                    <!-- Trust Badges -->
-                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-rose-100/80 text-center lg:text-left">
-                        <div>
-                            <p class="font-serif text-xl sm:text-2xl font-bold text-neutral-900">100%</p>
-                            <p class="text-xs text-neutral-500 font-medium">Vegano & Cruelty-Free</p>
-                        </div>
-                        <div>
-                            <p class="font-serif text-xl sm:text-2xl font-bold text-neutral-900">12 Horas</p>
-                            <p class="text-xs text-neutral-500 font-medium">Fixação Suave & Marcante</p>
-                        </div>
-                        <div>
-                            <p class="font-serif text-xl sm:text-2xl font-bold text-neutral-900">4.9 ★</p>
-                            <p class="text-xs text-neutral-500 font-medium">+2.400 Avaliações Positivas</p>
-                        </div>
-                    </div>
                 </div>
-
-                <!-- Hero Products Visual Showcase with Real High-Res Product Render -->
-                <div class="lg:col-span-6 relative flex items-center justify-center">
-                    <div class="relative w-full max-w-lg h-[480px] sm:h-[540px] flex items-center justify-center">
-                        
-                        <!-- Floating Glass Showcase Card -->
-                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-white/90 via-rose-50/50 to-white/80 backdrop-blur-xl border border-white/90 shadow-2xl overflow-hidden p-6 sm:p-8 flex flex-col justify-between">
-                            
-                            <!-- Central Watermarked Brand Text -->
-                            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none">
-                                <span class="font-serif text-9xl font-bold uppercase tracking-widest text-neutral-900">LOVELY</span>
-                            </div>
-
-                            <!-- Showcase Top Bar -->
-                            <div class="relative z-10 flex items-center justify-between">
-                                <span id="heroCategoryBadge" class="text-[11px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-3 py-1 rounded-full border border-rose-100 shadow-2xs">
-                                    Floral Delicado
-                                </span>
-                                <span class="text-xs bg-white/90 px-3 py-1 rounded-full text-neutral-600 shadow-2xs font-semibold border border-neutral-100">
-                                    236 mL / 8 fl oz
-                                </span>
-                            </div>
-
-                            <!-- Dynamic Featured Hero Image Showcase -->
-                            <div id="heroShowcaseContainer" class="relative z-10 flex flex-col items-center justify-center my-auto transition-all duration-500">
-                                <!-- Rendered dynamically via JavaScript -->
-                            </div>
-
-                            <!-- Scents Thumbnails Navigation Switcher -->
-                            <div class="relative z-10 flex items-center justify-center gap-2 sm:gap-3 bg-white/80 p-2 rounded-2xl backdrop-blur-md border border-white/90 shadow-md">
-                                <button onclick="switchHeroScent(0)" class="hero-thumb p-1.5 rounded-xl transition-all border-2 border-rose-400 bg-rose-50 hover:scale-105" title="Velvet Bloom">
-                                    <div class="w-9 h-9 rounded-lg bg-pink-100 flex items-center justify-center text-rose-700 text-[11px] font-bold">VB</div>
-                                </button>
-                                <button onclick="switchHeroScent(1)" class="hero-thumb p-1.5 rounded-xl transition-all border-2 border-transparent hover:border-purple-300 hover:scale-105" title="Purple Kiss">
-                                    <div class="w-9 h-9 rounded-lg bg-purple-100 flex items-center justify-center text-purple-700 text-[11px] font-bold">PK</div>
-                                </button>
-                                <button onclick="switchHeroScent(2)" class="hero-thumb p-1.5 rounded-xl transition-all border-2 border-transparent hover:border-amber-300 hover:scale-105" title="Golden Glow">
-                                    <div class="w-9 h-9 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700 text-[11px] font-bold">GG</div>
-                                </button>
-                                <button onclick="switchHeroScent(3)" class="hero-thumb p-1.5 rounded-xl transition-all border-2 border-transparent hover:border-teal-300 hover:scale-105" title="Fresh Muse">
-                                    <div class="w-9 h-9 rounded-lg bg-teal-100 flex items-center justify-center text-teal-700 text-[11px] font-bold">FM</div>
-                                </button>
-                                <button onclick="switchHeroScent(4)" class="hero-thumb p-1.5 rounded-xl transition-all border-2 border-transparent hover:border-slate-400 hover:scale-105" title="Midnight Pulse">
-                                    <div class="w-9 h-9 rounded-lg bg-slate-200 flex items-center justify-center text-slate-800 text-[11px] font-bold">MP</div>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Fragrance Collection Section -->
-    <section id="fragrances" class="py-20 bg-white relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="text-center max-w-3xl mx-auto space-y-4">
-                <span class="text-xs font-bold tracking-widest text-brand-purple uppercase bg-purple-50 px-4 py-1.5 rounded-full border border-purple-100">Coleção Completa</span>
-                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-neutral-900">
-                    Encontre a fragrância que conta a sua história
-                </h2>
-                <p class="text-neutral-600 text-base leading-relaxed font-light">
-                    Cada fórmula foi desenhada para se fundir harmoniosamente à sua pele, exalando notas olfativas delicadas, sofisticadas e marcantes ao longo de todo o dia.
-                </p>
-            </div>
+    </main>
 
-            <!-- Filter Tabs -->
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3" id="scentFilters">
-                <button onclick="filterProducts('all', event)" class="filter-btn active px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all bg-neutral-900 text-white shadow-xs">Todos (5)</button>
-                <button onclick="filterProducts('feminino', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Femininos</button>
-                <button onclick="filterProducts('masculino-unisex', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Masculinos & Unisex</button>
-                <button onclick="filterProducts('floral', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Florais</button>
-                <button onclick="filterProducts('doce', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Adocicados</button>
-                <button onclick="filterProducts('ensolarado', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Ensolarados</button>
-                <button onclick="filterProducts('fresco', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Refrescantes</button>
-            </div>
-
-            <!-- Products Grid Container -->
-            <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="productsGrid">
-                <!-- Injected dynamically via JS with real product images -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Olfactory Pyramid Detail Modal -->
-    <div id="notesModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-opacity">
-        <div class="bg-white rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl border border-rose-100 transform transition-all relative">
-            
-            <button onclick="closeNotesModal()" class="absolute top-4 right-4 z-20 bg-white/80 hover:bg-white p-2 rounded-full text-neutral-600 shadow-sm transition-all">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-
-            <div id="modalHeaderBg" class="p-8 text-neutral-900 text-center relative overflow-hidden flex flex-col items-center">
-                <span id="modalCategoryBadge" class="px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/80 shadow-xs mb-3"></span>
-                
-                <div class="w-32 h-44 my-2 flex items-center justify-center">
-                    <img id="modalProductImg" src="" alt="" class="max-h-full max-w-full object-contain drop-shadow-lg">
-                </div>
-
-                <h3 id="modalProductName" class="font-serif text-3xl sm:text-4xl font-semibold"></h3>
-                <p id="modalTagline" class="text-sm opacity-90 font-light mt-1 max-w-md"></p>
-            </div>
-
-            <div class="p-6 sm:p-8 space-y-6">
-                <div>
-                    <h4 class="text-xs font-bold uppercase tracking-widest text-neutral-400 mb-4 text-center">Pirâmide Olfativa Detalhada</h4>
-                    
-                    <div class="space-y-3.5">
-                        <!-- Top Notes -->
-                        <div class="p-3.5 rounded-2xl bg-amber-50/60 border border-amber-100/80 flex items-start gap-3">
-                            <div class="p-2 rounded-xl bg-amber-100 text-amber-800 shrink-0 mt-0.5">
-                                <i data-lucide="sun" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-bold uppercase text-amber-900 block">Notas de Topo (Saída)</span>
-                                <p id="modalTopNotes" class="text-xs text-neutral-700 mt-0.5 font-light"></p>
-                            </div>
-                        </div>
-
-                        <!-- Heart Notes -->
-                        <div class="p-3.5 rounded-2xl bg-rose-50/60 border border-rose-100/80 flex items-start gap-3">
-                            <div class="p-2 rounded-xl bg-rose-100 text-rose-800 shrink-0 mt-0.5">
-                                <i data-lucide="heart" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-bold uppercase text-rose-900 block">Notas de Coração (Corpo)</span>
-                                <p id="modalHeartNotes" class="text-xs text-neutral-700 mt-0.5 font-light"></p>
-                            </div>
-                        </div>
-
-                        <!-- Base Notes -->
-                        <div class="p-3.5 rounded-2xl bg-purple-50/60 border border-purple-100/80 flex items-start gap-3">
-                            <div class="p-2 rounded-xl bg-purple-100 text-purple-800 shrink-0 mt-0.5">
-                                <i data-lucide="sparkles" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-bold uppercase text-purple-900 block">Notas de Fundo (Fixação)</span>
-                                <p id="modalBaseNotes" class="text-xs text-neutral-700 mt-0.5 font-light"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-100 text-xs text-neutral-600 flex items-center justify-between">
-                    <div>
-                        <span class="block font-semibold text-neutral-800">Sensação na pele</span>
-                        <span id="modalSensationsText" class="font-light"></span>
-                    </div>
-                    <div class="font-mono text-neutral-500 font-semibold shrink-0 ml-4">236 mL</div>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <button id="modalAddToCartBtn" class="flex-1 py-3.5 rounded-2xl bg-neutral-900 text-white font-medium text-sm hover:bg-neutral-800 transition-all shadow-md flex items-center justify-center gap-2">
-                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                        <span>Adicionar por R$ 49,90</span>
+    <!-- Slide-over Shopping Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+        <div onclick="closeCart()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="absolute inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl flex flex-col justify-between p-6 sm:p-8">
+            <div class="space-y-6 overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-neutral-100 pb-4">
+                    <h3 class="font-serif text-2xl font-bold text-neutral-900">Sua Sacola de Compras</h3>
+                    <button onclick="closeCart()" class="p-2 text-neutral-400 hover:text-neutral-700">
+                        <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
+
+                <div id="cartItemsList" class="space-y-4 divide-y divide-neutral-100">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-neutral-100 space-y-4">
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between text-neutral-500">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">R$ 0,00</span>
+                    </div>
+                    <div class="flex justify-between text-emerald-600 font-semibold">
+                        <span>Frete:</span>
+                        <span id="cartShipping">Grátis</span>
+                    </div>
+                    <div class="flex justify-between text-neutral-900 font-bold text-base pt-2 border-t border-neutral-100">
+                        <span>Total:</span>
+                        <span id="cartTotal">R$ 0,00</span>
+                    </div>
+                </div>
+
+                <button onclick="openCheckoutModal()" class="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white font-semibold text-sm rounded-2xl transition-all shadow-md flex items-center justify-center gap-2">
+                    <i data-lucide="credit-card" class="w-4 h-4"></i>
+                    <span>Ir para o Checkout</span>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Custom Bundle Section (Monte Seu Trio & Economize) -->
-    <section id="combo" class="py-20 bg-brand-softBg relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                <!-- Bundle Info Left Column -->
-                <div class="lg:col-span-5 space-y-6">
-                    <span class="text-xs font-bold uppercase tracking-widest text-amber-800 bg-amber-100/90 px-3.5 py-1.5 rounded-full border border-amber-200">
-                        Monte Seu Trio Favorito
-                    </span>
-
-                    <h2 class="font-serif text-3xl sm:text-4xl font-normal text-neutral-900 leading-tight">
-                        Experimente a versatilidade de ter um aroma para cada momento do dia.
-                    </h2>
-
-                    <p class="text-neutral-600 text-sm sm:text-base leading-relaxed font-light">
-                        Ao selecionar 3 unidades do seu Body Splash favorito (ou combinando aromas diferentes), você garante a <strong>Promoção Especial de 3 por R$ 99,99</strong>, embalagem para presente e <strong>Frete Grátis</strong>.
-                    </p>
-
-                    <div class="p-5 rounded-2xl bg-white border border-rose-100 shadow-sm space-y-3">
-                        <div class="flex items-center justify-between text-sm">
-                            <span class="text-neutral-500"> Preço unitário individual (3x R$ 49,90):</span>
-                            <span class="line-through text-neutral-400">R$ 149,70</span>
-                        </div>
-                        <div class="flex items-center justify-between text-base font-bold text-neutral-900 border-t border-neutral-100 pt-3">
-                            <span class="flex items-center gap-1.5 text-rose-600">
-                                <i data-lucide="tag" class="w-4 h-4"></i>
-                                Valor Especial Promoção Trio:
-                            </span>
-                            <span class="text-2xl text-rose-600 font-serif">R$ 99,99 <span class="text-xs font-sans text-neutral-500 font-normal">(Economize R$ 49,71)</span></span>
-                        </div>
-                    </div>
-
-                    <ul class="space-y-3 text-xs sm:text-sm text-neutral-700 font-medium">
-                        <li class="flex items-center gap-2.5">
-                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 shrink-0"></i>
-                            <span>Escolha livremente entre as 5 fragrâncias da coleção</span>
-                        </li>
-                        <li class="flex items-center gap-2.5">
-                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 shrink-0"></i>
-                            <span>Frete Grátis para todo o Brasil automático no checkout</span>
-                        </li>
-                        <li class="flex items-center gap-2.5">
-                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 shrink-0"></i>
-                            <span>Caixa Gift Box Luxo Exclusiva useLOVELY incluída</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Bundle Interactive Picker Right Column -->
-                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-rose-100 shadow-xl">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="font-serif text-2xl font-semibold text-neutral-900">Selecione os 3 itens do seu Kit</h3>
-                        <span id="bundleCounterBadge" class="text-xs bg-rose-100 text-rose-700 font-bold px-3 py-1 rounded-full">0/3 Selecionados</span>
-                    </div>
-                    <p class="text-xs text-neutral-500 mb-6">Você pode repetir sua fragrância favorita ou diversificar!</p>
-
-                    <!-- Slots Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="bundleSlots">
-                        <!-- Slot 1 -->
-                        <div class="p-4 rounded-2xl border-2 border-dashed border-rose-200 bg-rose-50/30 text-center flex flex-col items-center justify-between min-h-[200px]">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-rose-500 bg-rose-100 px-2 py-0.5 rounded-full">Frasco 1</span>
-                            <div id="bundleSlotContent0" class="my-auto py-2 flex flex-col items-center">
-                                <i data-lucide="plus-circle" class="w-8 h-8 text-rose-300 mb-1"></i>
-                                <span class="text-xs text-neutral-500 font-medium">Clique abaixo para escolher</span>
-                            </div>
-                        </div>
-
-                        <!-- Slot 2 -->
-                        <div class="p-4 rounded-2xl border-2 border-dashed border-rose-200 bg-rose-50/30 text-center flex flex-col items-center justify-between min-h-[200px]">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-rose-500 bg-rose-100 px-2 py-0.5 rounded-full">Frasco 2</span>
-                            <div id="bundleSlotContent1" class="my-auto py-2 flex flex-col items-center">
-                                <i data-lucide="plus-circle" class="w-8 h-8 text-rose-300 mb-1"></i>
-                                <span class="text-xs text-neutral-500 font-medium">Clique abaixo para escolher</span>
-                            </div>
-                        </div>
-
-                        <!-- Slot 3 -->
-                        <div class="p-4 rounded-2xl border-2 border-dashed border-rose-200 bg-rose-50/30 text-center flex flex-col items-center justify-between min-h-[200px]">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-rose-500 bg-rose-100 px-2 py-0.5 rounded-full">Frasco 3</span>
-                            <div id="bundleSlotContent2" class="my-auto py-2 flex flex-col items-center">
-                                <i data-lucide="plus-circle" class="w-8 h-8 text-rose-300 mb-1"></i>
-                                <span class="text-xs text-neutral-500 font-medium">Clique abaixo para escolher</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fast Quick Add Selector Buttons -->
-                    <div class="mt-6">
-                        <span class="text-xs font-semibold text-neutral-700 block mb-2.5">Adicione fragrâncias ao slot disponível:</span>
-                        <div class="flex flex-wrap gap-2" id="bundleScentButtons">
-                            <!-- Injected dynamically via JS -->
-                        </div>
-                    </div>
-
-                    <div class="mt-8 pt-6 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div>
-                            <span class="text-xs text-neutral-500 block">Total do Kit (3 Itens):</span>
-                            <span class="font-serif text-2xl font-bold text-neutral-900">R$ 99,99</span>
-                        </div>
-                        <button id="addBundleToCartBtn" onclick="addBundleToCart()" disabled class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-neutral-300 text-neutral-500 font-medium text-sm transition-all flex items-center justify-center gap-2 cursor-not-allowed">
-                            <i data-lucide="package-plus" class="w-4 h-4"></i>
-                            <span>Selecione 3 Frascos</span>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Perfume Finder Quiz Section -->
-    <section id="quiz" class="py-20 bg-gradient-to-br from-purple-950 via-neutral-900 to-rose-950 text-white relative overflow-hidden">
-        <!-- Floating Ambient Shapes -->
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center space-y-4">
-                <span class="text-xs font-bold uppercase tracking-widest text-rose-300 bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/10">Perfume Finder Exclusivo</span>
-                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal">
-                    Não sabe qual fragrância escolher?
-                </h2>
-                <p class="text-rose-100/80 text-sm sm:text-base max-w-xl mx-auto font-light">
-                    Responda 3 perguntas rápidas e nosso algoritmo olfativo indicará a fragrância perfeita para seu momento e personalidade.
-                </p>
-            </div>
-
-            <!-- Quiz Interactive Box -->
-            <div class="mt-10 bg-white/10 backdrop-blur-xl rounded-3xl p-6 sm:p-10 border border-white/15 shadow-2xl">
-                
-                <div id="quizStepContainer">
-                    <!-- Dynamic Quiz Steps rendered via JS -->
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Brand Value & Ingredients Section -->
-    <section id="diferenciais" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
-                <span class="text-xs font-bold uppercase tracking-widest text-rose-600 bg-rose-50 px-3.5 py-1.5 rounded-full border border-rose-100">Qualidade Impecável</span>
-                <h2 class="font-serif text-3xl sm:text-4xl font-normal text-neutral-900">
-                    Por que o Body Splash useLOVELY é incomparável?
-                </h2>
-                <p class="text-neutral-600 text-sm sm:text-base font-light">
-                    Combinando alta perfumaria com cuidado diário da pele, desenhamos frascos pensados nos mínimos detalhes.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Feature 1 -->
-                <div class="p-6 rounded-3xl bg-brand-softBg border border-rose-100/70 hover:shadow-lg transition-all text-center group">
-                    <div class="w-14 h-14 mx-auto rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                        <i data-lucide="clock" class="w-7 h-7"></i>
-                    </div>
-                    <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-2">Fixação Long-Lasting</h3>
-                    <p class="text-xs text-neutral-600 leading-relaxed font-light">
-                        Micro-cápsulas perfumadas que se reativam com o calor do corpo, mantendo o aroma vivo por até 12 horas.
-                    </p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="p-6 rounded-3xl bg-brand-softBg border border-purple-100/70 hover:shadow-lg transition-all text-center group">
-                    <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                        <i data-lucide="droplet" class="w-7 h-7"></i>
-                    </div>
-                    <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-2">Com Extratos Botânicos</h3>
-                    <p class="text-xs text-neutral-600 leading-relaxed font-light">
-                        Enriquecido com Aloe Vera e Pantenol para hidratação leve e toque aveludado instantâneo na pele.
-                    </p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="p-6 rounded-3xl bg-brand-softBg border border-amber-100/70 hover:shadow-lg transition-all text-center group">
-                    <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                        <i data-lucide="leaf" class="w-7 h-7"></i>
-                    </div>
-                    <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-2">Fórmula 100% Limpa</h3>
-                    <p class="text-xs text-neutral-600 leading-relaxed font-light">
-                        Livre de parabenos, ftalatos e sem testes em animais. Fórmula gentil testada dermatologicamente.
-                    </p>
-                </div>
-
-                <!-- Feature 4 -->
-                <div class="p-6 rounded-3xl bg-brand-softBg border border-teal-100/70 hover:shadow-lg transition-all text-center group">
-                    <div class="w-14 h-14 mx-auto rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                        <i data-lucide="sparkle" class="w-7 h-7"></i>
-                    </div>
-                    <h3 class="font-serif text-xl font-semibold text-neutral-900 mb-2">Vaporização em Névoa</h3>
-                    <p class="text-xs text-neutral-600 leading-relaxed font-light">
-                        Válvula spray de alta precisão importada que cria uma névoa ultrafina envolvendo o corpo perfeitamente.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section id="avaliacoes" class="py-20 bg-gradient-to-b from-brand-softBg to-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
-                <div class="flex items-center justify-center gap-1 text-amber-400">
-                    <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-                    <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-                    <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-                    <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-                    <i data-lucide="star" class="w-5 h-5 fill-amber-400"></i>
-                </div>
-                <h2 class="font-serif text-3xl sm:text-4xl font-normal text-neutral-900">
-                    O que dizem nossas clientes encantadas
-                </h2>
-                <p class="text-neutral-600 text-sm sm:text-base font-light">
-                    Mais de 2.400 mulheres já encontraram sua assinatura perfumada com a useLOVELY.
-                </p>
-                <div class="pt-2">
-                    <button onclick="openAddReviewModal()" class="inline-flex items-center gap-2 text-xs font-semibold text-rose-600 bg-rose-50 px-4 py-2 rounded-full hover:bg-rose-100 transition-all border border-rose-200">
-                        <i data-lucide="pen-line" class="w-3.5 h-3.5"></i>
-                        <span>Escrever uma Avaliação</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Review Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="reviewsGrid">
-                <!-- Injected dynamically via JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Add Review Modal -->
-    <div id="addReviewModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <!-- Customer Auth Modal (Criar Conta & Login) -->
+    <div id="authModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl">
-            <button onclick="closeAddReviewModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
 
-            <h3 class="font-serif text-2xl font-bold text-neutral-900 mb-1">Deixe sua Avaliação</h3>
-            <p class="text-xs text-neutral-500 mb-6">Compartilhe sua experiência com nossas fragrâncias!</p>
+            <!-- Tabs -->
+            <div class="flex border-b border-neutral-200 mb-6">
+                <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600">Entrar</button>
+                <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700">Criar Conta</button>
+            </div>
 
-            <form onsubmit="submitReview(event)" class="space-y-4 text-xs">
+            <div id="authErrorMsg" class="hidden mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
+
+            <!-- Login Form -->
+            <form id="customerLoginForm" class="space-y-4 text-xs">
                 <div>
-                    <label class="block font-semibold text-neutral-700 mb-1">Seu Nome Completo</label>
-                    <input type="text" id="reviewAuthor" required placeholder="Ex: Ana Silva" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-400">
+                    <label class="block font-semibold text-neutral-700 mb-1">E-mail</label>
+                    <input type="email" id="custLoginEmail" required placeholder="seu@email.com" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
                 </div>
-
                 <div>
-                    <label class="block font-semibold text-neutral-700 mb-1">Sua Cidade / Estado</label>
-                    <input type="text" id="reviewCity" required placeholder="Ex: Curitiba, PR" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-400">
+                    <label class="block font-semibold text-neutral-700 mb-1">Senha</label>
+                    <input type="password" id="custLoginPassword" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
                 </div>
+                <button type="submit" class="w-full py-3 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold rounded-xl transition-all shadow-md">
+                    Entrar na Minha Conta
+                </button>
+            </form>
 
+            <!-- Register Form -->
+            <form id="customerRegisterForm" class="hidden space-y-4 text-xs">
                 <div>
-                    <label class="block font-semibold text-neutral-700 mb-1">Qual fragrância você comprou?</label>
-                    <select id="reviewProduct" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-400 bg-white">
-                        <option value="Velvet Bloom">Velvet Bloom</option>
-                        <option value="Purple Kiss">Purple Kiss</option>
-                        <option value="Golden Glow">Golden Glow</option>
-                        <option value="Fresh Muse">Fresh Muse</option>
-                        <option value="Midnight Pulse">Midnight Pulse</option>
-                        <option value="Combo Trio">Combo Trio (3 Itens)</option>
-                    </select>
+                    <label class="block font-semibold text-neutral-700 mb-1">Nome Completo</label>
+                    <input type="text" id="custRegName" required placeholder="Maria Silva" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
                 </div>
-
                 <div>
-                    <label class="block font-semibold text-neutral-700 mb-1">Sua Avaliação</label>
-                    <textarea id="reviewText" required rows="3" placeholder="Conte o que achou do aroma, fixação e entrega..." class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-400"></textarea>
+                    <label class="block font-semibold text-neutral-700 mb-1">E-mail</label>
+                    <input type="email" id="custRegEmail" required placeholder="seu@email.com" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
                 </div>
-
-                <button type="submit" class="w-full py-3.5 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold rounded-2xl transition-all shadow-md">
-                    Enviar Avaliação
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">Telefone / WhatsApp</label>
+                    <input type="tel" id="custRegPhone" required placeholder="(11) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">Senha</label>
+                    <input type="password" id="custRegPassword" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <button type="submit" class="w-full py-3 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-xl transition-all shadow-md">
+                    Criar Minha Conta
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Cart Drawer Slide-over -->
-    <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300">
-        <!-- Backdrop -->
-        <div id="cartBackdrop" onclick="closeCart()" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300"></div>
-
-        <!-- Slide Content -->
-        <div id="cartContent" class="absolute top-0 right-0 bottom-0 w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col pointer-events-auto">
-            
-            <div class="p-6 border-b border-neutral-100 flex items-center justify-between bg-brand-softBg">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="shopping-bag" class="w-5 h-5 text-neutral-800"></i>
-                    <h3 class="font-serif text-xl font-semibold text-neutral-900">Sua Sacola de Compras</h3>
-                </div>
-                <button onclick="closeCart()" class="p-2 text-neutral-400 hover:text-neutral-700 rounded-full">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <!-- Free Shipping Bar -->
-            <div class="bg-rose-50 p-4 border-b border-rose-100 space-y-1.5">
-                <div class="flex items-center justify-between text-xs font-semibold text-rose-800">
-                    <span id="freeShippingText">Adicione itens para Frete Grátis</span>
-                    <i data-lucide="truck" class="w-4 h-4 text-rose-600"></i>
-                </div>
-                <div class="w-full h-2 bg-rose-200/80 rounded-full overflow-hidden">
-                    <div id="freeShippingBar" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-            </div>
-
-            <!-- Cart Items List -->
-            <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4">
-                <!-- Cart items rendered dynamically via JS -->
-            </div>
-
-            <!-- Cart Footer -->
-            <div class="p-6 border-t border-neutral-100 bg-white space-y-4">
-                
-                <!-- Coupon & CEP input simulation -->
-                <div class="space-y-2 pt-1 border-b border-neutral-100 pb-3">
-                    <div class="flex gap-2">
-                        <input type="text" id="couponCodeInput" uppercase placeholder="Cupom (ex: LOVELY10)" class="flex-1 px-3 py-2 text-xs rounded-xl border border-neutral-200 uppercase focus:outline-none focus:border-rose-400">
-                        <button onclick="applyCoupon()" class="px-3 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold text-xs rounded-xl transition-all">
-                            Aplicar
-                        </button>
-                    </div>
-                    <div id="couponMessage" class="text-[11px] font-medium hidden"></div>
-                </div>
-
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between text-neutral-500">
-                        <span>Subtotal:</span>
-                        <span id="cartSubtotal" class="font-medium text-neutral-800">R$ 0,00</span>
-                    </div>
-                    <div id="discountRow" class="flex justify-between text-rose-600 hidden">
-                        <span id="discountLabel">Desconto Cupom:</span>
-                        <span id="discountAmount" class="font-semibold">- R$ 0,00</span>
-                    </div>
-                    <div class="flex justify-between text-neutral-500">
-                        <span>Frete:</span>
-                        <span id="cartShipping" class="font-medium text-emerald-600">A calcular</span>
-                    </div>
-                    <div class="flex justify-between text-base font-bold text-neutral-900 border-t border-neutral-100 pt-2">
-                        <span>Total:</span>
-                        <span id="cartTotal" class="font-serif text-xl text-neutral-900">R$ 0,00</span>
-                    </div>
-                </div>
-
-                <button onclick="openCheckoutModal()" class="w-full py-4 rounded-2xl bg-neutral-900 text-white font-semibold text-sm hover:bg-neutral-800 transition-all shadow-lg flex items-center justify-center gap-2">
-                    <i data-lucide="lock" class="w-4 h-4"></i>
-                    <span>Finalizar Pedido Seguro</span>
-                </button>
-                <p class="text-[11px] text-center text-neutral-400">Garantia de Satisfação de 7 dias • Envio Rápido em até 24h</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Checkout Simulation Modal -->
+    <!-- Complete Checkout Modal (ViaCEP + Address + Payment + Create Order) -->
     <div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
 
-            <div id="checkoutFormStep">
-                <div class="text-center space-y-2 mb-6">
+            <!-- Checkout Form Container -->
+            <form id="checkoutFullForm" class="space-y-6 text-xs">
+                <div class="text-center space-y-1">
                     <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-1">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        <i data-lucide="truck" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-serif text-2xl font-bold text-neutral-900">Finalizar Pedido</h3>
-                    <p class="text-xs text-neutral-500">Escolha a forma de pagamento conveniente:</p>
+                    <h3 class="font-serif text-2xl font-bold text-neutral-900">Endereço de Entrega & Pagamento</h3>
+                    <p class="text-xs text-neutral-500">Preencha seus dados para finalizar a compra online</p>
                 </div>
 
-                <div class="bg-neutral-50 p-4 rounded-2xl space-y-2 mb-6 text-xs text-neutral-600 border border-neutral-100">
-                    <div class="flex justify-between font-semibold text-neutral-800">
-                        <span>Resumo dos Itens:</span>
-                        <span id="checkoutSummaryCount">0 Itens</span>
+                <!-- Customer Details -->
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
+                    <span class="font-bold text-neutral-900 block text-xs">1. Dados Pessoais</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="chkName" required placeholder="Nome Completo" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="email" id="chkEmail" required placeholder="E-mail" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
                     </div>
-                    <div class="flex justify-between">
-                        <span>Valor Final:</span>
-                        <span id="checkoutSummaryTotal" class="font-bold text-rose-600 text-sm">R$ 0,00</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="tel" id="chkPhone" required placeholder="Telefone / WhatsApp" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="chkCpf" required placeholder="CPF (ex: 000.000.000-00)" maxlength="14" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 font-mono">
                     </div>
                 </div>
 
-                <div class="space-y-3">
-                    <button onclick="simulatePixPayment()" class="w-full p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50/50 hover:bg-emerald-50 text-left transition-all flex items-center justify-between group">
-                        <div class="flex items-center gap-3">
-                            <div class="p-2 rounded-xl bg-emerald-500 text-white">
-                                <i data-lucide="qr-code" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <span class="font-bold text-neutral-900 text-sm block">Pagamento via PIX</span>
-                                <span class="text-[11px] text-emerald-700 font-semibold">Ganhe 5% OFF Extra • Aprovação Imediata</span>
-                            </div>
-                        </div>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-transform"></i>
-                    </button>
-
-                    <button onclick="simulateOrderSuccess('Cartão de Crédito (3x sem juros)')" class="w-full p-4 rounded-2xl border border-neutral-200 hover:border-neutral-400 bg-white hover:bg-neutral-50 text-left transition-all flex items-center justify-between group">
-                        <div class="flex items-center gap-3">
-                            <div class="p-2 rounded-xl bg-neutral-100 text-neutral-700">
-                                <i data-lucide="credit-card" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <span class="font-bold text-neutral-900 text-sm block">Cartão de Crédito</span>
-                                <span class="text-[11px] text-neutral-500">Parcele em até 6x sem juros</span>
-                            </div>
-                        </div>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-neutral-400 group-hover:translate-x-1 transition-transform"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Pix QR Code Subview -->
-            <div id="checkoutPixStep" class="hidden text-center space-y-4">
-                <h4 class="font-serif text-2xl font-bold text-neutral-900">Pagamento via PIX</h4>
-                <p class="text-xs text-neutral-500">Escaneie o QR Code abaixo ou copie a chave PIX:</p>
-
-                <div class="w-44 h-44 mx-auto bg-neutral-100 border-2 border-emerald-400 rounded-2xl p-3 flex flex-col items-center justify-center shadow-inner">
-                    <i data-lucide="qr-code" class="w-32 h-32 text-neutral-800"></i>
-                </div>
-
-                <div class="p-3 bg-neutral-100 rounded-xl text-[11px] font-mono break-all text-neutral-700">
-                    00020126580014BR.GOV.BCB.PIX0136uselovely-pix-key-20265204000053039865405229.90
-                </div>
-
-                <button onclick="copyPixKey()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl transition-all flex items-center justify-center gap-2">
-                    <i data-lucide="copy" class="w-4 h-4"></i>
-                    <span id="copyPixBtnText">Copiar Chave PIX</span>
-                </button>
-
-                <button onclick="simulateOrderSuccess('PIX')" class="w-full py-3 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs rounded-xl transition-all">
-                    Simular Aprovação do Pagamento
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer Section -->
-    <footer class="bg-neutral-900 text-white pt-16 pb-12 border-t border-neutral-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-neutral-800">
-                
-                <!-- Brand Info Column -->
-                <div class="lg:col-span-2 space-y-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-full bg-rose-400/20 flex items-center justify-center">
-                            <!-- Lotus Mini SVG -->
-                            <svg viewBox="0 0 100 100" class="w-6 h-6">
-                                <path d="M50,15 C45,35 25,45 15,55 C30,60 45,55 50,85 C55,55 70,60 85,55 C75,45 55,35 50,15 Z" fill="#E8A5B8"/>
-                            </svg>
-                        </div>
-                        <span class="font-serif text-2xl font-semibold tracking-wider text-white">
-                            use<span class="font-bold uppercase tracking-widest text-xl ml-1 text-rose-300">LOVELY</span>
-                        </span>
+                <!-- Delivery Address with ViaCEP -->
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-neutral-900 block text-xs">2. Endereço de Entrega</span>
+                        <span id="cepStatusMsg" class="text-[10px] font-semibold text-rose-500"></span>
                     </div>
-                    <p class="text-xs text-neutral-400 leading-relaxed font-light max-w-sm">
-                        High-End Body Splashes criados para despertar sentimentos, destacar sua personalidade e proporcionar momentos inesquecíveis todos os dias.
+
+                    <div class="flex gap-2">
+                        <input type="text" id="chkCep" required placeholder="CEP (ex: 01001-000)" maxlength="9" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 font-mono">
+                        <button type="button" onclick="lookupCep()" class="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold shrink-0">Buscar CEP</button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="chkStreet" required placeholder="Rua / Logradouro" class="col-span-2 px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="chkNumber" required placeholder="Número" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="chkComplement" placeholder="Complemento / Apto" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="chkNeighborhood" required placeholder="Bairro" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="chkCity" required placeholder="Cidade" class="col-span-2 px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="chkState" required placeholder="UF" maxlength="2" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 uppercase">
+                    </div>
+                </div>
+
+                <!-- Mercado Pago Checkout Pro Info -->
+                <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2 text-blue-900">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-md bg-blue-600 text-white flex items-center justify-center font-bold text-[10px]">MP</div>
+                        <span class="font-bold text-xs">Pagamento Seguro via Mercado Pago</span>
+                    </div>
+                    <p class="text-[11px] text-blue-700 leading-relaxed font-light">
+                        Você poderá pagar via <strong>PIX</strong>, <strong>Cartão de Crédito em até 6x</strong>, Boleto ou Saldo do Mercado Pago no ambiente 100% seguro do Checkout Pro.
                     </p>
-                    <div class="flex items-center gap-3 pt-2">
-                        <a href="#" class="w-9 h-9 rounded-full bg-neutral-800 hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center text-neutral-400">
-                            <i data-lucide="instagram" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-neutral-800 hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center text-neutral-400">
-                            <i data-lucide="facebook" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-neutral-800 hover:bg-rose-500 hover:text-white transition-all flex items-center justify-center text-neutral-400">
-                            <i data-lucide="music-2" class="w-4 h-4"></i>
-                        </a>
-                    </div>
                 </div>
 
-                <!-- Navigation Column -->
-                <div class="space-y-3">
-                    <h4 class="font-serif text-lg font-semibold text-rose-200">Nossas Fragrâncias</h4>
-                    <ul class="space-y-2 text-xs text-neutral-400 font-light">
-                        <li><a href="#fragrances" onclick="filterProducts('all')" class="hover:text-white transition-colors">Velvet Bloom</a></li>
-                        <li><a href="#fragrances" onclick="filterProducts('doce')" class="hover:text-white transition-colors">Purple Kiss</a></li>
-                        <li><a href="#fragrances" onclick="filterProducts('ensolarado')" class="hover:text-white transition-colors">Golden Glow</a></li>
-                        <li><a href="#fragrances" onclick="filterProducts('fresco')" class="hover:text-white transition-colors">Fresh Muse</a></li>
-                        <li><a href="#fragrances" onclick="filterProducts('doce')" class="hover:text-white transition-colors">Midnight Pulse</a></li>
-                    </ul>
-                </div>
+                <div id="checkoutErrorMsg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
 
-                <!-- Links Column -->
-                <div class="space-y-3">
-                    <h4 class="font-serif text-lg font-semibold text-rose-200">Atendimento</h4>
-                    <ul class="space-y-2 text-xs text-neutral-400 font-light">
-                        <li><a href="#" class="hover:text-white transition-colors">Central de Ajuda</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Rastreie seu Pedido</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Política de Frete & Entregas</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Trocas e Devoluções</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Fale Conosco</a></li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter Column -->
-                <div class="space-y-3">
-                    <h4 class="font-serif text-lg font-semibold text-rose-200">Ganhe 10% OFF</h4>
-                    <p class="text-xs text-neutral-400 font-light">
-                        Cadastre-se para receber ofertas secretas e o cupom de 10% OFF no seu e-mail:
-                    </p>
-                    <form onsubmit="event.preventDefault(); alert('Obrigado! Seu cupom de 10% OFF é LOVELY10.');" class="space-y-2">
-                        <input type="email" placeholder="Seu melhor e-mail..." required class="w-full px-3.5 py-2.5 rounded-xl bg-neutral-800 border border-neutral-700 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-rose-400">
-                        <div class="flex items-start gap-2 pt-1">
-                            <input type="checkbox" id="lgpdNewsletter" required class="mt-0.5 rounded border-neutral-700 text-rose-500 focus:ring-rose-400 accent-rose-500">
-                            <label for="lgpdNewsletter" class="text-[10px] text-neutral-400 leading-tight">
-                                Aceito a <button type="button" onclick="openLgpdModal()" class="text-rose-300 underline hover:text-white">Política de Privacidade (LGPD)</button>.
-                            </label>
-                        </div>
-                        <button type="submit" class="w-full py-2.5 bg-rose-500 hover:bg-rose-600 text-white font-semibold text-xs rounded-xl transition-all">
-                            Inscrever-se
-                        </button>
-                    </form>
-                </div>
-
-            </div>
-
-            <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-500 font-light">
-                <div class="space-y-1 text-center md:text-left">
-                    <p>© 2026 useLOVELY Cosmetics. Todos os direitos reservados.</p>
-                    <p class="text-[11px] text-neutral-400 font-mono">THREE COMÉRCIO E SERVIÇOS LTDA • CNPJ: 21.610.150/0001-97</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="openLgpdModal()" class="hover:text-white transition-colors underline">Privacidade & LGPD</button>
-                    <span>•</span>
-                    <button onclick="resetCookieConsent()" class="hover:text-white transition-colors underline">Preferências de Cookies</button>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span>PIX</span> • <span>Cartão de Crédito</span> • <span>Boleto</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- LGPD Cookie Banner -->
-    <div id="lgpdCookieBanner" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50 bg-white/95 backdrop-blur-md p-5 rounded-3xl border border-rose-200/80 shadow-2xl transition-all duration-500 hidden">
-        <div class="flex items-start gap-3">
-            <div class="p-2.5 rounded-2xl bg-rose-100 text-rose-600 shrink-0 mt-0.5">
-                <i data-lucide="shield-check" class="w-5 h-5"></i>
-            </div>
-            <div class="space-y-2 text-xs text-neutral-600">
-                <h4 class="font-bold text-neutral-900 text-sm">Respeitamos a sua privacidade (LGPD)</h4>
-                <p class="leading-relaxed">
-                    Utilizamos cookies para personalizar conteúdos, analisar o tráfego e melhorar sua experiência de navegação em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).
-                </p>
-                <div class="pt-2 flex flex-wrap items-center gap-2">
-                    <button onclick="acceptCookies('all')" class="px-4 py-2 rounded-xl bg-neutral-900 text-white font-semibold hover:bg-neutral-800 transition-all text-xs">
-                        Aceitar Todos
-                    </button>
-                    <button onclick="acceptCookies('essential')" class="px-3.5 py-2 rounded-xl bg-neutral-100 text-neutral-700 font-medium hover:bg-neutral-200 transition-all text-xs">
-                        Apenas Essenciais
-                    </button>
-                    <button onclick="openLgpdModal()" class="text-rose-600 font-medium underline text-xs ml-auto">
-                        Saber mais
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- LGPD Privacy Policy Modal -->
-    <div id="lgpdModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden shadow-2xl border border-rose-100">
-            <!-- Header -->
-            <div class="p-6 bg-brand-softBg border-b border-neutral-100 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
-                        <i data-lucide="shield-lock" class="w-5 h-5"></i>
-                    </div>
+                <!-- Total Summary & Submit -->
+                <div class="pt-2 flex items-center justify-between">
                     <div>
-                        <h3 class="font-serif text-xl font-bold text-neutral-900">Política de Privacidade & LGPD</h3>
-                        <p class="text-[11px] text-neutral-500">Conformidade com a Lei nº 13.709/2018</p>
+                        <span class="text-[10px] text-neutral-400 uppercase font-semibold block">Total a Pagar</span>
+                        <span id="chkFinalTotal" class="font-serif text-2xl font-bold text-rose-600">R$ 0,00</span>
                     </div>
-                </div>
-                <button onclick="closeLgpdModal()" class="p-2 text-neutral-400 hover:text-neutral-700 rounded-full">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
 
-            <!-- Content -->
-            <div class="p-6 overflow-y-auto space-y-4 text-xs text-neutral-600 leading-relaxed font-light">
-                <div class="p-4 rounded-2xl bg-rose-50/60 border border-rose-100/80">
-                    <h4 class="font-semibold text-neutral-900 text-sm mb-1">Dados da Empresa Controladora</h4>
-                    <p><strong>Razão Social:</strong> THREE COMÉRCIO E SERVIÇOS LTDA</p>
-                    <p><strong>CNPJ:</strong> 21.610.150/0001-97</p>
-                    <p><strong>Encarregado de Proteção de Dados (DPO):</strong> dpo@uselovely.com.br</p>
+                    <button type="submit" id="submitCheckoutBtn" class="px-8 py-3.5 bg-rose-500 hover:bg-rose-600 disabled:bg-neutral-400 text-white font-bold rounded-2xl transition-all shadow-lg flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span id="submitCheckoutBtnText">IR PARA PAGAMENTO</span>
+                    </button>
                 </div>
+            </form>
+        </div>
+    </div>
 
-                <div class="space-y-2">
-                    <h5 class="font-bold text-neutral-800 text-sm">1. Coleta e Finalidade dos Dados</h5>
-                    <p>
-                        A <strong>THREE COMÉRCIO E SERVIÇOS LTDA</strong> coleta dados pessoais fornecidos voluntariamente por você para:
-                    </p>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li>Processamento e entrega dos pedidos de Body Splash;</li>
-                        <li>Envio de comunicações promocionais e lançamentos;</li>
-                        <li>Emissão de Notas Fiscais e atendimento de obrigações legais.</li>
-                    </ul>
-                </div>
+    <!-- Customer Orders History Modal -->
+    <div id="userOrdersModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeUserOrdersModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
 
-                <div class="space-y-2">
-                    <h5 class="font-bold text-neutral-800 text-sm">2. Seus Direitos sob a LGPD (Art. 18)</h5>
-                    <p>Você pode solicitar a qualquer momento a confirmação, correção ou eliminação dos seus dados pessoais.</p>
-                </div>
-            </div>
+            <h3 class="font-serif text-2xl font-bold text-neutral-900 mb-1">Meus Pedidos Realizados</h3>
+            <p class="text-xs text-neutral-500 mb-6">Acompanhe o status e a entrega de todas as suas compras online na useLOVELY</p>
 
-            <!-- Footer -->
-            <div class="p-4 bg-neutral-50 border-t border-neutral-100 flex items-center justify-between">
-                <span class="text-[11px] text-neutral-400">Atualizado em 2026</span>
-                <button onclick="closeLgpdModal()" class="px-5 py-2.5 rounded-xl bg-neutral-900 text-white font-medium text-xs hover:bg-neutral-800 transition-all">
-                    Entendi e Concordo
-                </button>
+            <div id="userOrdersList" class="space-y-4">
+                <!-- Injected dynamically -->
             </div>
         </div>
     </div>
 
-    <!-- Application Script Engine with Firebase Realtime Sync -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <!-- 100% PHP & MySQL Store Engine (Zero Firebase Dependency) -->
+    <script>
+        let PRODUCTS = [];
+        let cart = [];
+        let currentUser = null;
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDhtQmSm-ERQKoEyVheeCfmXj_j1LGBgH0",
-            authDomain: "uselovelybr-d213e.firebaseapp.com",
-            projectId: "uselovelybr-d213e",
-            storageBucket: "uselovelybr-d213e.firebasestorage.app",
-            messagingSenderId: "909064598174",
-            appId: "1:909064598174:web:6027f3eb3f38a41f72018f",
-            measurementId: "G-4ESW88LQYS"
+        // Check PHP Session for Customer User
+        async function checkCustomerSession() {
+            try {
+                const res = await fetch('api/auth_check.php');
+                const result = await res.json();
+                if (result.loggedIn && result.user) {
+                    currentUser = result.user;
+                } else {
+                    currentUser = null;
+                }
+                updateCustomerNavUI();
+            } catch (e) {
+                console.error("Erro ao checar sessão de cliente:", e);
+            }
+        }
+
+        function updateCustomerNavUI() {
+            const container = document.getElementById('customerAuthContainer');
+            if (currentUser) {
+                document.getElementById('chkEmail').value = currentUser.email;
+                if (currentUser.name) document.getElementById('chkName').value = currentUser.name;
+                if (currentUser.phone) document.getElementById('chkPhone').value = currentUser.phone;
+
+                container.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <button onclick="openUserOrdersModal()" class="px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold transition-all border border-rose-200">
+                            Meus Pedidos
+                        </button>
+                        <button onclick="logoutCustomer()" class="p-2 text-neutral-400 hover:text-neutral-700" title="Sair">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <button onclick="openAuthModal('login')" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-semibold transition-all">
+                        <i data-lucide="user" class="w-4 h-4 text-rose-600"></i>
+                        <span class="hidden sm:inline">Entrar / Criar Conta</span>
+                    </button>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // Global functions
+        window.openAuthModal = function(tab = 'login') {
+            document.getElementById('authModal').classList.remove('hidden');
+            switchAuthTab(tab);
+        };
+        window.closeAuthModal = function() {
+            document.getElementById('authModal').classList.add('hidden');
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        window.switchAuthTab = function(tab) {
+            const errorMsg = document.getElementById('authErrorMsg');
+            errorMsg.classList.add('hidden');
 
-        // Data structure for the 5 signature body splashes with REAL HIGH-RES PRODUCT IMAGES
-        let PRODUCTS = [
-            {
-                id: 'velvet-bloom',
-                name: 'Velvet Bloom',
-                category: 'floral',
-                genderGroup: 'feminino',
-                genderTag: 'Feminino',
-                genderBadge: 'bg-pink-100 text-pink-700 font-semibold',
-                tagline: 'Floral Delicado & Aveludado',
-                description: 'Uma explosão romântica de pétalas de rosa aveludadas entrelaçadas com notas doces de baunilha em flor.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/velvet_bloom.jpg',
-                colorTheme: 'rose',
-                bgGradient: 'from-pink-100 via-rose-50 to-pink-200',
-                btnBg: 'bg-rose-500 hover:bg-rose-600 text-white',
-                shadowClass: 'shadow-glow-rose',
-                accentColor: '#E8A5B8',
-                accentText: 'text-rose-600',
-                notes: {
-                    top: 'Frutas Vermelhas Silvestres, Peônia Rosa, Orvalho da Manhã',
-                    heart: 'Rosas Aveludadas, Pétalas de Jasmin, Magnólia',
-                    base: 'Baunilha em Flor, Âmbar Cremoso, Almíscar Macio'
-                },
-                sensation: 'Toque aveludado, feminino e levemente adocicado.'
-            },
-            {
-                id: 'purple-kiss',
-                name: 'Purple Kiss',
-                category: 'doce',
-                genderGroup: 'feminino',
-                genderTag: 'Feminino & Envolvente',
-                genderBadge: 'bg-purple-100 text-purple-700 font-semibold',
-                tagline: 'Enchanting & Misterioso',
-                description: 'Uma combinação envolvente de orquídea negra, amoras doces e um toque cremoso de madeira de cashmere.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/purple_kiss.jpg',
-                colorTheme: 'purple',
-                bgGradient: 'from-purple-100 via-purple-50 to-indigo-100',
-                btnBg: 'bg-purple-600 hover:bg-purple-700 text-white',
-                shadowClass: 'shadow-glow-purple',
-                accentColor: '#9B72AA',
-                accentText: 'text-purple-600',
-                notes: {
-                    top: 'Amora Preta, Orquídea Negra, Toque de Ameixa',
-                    heart: 'Flor de Lilás, Violeta Oriental, Jasmin da Noite',
-                    base: 'Madeira de Cashmere, Açúcar Tostado, Âmbar Sensual'
-                },
-                sensation: 'Misterioso, marcante e irresistivelmente doce.'
-            },
-            {
-                id: 'golden-glow',
-                name: 'Golden Glow',
-                category: 'ensolarado',
-                genderGroup: 'masculino-unisex',
-                genderTag: 'Unisex / Compartilhável',
-                genderBadge: 'bg-amber-100 text-amber-800 font-semibold',
-                tagline: 'Luminoso & Sun-Kissed',
-                description: 'A calidez radiante do sol traduzida em notas de nectarina dourada, âmbar solar e flor de laranjeira.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/golden_glow.jpg',
-                colorTheme: 'gold',
-                bgGradient: 'from-amber-100 via-orange-50 to-yellow-100',
-                btnBg: 'bg-amber-600 hover:bg-amber-700 text-white',
-                shadowClass: 'shadow-glow-gold',
-                accentColor: '#E3A857',
-                accentText: 'text-amber-600',
-                notes: {
-                    top: 'Nectarina Solar, Bergamota Dourada, Mandarina',
-                    heart: 'Flor de Laranjeira, Jasmin Solar, Néctar de Pêssego',
-                    base: 'Âmbar Dourado, Sândalo Quente, Baunilha Tropical'
-                },
-                sensation: 'Aconchegante, ensolarado e radiantemente iluminado.'
-            },
-            {
-                id: 'fresh-muse',
-                name: 'Fresh Muse',
-                category: 'fresco',
-                genderGroup: 'masculino-unisex',
-                genderTag: 'Masculino & Unisex',
-                genderBadge: 'bg-teal-100 text-teal-800 font-semibold',
-                tagline: 'Refrescante & Brizante',
-                description: 'A energia revitalizante da brisa marinha com flor de lótus aquática e chá verde refrescante.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/fresh_muse.jpg',
-                colorTheme: 'mint',
-                bgGradient: 'from-teal-100 via-emerald-50 to-cyan-100',
-                btnBg: 'bg-teal-600 hover:bg-teal-700 text-white',
-                shadowClass: 'shadow-glow-mint',
-                accentColor: '#6FB3B0',
-                accentText: 'text-teal-600',
-                notes: {
-                    top: 'Maçã Verde Crocante, Brisa Marinha, Flor de Lótus',
-                    heart: 'Chá Verde Fresco, Lírio do Vale, Hortelã Suave',
-                    base: 'Musk Limpo, Cedro Branco, Pepino Aquático'
-                },
-                sensation: 'Revigorante, ultra-fresco e energizante.'
-            },
-            {
-                id: 'midnight-pulse',
-                name: 'Midnight Pulse',
-                category: 'doce',
-                genderGroup: 'masculino-unisex',
-                genderTag: 'Masculino & Unisex Noturno',
-                genderBadge: 'bg-slate-200 text-slate-800 font-semibold',
-                tagline: 'Sensual & Noturno',
-                description: 'Uma fragrância intensa e sedutora com notas de figo escuro, íris noturna e baunilha defumada.',
-                price: 49.90,
-                volume: '236 mL / 8 fl oz',
-                image: 'assets/images/midnight_pulse.jpg',
-                colorTheme: 'navy',
-                bgGradient: 'from-slate-200 via-slate-100 to-blue-200',
-                btnBg: 'bg-slate-800 hover:bg-slate-900 text-white',
-                shadowClass: 'shadow-glow-navy',
-                accentColor: '#3B4861',
-                accentText: 'text-slate-800',
-                notes: {
-                    top: 'Figo Escuro, Anís Estrelado, Pimenta Rosa',
-                    heart: 'Íris Noturna, Jasmin da Meia-Noite, Orquídea',
-                    base: 'Baunilha Defumada, Patchouli Suave, Âmbar Profundo'
-                },
-                sensation: 'Marcante, elegante e extremamente sedutor.'
+            if (tab === 'login') {
+                document.getElementById('customerLoginForm').classList.remove('hidden');
+                document.getElementById('customerRegisterForm').classList.add('hidden');
+                document.getElementById('tabLoginBtn').className = 'flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600';
+                document.getElementById('tabRegisterBtn').className = 'flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700';
+            } else {
+                document.getElementById('customerLoginForm').classList.add('hidden');
+                document.getElementById('customerRegisterForm').classList.remove('hidden');
+                document.getElementById('tabRegisterBtn').className = 'flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600';
+                document.getElementById('tabLoginBtn').className = 'flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700';
             }
-        ];
+        };
 
-        // Quiz Questions Data
-        const QUIZ_QUESTIONS = [
-            {
-                id: 1,
-                question: 'Qual é a sua vibe ou momento perfeito do dia?',
-                options: [
-                    { label: 'Um passeio ao ar livre em uma manhã florida', productId: 'velvet-bloom' },
-                    { label: 'Um encontro especial no fim de tarde', productId: 'purple-kiss' },
-                    { label: 'Um dia ensolarado de verão na praia', productId: 'golden-glow' },
-                    { label: 'Um banho pós-treino ou mergulho revigorante', productId: 'fresh-muse' },
-                    { label: 'Uma noite marcante ou festa inesquecível', productId: 'midnight-pulse' }
-                ]
-            },
-            {
-                id: 2,
-                question: 'Qual família de aromas você mais ama sentir?',
-                options: [
-                    { label: 'Florais delicados com pétalas de rosa e jasmin', productId: 'velvet-bloom' },
-                    { label: 'Adocicados gourmand com baunilha e amoras', productId: 'purple-kiss' },
-                    { label: 'Notas âmbar quentes, ensolaradas e cítricas', productId: 'golden-glow' },
-                    { label: 'Notas aquáticas, maçã verde e chá refrescante', productId: 'fresh-muse' },
-                    { label: 'Amadeirados sensuais, figo escuro e especiarias', productId: 'midnight-pulse' }
-                ]
-            },
-            {
-                id: 3,
-                question: 'Como você prefere que o seu rastro perfumado seja percebido?',
-                options: [
-                    { label: 'Suave, sutil e romântico', productId: 'velvet-bloom' },
-                    { label: 'Doce, marcante e apaixonante', productId: 'purple-kiss' },
-                    { label: 'Luminoso, acolhedor e radiante', productId: 'golden-glow' },
-                    { label: 'Leve, limpo e energizante', productId: 'fresh-muse' },
-                    { label: 'Intenso, misterioso e sedutor', productId: 'midnight-pulse' }
-                ]
-            }
-        ];
+        // Handle Customer Login (100% MySQL via PHP API)
+        document.getElementById('customerLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('custLoginEmail').value.trim();
+            const password = document.getElementById('custLoginPassword').value;
+            const errorMsg = document.getElementById('authErrorMsg');
 
-        // Customer Reviews Database
-        let CUSTOMER_REVIEWS = [
-            {
-                author: 'Camila Rodrigues',
-                city: 'São Paulo, SP',
-                rating: 5,
-                product: 'Velvet Bloom',
-                text: 'Comprei o Velvet Bloom e o Purple Kiss. O aroma de Velvet Bloom é simplesmente perfeito! Floral, suave e todo mundo no meu trabalho me pergunta qual perfume estou usando.',
-                date: 'Há 2 dias'
-            },
-            {
-                author: 'Beatriz Santos',
-                city: 'Rio de Janeiro, RJ',
-                rating: 5,
-                product: 'Golden Glow',
-                text: 'Golden Glow é amor à primeira borrifada! Lembra um fim de tarde ensolarado na praia, muito elegante. A névoa é super fina e dura o dia todinho.',
-                date: 'Há 5 dias'
-            },
-            {
-                author: 'Juliana Ferreira',
-                city: 'Belo Horizonte, MG',
-                rating: 5,
-                product: 'Combo Trio',
-                text: 'Aproveitei o Kit com 3 e peguei Fresh Muse, Midnight Pulse e Golden Glow. Veio super bem embalado com um cheirinho delicioso na caixa!',
-                date: 'Há 1 semana'
-            }
-        ];
+            try {
+                const res = await fetch('api/auth_login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
 
-        // Global State Variables
-        let currentCart = [];
-        let bundleSelection = [null, null, null];
-        let currentQuizStep = 0;
-        let quizAnswers = [];
-        let appliedDiscountPercent = 0;
-
-        // Switch Hero Featured Product Showcase
-        function switchHeroScent(index) {
-            const p = PRODUCTS[index];
-            const container = document.getElementById('heroShowcaseContainer');
-            const categoryBadge = document.getElementById('heroCategoryBadge');
-
-            categoryBadge.textContent = p.tagline;
-            categoryBadge.className = `text-[11px] font-bold uppercase tracking-wider ${p.accentText} bg-white px-3 py-1 rounded-full shadow-2xs border border-neutral-100`;
-
-            // Highlight active thumbnail
-            document.querySelectorAll('.hero-thumb').forEach((btn, i) => {
-                if (i === index) {
-                    btn.classList.add('border-neutral-900', 'scale-110', 'shadow-md');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    currentUser = result.user;
+                    updateCustomerNavUI();
+                    closeAuthModal();
                 } else {
-                    btn.classList.remove('border-neutral-900', 'scale-110', 'shadow-md');
+                    errorMsg.textContent = result.message || 'Erro ao realizar login no MySQL.';
+                    errorMsg.classList.remove('hidden');
                 }
-            });
+            } catch (err) {
+                errorMsg.textContent = 'Erro de conexão com o banco MySQL.';
+                errorMsg.classList.remove('hidden');
+            }
+        });
 
-            container.innerHTML = `
-                <div class="flex flex-col sm:flex-row items-center gap-6 animate-fadeIn">
-                    <div class="w-40 sm:w-48 h-64 sm:h-72 shrink-0 flex items-center justify-center relative group p-2 rounded-2xl bg-gradient-to-b ${p.bgGradient}">
-                        <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    <div class="text-center sm:text-left space-y-2.5 max-w-xs">
-                        <h3 class="font-serif text-3xl font-semibold text-neutral-900">${p.name}</h3>
-                        <p class="text-xs text-neutral-600 font-light leading-relaxed">${p.description}</p>
-                        <div class="pt-3 flex flex-wrap items-center justify-center sm:justify-start gap-3">
-                            <span class="font-serif text-2xl font-bold text-neutral-900">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
-                            <button onclick="addToCart('${p.id}')" class="px-5 py-2.5 rounded-full ${p.btnBg} text-xs font-semibold shadow-md transition-all hover:scale-102">
-                                Adicionar à Sacola
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+        // Handle Customer Register (100% MySQL via PHP API)
+        document.getElementById('customerRegisterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('custRegEmail').value.trim();
+            const password = document.getElementById('custRegPassword').value;
+            const name = document.getElementById('custRegName').value;
+            const phone = document.getElementById('custRegPhone').value;
+            const errorMsg = document.getElementById('authErrorMsg');
 
-        // Render Products Collection Grid
-        function renderProductsGrid(filter = 'all') {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
+            try {
+                const res = await fetch('api/auth_register.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, phone })
+                });
 
-            const filtered = filter === 'all' 
-                ? PRODUCTS 
-                : PRODUCTS.filter(p => p.category === filter || p.genderGroup === filter);
+                const result = await res.json();
+                if (result.status === 'success') {
+                    currentUser = result.user;
+                    updateCustomerNavUI();
+                    closeAuthModal();
+                    alert('Conta criada com sucesso no banco MySQL!');
+                } else {
+                    errorMsg.textContent = result.message || 'Erro ao criar conta no MySQL.';
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorMsg.textContent = 'Erro ao conectar com o banco de dados.';
+                errorMsg.classList.remove('hidden');
+            }
+        });
 
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = `glass-card rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between border border-rose-100/70 relative group`;
-                
-                card.innerHTML = `
-                    <div class="absolute top-4 left-4 z-10">
-                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border border-black/5 shadow-2xs ${p.genderBadge}">
-                            ${p.genderTag}
-                        </span>
-                    </div>
+        window.logoutCustomer = async function() {
+            await fetch('api/auth_logout.php');
+            currentUser = null;
+            updateCustomerNavUI();
+        };
 
-                    <div class="absolute top-4 right-4 z-10">
-                        <button onclick="openNotesModal('${p.id}')" class="p-2.5 rounded-full bg-white/90 hover:bg-white text-neutral-700 shadow-md backdrop-blur-md transition-all hover:scale-110" title="Ver Pirâmide Olfativa">
-                            <i data-lucide="info" class="w-4 h-4 text-brand-purple"></i>
-                        </button>
-                    </div>
+        // ViaCEP Lookup
+        window.lookupCep = async function() {
+            const cepInput = document.getElementById('chkCep').value.replace(/\D/g, '');
+            const msg = document.getElementById('cepStatusMsg');
 
-                    <div class="w-full h-72 flex items-center justify-center p-4 rounded-2xl bg-gradient-to-b ${p.bgGradient} relative overflow-hidden">
-                        <img src="${p.image}" alt="${p.name}" class="h-60 max-w-full object-contain mix-blend-multiply drop-shadow-xl transition-transform duration-500 group-hover:scale-108">
-                    </div>
-
-                    <div class="mt-6 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[11px] font-bold uppercase tracking-wider ${p.accentText}">${p.tagline}</span>
-                            <span class="text-xs font-medium text-neutral-400">${p.volume}</span>
-                        </div>
-
-                        <h3 class="font-serif text-2xl font-semibold text-neutral-900">${p.name}</h3>
-                        <p class="text-xs text-neutral-600 line-clamp-2 leading-relaxed font-light">${p.description}</p>
-
-                        <div class="pt-3 border-t border-neutral-100 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-neutral-400 block uppercase font-medium">Preço</span>
-                                <span class="font-serif text-xl font-bold text-neutral-900">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
-                            </div>
-
-                            <button onclick="addToCart('${p.id}')" class="px-4 py-2.5 rounded-2xl ${p.btnBg} text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all hover:scale-105">
-                                <i data-lucide="plus" class="w-4 h-4"></i>
-                                <span>Comprar</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-
-                grid.appendChild(card);
-            });
-
-            lucide.createIcons();
-        }
-
-        // Filter Collection Buttons
-        function filterProducts(cat, evt) {
-            document.querySelectorAll('#scentFilters .filter-btn').forEach(btn => {
-                btn.className = 'filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200';
-            });
-            if (evt && evt.target) {
-                evt.target.className = 'filter-btn active px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all bg-neutral-900 text-white shadow-xs';
+            if (cepInput.length !== 8) {
+                msg.textContent = 'CEP inválido.';
+                return;
             }
 
-            renderProductsGrid(cat);
-        }
+            msg.textContent = 'Buscando CEP...';
+            try {
+                const res = await fetch(`https://viacep.com.br/ws/${cepInput}/json/`);
+                const data = await res.json();
+                if (data.erro) {
+                    msg.textContent = 'CEP não encontrado.';
+                    return;
+                }
 
-        // Open Olfactory Pyramid Modal
-        function openNotesModal(productId) {
-            const p = PRODUCTS.find(item => item.id === productId);
+                document.getElementById('chkStreet').value = data.logradouro || '';
+                document.getElementById('chkNeighborhood').value = data.bairro || '';
+                document.getElementById('chkCity').value = data.localidade || '';
+                document.getElementById('chkState').value = data.uf || '';
+                msg.textContent = 'Endereço encontrado ✓';
+            } catch (err) {
+                msg.textContent = 'Erro ao buscar CEP.';
+            }
+        };
+
+        document.getElementById('chkCep').addEventListener('blur', lookupCep);
+
+        // Cart Drawer
+        window.openCart = function() {
+            document.getElementById('cartDrawer').classList.remove('hidden');
+            renderCartUI();
+        };
+        window.closeCart = function() {
+            document.getElementById('cartDrawer').classList.add('hidden');
+        };
+
+        window.addToCart = function(id) {
+            const p = PRODUCTS.find(item => item.id === id);
             if (!p) return;
 
-            document.getElementById('modalHeaderBg').className = `p-8 text-neutral-900 text-center relative overflow-hidden bg-gradient-to-b ${p.bgGradient} flex flex-col items-center`;
-            document.getElementById('modalCategoryBadge').textContent = p.tagline;
-            document.getElementById('modalProductImg').src = p.image;
-            document.getElementById('modalProductName').textContent = p.name;
-            document.getElementById('modalTagline').textContent = p.description;
-
-            document.getElementById('modalTopNotes').textContent = p.notes.top;
-            document.getElementById('modalHeartNotes').textContent = p.notes.heart;
-            document.getElementById('modalBaseNotes').textContent = p.notes.base;
-            document.getElementById('modalSensationsText').textContent = p.sensation;
-
-            const btn = document.getElementById('modalAddToCartBtn');
-            btn.onclick = function() {
-                addToCart(p.id);
-                closeNotesModal();
-            };
-
-            document.getElementById('notesModal').classList.remove('hidden');
-        }
-
-        function closeNotesModal() {
-            document.getElementById('notesModal').classList.add('hidden');
-        }
-
-        // Bundle Builder Logic
-        function renderBundlePicker() {
-            const container = document.getElementById('bundleScentButtons');
-            container.innerHTML = '';
-
-            PRODUCTS.forEach(p => {
-                const btn = document.createElement('button');
-                btn.className = `px-3.5 py-2 rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-white text-xs font-medium text-neutral-700 flex items-center gap-2 transition-all hover:scale-102 shadow-2xs`;
-                btn.innerHTML = `
-                    <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${p.accentColor}"></span>
-                    <span>+ ${p.name}</span>
-                `;
-                btn.onclick = () => addScentToBundle(p.id);
-                container.appendChild(btn);
-            });
-        }
-
-        function addScentToBundle(productId) {
-            const emptyIdx = bundleSelection.findIndex(item => item === null);
-            if (emptyIdx !== -1) {
-                bundleSelection[emptyIdx] = productId;
-                updateBundleUI();
+            const existing = cart.find(x => x.id === id);
+            if (existing) {
+                existing.qty += 1;
             } else {
-                alert('Você já selecionou os 3 frascos do kit! Para alterar, remova um frasco.');
+                cart.push({ ...p, qty: 1 });
             }
-        }
-
-        function removeScentFromBundle(index) {
-            bundleSelection[index] = null;
-            updateBundleUI();
-        }
-
-        function updateBundleUI() {
-            const selectedCount = bundleSelection.filter(x => x !== null).length;
-            document.getElementById('bundleCounterBadge').textContent = `${selectedCount}/3 Selecionados`;
-
-            for (let i = 0; i < 3; i++) {
-                const slotContent = document.getElementById(`bundleSlotContent${i}`);
-                const pid = bundleSelection[i];
-
-                if (pid) {
-                    const p = PRODUCTS.find(item => item.id === pid);
-                    slotContent.innerHTML = `
-                        <div class="relative group flex flex-col items-center">
-                            <img src="${p.image}" alt="${p.name}" class="h-24 object-contain mb-1 drop-shadow-md">
-                            <span class="text-xs font-bold text-neutral-900 block">${p.name}</span>
-                            <button onclick="removeScentFromBundle(${i})" class="text-[11px] text-rose-500 hover:underline mt-1 font-medium">Remover</button>
-                        </div>
-                    `;
-                } else {
-                    slotContent.innerHTML = `
-                        <i data-lucide="plus-circle" class="w-8 h-8 text-rose-300 mb-1"></i>
-                        <span class="text-xs text-neutral-500 font-medium">Clique abaixo para escolher</span>
-                    `;
-                }
-            }
-
-            lucide.createIcons();
-
-            const isComplete = bundleSelection.every(item => item !== null);
-            const addBtn = document.getElementById('addBundleToCartBtn');
-
-            if (isComplete) {
-                addBtn.disabled = false;
-                addBtn.className = `w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-neutral-900 text-white font-semibold text-sm hover:bg-neutral-800 transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer hover:scale-102`;
-                addBtn.innerHTML = `
-                    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
-                    <span>Adicionar Kit Trio (R$ 99,99)</span>
-                `;
-            } else {
-                addBtn.disabled = true;
-                addBtn.className = `w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-neutral-200 text-neutral-400 font-medium text-sm transition-all flex items-center justify-center gap-2 cursor-not-allowed`;
-                addBtn.innerHTML = `
-                    <i data-lucide="package-plus" class="w-4 h-4"></i>
-                    <span>Selecione 3 Frascos (${selectedCount}/3)</span>
-                `;
-            }
-        }
-
-        function addBundleToCart() {
-            if (!bundleSelection.every(x => x !== null)) return;
-
-            const bundleNames = bundleSelection.map(id => PRODUCTS.find(p => p.id === id).name).join(' + ');
-            
-            const bundleItem = {
-                id: 'bundle-trio-' + Date.now(),
-                name: 'Kit Trio useLOVELY (Custom)',
-                description: `Aromas: ${bundleNames}`,
-                price: 99.99,
-                qty: 1,
-                isBundle: true,
-                image: 'assets/images/velvet_bloom.jpg'
-            };
-
-            currentCart.push(bundleItem);
-            bundleSelection = [null, null, null];
-            updateBundleUI();
-            updateCartUI();
+            updateCartBadge();
             openCart();
+        };
+
+        function updateCartBadge() {
+            const count = cart.reduce((acc, x) => acc + x.qty, 0);
+            document.getElementById('cartCountBadge').textContent = count;
         }
 
-        // Quiz Engine
-        function renderQuizStep() {
-            const container = document.getElementById('quizStepContainer');
-
-            if (currentQuizStep < QUIZ_QUESTIONS.length) {
-                const q = QUIZ_QUESTIONS[currentQuizStep];
-                
-                container.innerHTML = `
-                    <div class="space-y-6 animate-fadeIn">
-                        <div class="flex items-center justify-between text-xs text-rose-200 font-medium border-b border-white/10 pb-3">
-                            <span>Pergunta ${currentQuizStep + 1} de ${QUIZ_QUESTIONS.length}</span>
-                            <span>Scent Finder</span>
-                        </div>
-
-                        <h3 class="font-serif text-2xl sm:text-3xl font-normal text-white">${q.question}</h3>
-
-                        <div class="grid grid-cols-1 gap-3">
-                            ${q.options.map((opt) => `
-                                <button onclick="answerQuiz('${opt.productId}')" class="p-4 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 text-left text-sm text-rose-50 hover:text-white transition-all flex items-center justify-between group">
-                                    <span>${opt.label}</span>
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-rose-300 group-hover:translate-x-1 transition-transform"></i>
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            } else {
-                // Determine recommendation
-                const counts = {};
-                quizAnswers.forEach(id => { counts[id] = (counts[id] || 0) + 1; });
-                let recommendedId = quizAnswers[0] || 'velvet-bloom';
-                let maxCount = 0;
-                for (const id in counts) {
-                    if (counts[id] > maxCount) {
-                        maxCount = counts[id];
-                        recommendedId = id;
-                    }
-                }
-
-                const p = PRODUCTS.find(item => item.id === recommendedId);
-
-                container.innerHTML = `
-                    <div class="text-center space-y-6 animate-fadeIn">
-                        <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold uppercase tracking-wider border border-emerald-500/30">
-                            ✨ 98% Match Olfativo Perfeito!
-                        </div>
-
-                        <div class="max-w-xs mx-auto h-56 flex items-center justify-center">
-                            <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain drop-shadow-2xl">
-                        </div>
-
-                        <div>
-                            <h3 class="font-serif text-3xl font-semibold text-white">${p.name}</h3>
-                            <p class="text-xs text-rose-100/80 max-w-md mx-auto mt-2 leading-relaxed">${p.description}</p>
-                        </div>
-
-                        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <button onclick="addToCart('${p.id}');" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-rose-500 text-white font-semibold text-sm hover:bg-rose-600 transition-all shadow-lg flex items-center justify-center gap-2">
-                                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                                <span>Garantir o Meu (R$ ${p.price.toFixed(2).replace('.', ',')})</span>
-                            </button>
-                            <button onclick="resetQuiz()" class="text-xs text-rose-300 hover:text-white underline">
-                                Refazer Quiz
-                            </button>
-                        </div>
-                    </div>
-                `;
+        function renderCartUI() {
+            const list = document.getElementById('cartItemsList');
+            if (cart.length === 0) {
+                list.innerHTML = `<div class="py-8 text-center text-xs text-neutral-400">Sua sacola está vazia.</div>`;
+                document.getElementById('cartSubtotal').textContent = 'R$ 0,00';
+                document.getElementById('cartTotal').textContent = 'R$ 0,00';
+                return;
             }
 
-            lucide.createIcons();
-        }
-
-        function answerQuiz(productId) {
-            quizAnswers.push(productId);
-            currentQuizStep++;
-            renderQuizStep();
-        }
-
-        function resetQuiz() {
-            currentQuizStep = 0;
-            quizAnswers = [];
-            renderQuizStep();
-        }
-
-        function toggleQuizModal() {
-            const section = document.getElementById('quiz');
-            section.scrollIntoView({ behavior: 'smooth' });
-            resetQuiz();
-        }
-
-        // Reviews System
-        function renderReviews() {
-            const grid = document.getElementById('reviewsGrid');
-            grid.innerHTML = CUSTOMER_REVIEWS.map(r => `
-                <div class="p-6 rounded-3xl bg-white border border-rose-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex text-amber-400 gap-0.5">
-                                ${'★'.repeat(r.rating)}
-                            </div>
-                            <span class="text-[11px] text-emerald-600 font-semibold bg-emerald-50 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                                <i data-lucide="check" class="w-3 h-3"></i> Compra Verificada
-                            </span>
-                        </div>
-                        <p class="text-xs sm:text-sm text-neutral-700 leading-relaxed italic">
-                            "${r.text}"
-                        </p>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
+            list.innerHTML = cart.map(item => `
+                <div class="py-3 flex items-center justify-between gap-4 text-xs">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-16 object-contain mix-blend-multiply border rounded-lg">
                         <div>
-                            <span class="font-semibold text-neutral-900 text-sm block">${r.author}</span>
-                            <span class="text-[11px] text-neutral-400">${r.city} • ${r.date}</span>
+                            <span class="font-bold text-neutral-900 block">${item.name}</span>
+                            <span class="text-neutral-500">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
                         </div>
-                        <span class="text-[11px] font-semibold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-md">${r.product}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 rounded-md bg-neutral-100 text-neutral-700 font-bold">-</button>
+                        <span class="font-bold text-neutral-900">${item.qty}</span>
+                        <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 rounded-md bg-neutral-100 text-neutral-700 font-bold">+</button>
                     </div>
                 </div>
             `).join('');
 
-            lucide.createIcons();
+            const subtotal = cart.reduce((acc, x) => acc + (x.price * x.qty), 0);
+            document.getElementById('cartSubtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('cartTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('chkFinalTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
         }
 
-        function openAddReviewModal() {
-            document.getElementById('addReviewModal').classList.remove('hidden');
-        }
-
-        function closeAddReviewModal() {
-            document.getElementById('addReviewModal').classList.add('hidden');
-        }
-
-        function submitReview(e) {
-            e.preventDefault();
-            const author = document.getElementById('reviewAuthor').value;
-            const city = document.getElementById('reviewCity').value;
-            const product = document.getElementById('reviewProduct').value;
-            const text = document.getElementById('reviewText').value;
-
-            CUSTOMER_REVIEWS.unshift({
-                author,
-                city,
-                rating: 5,
-                product,
-                text,
-                date: 'Agora mesmo'
-            });
-
-            renderReviews();
-            closeAddReviewModal();
-            alert('Obrigado! Sua avaliação foi cadastrada com sucesso.');
-        }
-
-        // Cart Drawer & Coupon Engine
-        function addToCart(productId) {
-            const p = PRODUCTS.find(item => item.id === productId);
-            if (!p) return;
-
-            const existing = currentCart.find(item => item.id === productId);
-            if (existing) {
-                existing.qty++;
-            } else {
-                currentCart.push({
-                    id: p.id,
-                    name: p.name,
-                    description: p.tagline,
-                    price: p.price,
-                    qty: 1,
-                    image: p.image
-                });
+        window.changeQty = function(id, delta) {
+            const idx = cart.findIndex(x => x.id === id);
+            if (idx !== -1) {
+                cart[idx].qty += delta;
+                if (cart[idx].qty <= 0) cart.splice(idx, 1);
             }
+            updateCartBadge();
+            renderCartUI();
+        };
 
-            updateCartUI();
-            openCart();
-        }
-
-        function updateCartQuantity(id, delta) {
-            const item = currentCart.find(i => i.id === id);
-            if (!item) return;
-
-            item.qty += delta;
-            if (item.qty <= 0) {
-                currentCart = currentCart.filter(i => i.id !== id);
-            }
-
-            updateCartUI();
-        }
-
-        function applyCoupon() {
-            const code = document.getElementById('couponCodeInput').value.trim().toUpperCase();
-            const msg = document.getElementById('couponMessage');
-
-            if (code === 'LOVELY10') {
-                appliedDiscountPercent = 10;
-                msg.textContent = '✓ Cupom LOVELY10 de 10% OFF applied!';
-                msg.className = 'text-[11px] font-semibold text-emerald-600 block';
-            } else if (code === 'TRIO15') {
-                appliedDiscountPercent = 15;
-                msg.textContent = '✓ Cupom TRIO15 de 15% OFF applied!';
-                msg.className = 'text-[11px] font-semibold text-emerald-600 block';
-            } else {
-                msg.textContent = '✕ Cupom inválido ou expirado.';
-                msg.className = 'text-[11px] font-semibold text-rose-500 block';
-            }
-
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const badge = document.getElementById('cartBadge');
-            const list = document.getElementById('cartItemsList');
-
-            const totalCount = currentCart.reduce((sum, item) => sum + item.qty, 0);
-            badge.textContent = totalCount;
-
-            if (currentCart.length === 0) {
-                list.innerHTML = `
-                    <div class="text-center py-12 text-neutral-400 space-y-3">
-                        <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto stroke-1 text-neutral-300"></i>
-                        <p class="text-sm">Sua sacola está vazia.</p>
-                        <a href="#fragrances" onclick="closeCart()" class="inline-block text-xs text-brand-purple font-semibold underline">Explorar a Coleção</a>
-                    </div>
-                `;
-            } else {
-                list.innerHTML = currentCart.map(item => `
-                    <div class="p-3.5 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-between gap-3">
-                        <div class="w-12 h-16 shrink-0 bg-white rounded-xl p-1 border border-neutral-100 flex items-center justify-center overflow-hidden">
-                            <img src="${item.image}" alt="${item.name}" class="max-h-full max-w-full object-contain">
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-semibold text-neutral-800 text-sm truncate">${item.name}</h4>
-                            <p class="text-[11px] text-neutral-400 truncate">${item.description}</p>
-                            <span class="text-xs font-bold text-neutral-900 block mt-1">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</span>
-                        </div>
-                        <div class="flex items-center gap-2 bg-white rounded-xl border border-neutral-200 px-2.5 py-1">
-                            <button onclick="updateCartQuantity('${item.id}', -1)" class="text-neutral-500 hover:text-neutral-800 font-bold text-xs">-</button>
-                            <span class="text-xs font-semibold text-neutral-800">${item.qty}</span>
-                            <button onclick="updateCartQuantity('${item.id}', 1)" class="text-neutral-500 hover:text-neutral-800 font-bold text-xs">+</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            const rawSubtotal = currentCart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            const discountValue = (rawSubtotal * appliedDiscountPercent) / 100;
-            const subtotalAfterDiscount = rawSubtotal - discountValue;
-
-            document.getElementById('cartSubtotal').textContent = `R$ ${rawSubtotal.toFixed(2).replace('.', ',')}`;
-
-            if (appliedDiscountPercent > 0) {
-                document.getElementById('discountRow').classList.remove('hidden');
-                document.getElementById('discountAmount').textContent = `- R$ ${discountValue.toFixed(2).replace('.', ',')}`;
-            } else {
-                document.getElementById('discountRow').classList.add('hidden');
-            }
-
-            // Free shipping threshold (R$ 99)
-            const freeShippingTarget = 99;
-            const progress = Math.min(100, (subtotalAfterDiscount / freeShippingTarget) * 100);
-            document.getElementById('freeShippingBar').style.width = `${progress}%`;
-
-            if (subtotalAfterDiscount >= freeShippingTarget || currentCart.some(i => i.isBundle)) {
-                document.getElementById('freeShippingText').textContent = '🎉 Parabéns! Você ganhou FRETE GRÁTIS!';
-                document.getElementById('cartShipping').textContent = 'GRÁTIS';
-                document.getElementById('cartTotal').textContent = `R$ ${subtotalAfterDiscount.toFixed(2).replace('.', ',')}`;
-            } else if (currentCart.length > 0) {
-                const diff = freeShippingTarget - subtotalAfterDiscount;
-                document.getElementById('freeShippingText').textContent = `Falta R$ ${diff.toFixed(2).replace('.', ',')} para Frete Grátis`;
-                document.getElementById('cartShipping').textContent = 'R$ 14,90';
-                document.getElementById('cartTotal').textContent = `R$ ${(subtotalAfterDiscount + 14.90).toFixed(2).replace('.', ',')}`;
-            } else {
-                document.getElementById('freeShippingText').textContent = 'Adicione itens para Frete Grátis';
-                document.getElementById('cartShipping').textContent = 'A calcular';
-                document.getElementById('cartTotal').textContent = `R$ 0,00`;
-            }
-
-            lucide.createIcons();
-        }
-
-        function openCart() {
-            document.getElementById('cartBackdrop').classList.remove('opacity-0');
-            document.getElementById('cartContent').classList.remove('translate-x-full');
-            document.getElementById('cartDrawer').classList.remove('pointer-events-none');
-        }
-
-        function closeCart() {
-            document.getElementById('cartBackdrop').classList.add('opacity-0');
-            document.getElementById('cartContent').classList.add('translate-x-full');
-            document.getElementById('cartDrawer').classList.add('pointer-events-none');
-        }
-
-        function openCheckoutModal() {
-            if (currentCart.length === 0) {
-                alert('Sua sacola está vazia! Adicione fragrâncias antes de finalizar.');
+        // Checkout Modal & Full Form Handler
+        window.openCheckoutModal = function() {
+            if (cart.length === 0) {
+                alert('Sua sacola está vazia.');
                 return;
             }
             closeCart();
-            const count = currentCart.reduce((s, i) => s + i.qty, 0);
-            const subtotal = currentCart.reduce((s, i) => s + (i.price * i.qty), 0);
-            const finalVal = subtotal * (1 - (appliedDiscountPercent / 100));
-
-            document.getElementById('checkoutSummaryCount').textContent = `${count} ${count === 1 ? 'item' : 'itens'}`;
-            document.getElementById('checkoutSummaryTotal').textContent = `R$ ${finalVal.toFixed(2).replace('.', ',')}`;
-            
-            document.getElementById('checkoutFormStep').classList.remove('hidden');
-            document.getElementById('checkoutPixStep').classList.add('hidden');
             document.getElementById('checkoutModal').classList.remove('hidden');
-        }
+        };
 
-        function closeCheckoutModal() {
+        window.closeCheckoutModal = function() {
             document.getElementById('checkoutModal').classList.add('hidden');
-        }
+        };
 
-        function simulatePixPayment() {
-            document.getElementById('checkoutFormStep').classList.add('hidden');
-            document.getElementById('checkoutPixStep').classList.remove('hidden');
-        }
+        document.getElementById('checkoutFullForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        function copyPixKey() {
-            navigator.clipboard.writeText('00020126580014BR.GOV.BCB.PIX0136uselovely-pix-key-20265204000053039865405229.90');
-            const btnText = document.getElementById('copyPixBtnText');
-            btnText.textContent = 'Copiado com Sucesso! ✓';
-            setTimeout(() => { btnText.textContent = 'Copiar Chave PIX'; }, 3000);
-        }
+            const submitBtn = document.getElementById('submitCheckoutBtn');
+            const submitBtnText = document.getElementById('submitCheckoutBtnText');
+            const errorMsg = document.getElementById('checkoutErrorMsg');
 
-        function simulateOrderSuccess(method = 'PIX') {
-            closeCheckoutModal();
-            alert(`🎉 Pedido #LV-84920 Confirmado via ${method}!\n\nEnviamos os detalhes do rastreio para o seu e-mail. Obrigado por escolher a useLOVELY!`);
-            currentCart = [];
-            appliedDiscountPercent = 0;
-            updateCartUI();
-        }
+            errorMsg.classList.add('hidden');
 
-        // Mobile Menu Toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
+            // Feedback visual de carregamento
+            submitBtn.disabled = true;
+            submitBtnText.textContent = "Preparando seu pagamento...";
+
+            const checkoutPayload = {
+                customer: {
+                    name: document.getElementById('chkName').value.trim(),
+                    email: document.getElementById('chkEmail').value.trim(),
+                    phone: document.getElementById('chkPhone').value.trim(),
+                    cpf: document.getElementById('chkCpf').value.trim()
+                },
+                address: {
+                    cep: document.getElementById('chkCep').value.trim(),
+                    street: document.getElementById('chkStreet').value.trim(),
+                    number: document.getElementById('chkNumber').value.trim(),
+                    complement: document.getElementById('chkComplement').value.trim(),
+                    neighborhood: document.getElementById('chkNeighborhood').value.trim(),
+                    city: document.getElementById('chkCity').value.trim(),
+                    state: document.getElementById('chkState').value.trim()
+                },
+                items: cart
+            };
+
+            try {
+                const res = await fetch('api/mercadopago/create-preference.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(checkoutPayload)
+                });
+
+                const result = await res.json();
+                if (result.status === 'success' && result.initPoint) {
+                    cart = [];
+                    updateCartBadge();
+                    // Redireciona o cliente para o Checkout Pro do Mercado Pago
+                    window.location.href = result.initPoint;
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtnText.textContent = "IR PARA PAGAMENTO";
+                    errorMsg.textContent = result.message || 'Não conseguimos iniciar o pagamento. Tente novamente em alguns instantes.';
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (err) {
+                submitBtn.disabled = false;
+                submitBtnText.textContent = "IR PARA PAGAMENTO";
+                errorMsg.textContent = 'Não conseguimos conectar ao servidor de pagamento. Tente novamente em alguns instantes.';
+                errorMsg.classList.remove('hidden');
+            }
         });
 
-        function closeMobileMenu() {
-            document.getElementById('mobileMenu').classList.add('hidden');
-        }
-
-        // LGPD Cookie Consent Management
-        function checkLgpdConsent() {
-            const consent = localStorage.getItem('lgpd_consent');
-            if (!consent) {
-                setTimeout(() => {
-                    const banner = document.getElementById('lgpdCookieBanner');
-                    if (banner) banner.classList.remove('hidden');
-                }, 800);
+        // User Orders History Modal
+        window.openUserOrdersModal = async function() {
+            if (!currentUser) {
+                openAuthModal('login');
+                return;
             }
-        }
 
-        function acceptCookies(type) {
-            localStorage.setItem('lgpd_consent', JSON.stringify({
-                type: type,
-                timestamp: new Date().toISOString()
-            }));
-            const banner = document.getElementById('lgpdCookieBanner');
-            if (banner) banner.classList.add('hidden');
-        }
+            document.getElementById('userOrdersModal').classList.remove('hidden');
+            const list = document.getElementById('userOrdersList');
+            list.innerHTML = `<div class="py-4 text-center text-xs text-neutral-400">Carregando seus pedidos...</div>`;
 
-        function resetCookieConsent() {
-            localStorage.removeItem('lgpd_consent');
-            const banner = document.getElementById('lgpdCookieBanner');
-            if (banner) banner.classList.remove('hidden');
-        }
+            const res = await fetch(`api/get_user_orders.php?email=${encodeURIComponent(currentUser.email)}`);
+            const result = await res.json();
 
-        function openLgpdModal() {
-            document.getElementById('lgpdModal').classList.remove('hidden');
-        }
+            if (result.status === 'success' && result.data.length > 0) {
+                list.innerHTML = result.data.map(o => `
+                    <div class="p-5 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3 text-xs">
+                        <div class="flex items-center justify-between border-b border-neutral-200 pb-3">
+                            <div>
+                                <span class="font-bold text-neutral-900 text-sm block">${o.id}</span>
+                                <span class="text-[11px] text-neutral-400">${new Date(o.createdAt).toLocaleString()}</span>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">
+                                ${o.status}
+                            </span>
+                        </div>
+                        <div class="text-neutral-600 space-y-1">
+                            <p><strong>Entrega:</strong> ${o.address.street}, ${o.address.number} - ${o.address.neighborhood}, ${o.address.city}/${o.address.state} (CEP: ${o.address.cep})</p>
+                            <p><strong>Pagamento:</strong> ${o.paymentMethod}</p>
+                            <p><strong>Total:</strong> R$ ${o.totalAmount.toFixed(2).replace('.', ',')}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                list.innerHTML = `<div class="py-8 text-center text-xs text-neutral-400">Nenhum pedido realizado ainda.</div>`;
+            }
+        };
 
-        function closeLgpdModal() {
-            document.getElementById('lgpdModal').classList.add('hidden');
-        }
+        window.closeUserOrdersModal = function() {
+            document.getElementById('userOrdersModal').classList.add('hidden');
+        };
 
-        // Global bindings for inline HTML event handlers in ES Modules
-        window.switchHeroScent = switchHeroScent;
-        window.filterProducts = filterProducts;
-        window.openNotesModal = openNotesModal;
-        window.closeNotesModal = closeNotesModal;
-        window.addScentToBundle = addScentToBundle;
-        window.removeScentFromBundle = removeScentFromBundle;
-        window.addBundleToCart = addBundleToCart;
-        window.answerQuiz = answerQuiz;
-        window.resetQuiz = resetQuiz;
-        window.toggleQuizModal = toggleQuizModal;
-        window.openAddReviewModal = openAddReviewModal;
-        window.closeAddReviewModal = closeAddReviewModal;
-        window.submitReview = submitReview;
-        window.addToCart = addToCart;
-        window.updateCartQuantity = updateCartQuantity;
-        window.applyCoupon = applyCoupon;
-        window.openCart = openCart;
-        window.closeCart = closeCart;
-        window.openCheckoutModal = openCheckoutModal;
-        window.closeCheckoutModal = closeCheckoutModal;
-        window.simulatePixPayment = simulatePixPayment;
-        window.copyPixKey = copyPixKey;
-        window.simulateOrderSuccess = simulateOrderSuccess;
-        window.closeMobileMenu = closeMobileMenu;
-        window.acceptCookies = acceptCookies;
-        window.resetCookieConsent = resetCookieConsent;
-        window.openLgpdModal = openLgpdModal;
-        window.closeLgpdModal = closeLgpdModal;
-
-        // Initialization & Firebase Sync
-        window.onload = function() {
-            switchHeroScent(0);
-            renderProductsGrid();
-            renderBundlePicker();
-            updateBundleUI();
-            renderQuizStep();
-            renderReviews();
-            updateCartUI();
-            checkLgpdConsent();
-            lucide.createIcons();
-
-            // Firebase Live Sync (Products & Mercado Pago Config)
+        // Load Products from PHP Local API
+        async function loadProducts() {
             try {
-                onSnapshot(collection(db, "products"), (snapshot) => {
-                    if (!snapshot.empty) {
-                        let firebaseItems = [];
-                        snapshot.forEach(docSnap => {
-                            firebaseItems.push({ id: docSnap.id, ...docSnap.data() });
-                        });
-                        if (firebaseItems.length > 0) {
-                            PRODUCTS = firebaseItems;
-                            switchHeroScent(0);
-                            renderProductsGrid();
-                            renderBundlePicker();
-                        }
-                    }
-                }, (error) => {
-                    console.log("Using local default dataset.");
-                });
-
-                // Mercado Pago Config Sync
-                onSnapshot(doc(db, "config", "mercadopago"), (docSnap) => {
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        if (data.publicKey) {
-                            window.mpPublicKey = data.publicKey;
-                            console.log("Mercado Pago Public Key carregada com sucesso.");
-                        }
-                    }
-                });
-            } catch (e) {
-                console.log("Firebase sync fallback.");
+                const res = await fetch('api/get_products.php');
+                const result = await res.json();
+                if (result.status === 'success' && result.data.length > 0) {
+                    PRODUCTS = result.data;
+                    window.switchHeroScent(0);
+                    window.filterProducts('all');
+                }
+            } catch (err) {
+                console.error("Erro ao carregar produtos da API PHP:", err);
             }
+        }
+
+        window.onload = function() {
+            checkCustomerSession();
+            loadProducts();
+            lucide.createIcons();
         };
     </script>
 </body>
