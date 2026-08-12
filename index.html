@@ -27,6 +27,9 @@
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <!-- Mercado Pago SDK v2 -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    
     <!-- Custom Tailwind Configuration -->
     <script>
         tailwind.config = {
@@ -1936,7 +1939,7 @@
             checkLgpdConsent();
             lucide.createIcons();
 
-            // Firebase Live Sync
+            // Firebase Live Sync (Products & Mercado Pago Config)
             try {
                 onSnapshot(collection(db, "products"), (snapshot) => {
                     if (!snapshot.empty) {
@@ -1953,6 +1956,17 @@
                     }
                 }, (error) => {
                     console.log("Using local default dataset.");
+                });
+
+                // Mercado Pago Config Sync
+                onSnapshot(doc(db, "config", "mercadopago"), (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        if (data.publicKey) {
+                            window.mpPublicKey = data.publicKey;
+                            console.log("Mercado Pago Public Key carregada com sucesso.");
+                        }
+                    }
                 });
             } catch (e) {
                 console.log("Firebase sync fallback.");

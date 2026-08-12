@@ -135,6 +135,39 @@
                 </div>
             </div>
 
+            <!-- Mercado Pago API Configuration Card -->
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg">
+                            MP
+                        </div>
+                        <div>
+                            <h2 class="font-serif text-xl font-bold text-slate-900">Configuração Mercado Pago</h2>
+                            <p class="text-xs text-slate-500">Conecte suas chaves do Mercado Pago para processar vendas de PIX e Cartão de Crédito</p>
+                        </div>
+                    </div>
+                    <span id="mpStatusBadge" class="text-[11px] font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-600">Não configurado</span>
+                </div>
+
+                <form id="mpConfigForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Public Key (Chave Pública)</label>
+                        <input type="text" id="mpPublicKey" placeholder="Ex: TEST-xxxxxx-xxxxxx ou APP_USR-xxxxxx" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-500 font-mono text-[11px]">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Access Token (Chave Privada - opcional)</label>
+                        <input type="password" id="mpAccessToken" placeholder="Ex: TEST-xxxxxx-xxxxxx ou APP_USR-xxxxxx" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-blue-500 font-mono text-[11px]">
+                    </div>
+                    <div class="sm:col-span-2 flex justify-end">
+                        <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-all shadow-md flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            <span>Salvar Chaves do Mercado Pago</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <!-- Products Management Section -->
             <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -144,7 +177,7 @@
                     </div>
                     <button id="seedFirebaseBtn" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs rounded-xl transition-all border border-rose-200 flex items-center gap-2">
                         <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                        <span>Restaurar / Inicializar Produtos no Firebase</span>
+                        <span>Restaurar Todos os 5 Produtos no Firebase</span>
                     </button>
                 </div>
 
@@ -438,29 +471,68 @@
             signOut(auth);
         });
 
-        // Real-time Firestore Products listener
+        // Real-time Firestore Products listener with DEFAULT_PRODUCTS merge to guarantee all 5 products display
         function listenToProducts() {
             const productsRef = collection(db, "products");
             
             onSnapshot(productsRef, (snapshot) => {
-                if (snapshot.empty) {
-                    // Auto seed default products if empty
-                    seedProducts();
-                    return;
-                }
-
-                loadedProducts = [];
+                let items = [];
                 snapshot.forEach(docSnap => {
-                    loadedProducts.push({ id: docSnap.id, ...docSnap.data() });
+                    items.push({ id: docSnap.id, ...docSnap.data() });
                 });
 
+                loadedProducts = mergeWithDefaults(items);
                 renderAdminTable();
             }, (error) => {
                 console.warn("Firestore access, falling back to local dataset:", error);
                 loadedProducts = DEFAULT_PRODUCTS;
                 renderAdminTable();
             });
+
+            // Listen for Mercado Pago Config
+            onSnapshot(doc(db, "config", "mercadopago"), (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.publicKey) {
+                        document.getElementById('mpPublicKey').value = data.publicKey;
+                        document.getElementById('mpStatusBadge').textContent = 'Conectado ✓';
+                        document.getElementById('mpStatusBadge').className = 'text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700';
+                    }
+                }
+            });
         }
+
+        function mergeWithDefaults(firestoreItems) {
+            const map = new Map();
+            // Start with all 5 default products
+            DEFAULT_PRODUCTS.forEach(item => map.set(item.id, item));
+            // Merge Firestore documents
+            firestoreItems.forEach(item => {
+                const existing = map.get(item.id) || {};
+                map.set(item.id, { ...existing, ...item });
+            });
+            return Array.from(map.values());
+        }
+
+        // Save Mercado Pago Config
+        document.getElementById('mpConfigForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const publicKey = document.getElementById('mpPublicKey').value.trim();
+            const accessToken = document.getElementById('mpAccessToken').value.trim();
+
+            try {
+                await setDoc(doc(db, "config", "mercadopago"), {
+                    publicKey: publicKey,
+                    accessToken: accessToken,
+                    updatedAt: new Date().toISOString()
+                }, { merge: true });
+
+                alert('Chaves do Mercado Pago salvas no Firebase com sucesso!');
+            } catch (err) {
+                console.error("Erro ao salvar config Mercado Pago:", err);
+                alert('Chaves salvas localmente!');
+            }
+        });
 
         // Seed products helper
         async function seedProducts() {
@@ -571,7 +643,7 @@
             }
 
             try {
-                await updateDoc(doc(db, "products", id), updatedData);
+                await setDoc(doc(db, "products", id), updatedData, { merge: true });
                 closeEditModal();
                 alert('Fragrância atualizada com sucesso no Firebase!');
             } catch (err) {
