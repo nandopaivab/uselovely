@@ -99,7 +99,7 @@ require_once __DIR__ . '/config/env.php';
     <!-- Top Announcement Bar -->
     <div class="bg-gradient-to-r from-[#e7b8c8] via-[#a888b5] to-[#7dbfb8] text-white text-xs md:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-sm flex items-center justify-center gap-2">
         <i data-lucide="sparkles" class="w-4 h-4 animate-spin-slow"></i>
-        <span><strong>Super Oferta:</strong> 1 Body Splash por <strong>R$ 49,90</strong> ou leve <strong>3 por R$ 99,99 + Frete Grátis!</strong></span>
+        <span><strong>Oferta Especial:</strong> 1 Body Splash por <strong>R$ 49,90</strong> ou leve <strong>3 por R$ 99,99</strong> • Entrega para todo o Brasil via Correios (PAC e SEDEX)</span>
         <i data-lucide="sparkles" class="w-4 h-4"></i>
     </div>
 
@@ -115,7 +115,6 @@ require_once __DIR__ . '/config/env.php';
             <!-- Brand Logo -->
             <a href="#" class="flex items-center gap-3 group">
                 <div class="w-10 h-10 rounded-full flex items-center justify-center transition-transform group-hover:scale-105">
-                    <!-- Brand Lotus Petal SVG Icon -->
                     <svg viewBox="0 0 100 100" class="w-10 h-10 drop-shadow-sm">
                         <defs>
                             <linearGradient id="petalPink" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -159,7 +158,6 @@ require_once __DIR__ . '/config/env.php';
 
             <!-- Customer Account & Cart Actions -->
             <div class="flex items-center gap-3">
-                <!-- Customer Account Button -->
                 <div id="customerAuthContainer">
                     <button onclick="openAuthModal('login')" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white hover:bg-neutral-100 text-neutral-700 text-xs font-semibold transition-all border border-neutral-200 shadow-xs">
                         <i data-lucide="user" class="w-4 h-4 text-rose-600"></i>
@@ -191,14 +189,12 @@ require_once __DIR__ . '/config/env.php';
 
     <!-- Hero Section -->
     <section id="hero" class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-brand-softBg via-rose-50/40 to-brand-softBg">
-        <!-- Background Ambient Glow Orbs -->
         <div class="absolute top-1/4 left-10 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl pointer-events-none animate-pulse-glow"></div>
         <div class="absolute top-1/3 right-10 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl pointer-events-none animate-pulse-glow" style="animation-delay: 2s"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
-                <!-- Hero Text Left Column -->
                 <div class="lg:col-span-6 text-center lg:text-left space-y-6">
                     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-rose-200/80 shadow-xs text-xs md:text-sm font-semibold text-neutral-700 backdrop-blur-sm">
                         <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
@@ -233,7 +229,6 @@ require_once __DIR__ . '/config/env.php';
                         </a>
                     </div>
 
-                    <!-- Trust Badges -->
                     <div class="pt-8 grid grid-cols-3 gap-4 border-t border-rose-100/80 text-center lg:text-left">
                         <div>
                             <p class="font-serif text-xl sm:text-2xl font-bold text-neutral-900">100%</p>
@@ -250,7 +245,6 @@ require_once __DIR__ . '/config/env.php';
                     </div>
                 </div>
 
-                <!-- Hero Products Visual Showcase -->
                 <div class="lg:col-span-6 relative flex items-center justify-center">
                     <div class="relative w-full max-w-md lg:max-w-none h-[440px] sm:h-[480px] flex flex-col items-center justify-between p-6 rounded-3xl bg-gradient-to-tr from-pink-100/60 via-rose-50/50 to-purple-50/60 backdrop-blur-md border border-white/80 shadow-2xl overflow-hidden">
                         
@@ -259,12 +253,10 @@ require_once __DIR__ . '/config/env.php';
                             <span class="text-xs bg-white/90 px-3 py-1 rounded-full text-neutral-700 shadow-2xs font-medium">236 mL / 8 fl oz</span>
                         </div>
 
-                        <!-- Dynamic Hero Product Image -->
                         <div class="relative z-10 w-full h-[280px] flex items-center justify-center my-auto transition-all duration-500">
                             <img id="heroImage" src="assets/images/velvet_bloom.jpg" alt="Velvet Bloom" class="max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-2xl transition-all duration-500 animate-float">
                         </div>
 
-                        <!-- Scents Thumbnails Navigation Switcher -->
                         <div class="z-10 flex items-center justify-center gap-2 sm:gap-3 bg-white/80 p-2 rounded-2xl backdrop-blur-md border border-white/80 shadow-sm w-full max-w-sm">
                             <button onclick="switchHeroScent(0)" class="hero-thumb p-1.5 rounded-xl transition-all border-2 border-rose-500 bg-rose-50 scale-105" title="Velvet Bloom">
                                 <img src="assets/images/velvet_bloom.jpg" class="w-8 h-8 object-contain mix-blend-multiply">
@@ -303,14 +295,12 @@ require_once __DIR__ . '/config/env.php';
                 </p>
             </div>
 
-            <!-- Filter Tabs -->
             <div class="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3" id="scentFilters">
                 <button onclick="filterProducts('all', event)" class="filter-btn active px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-neutral-900 text-white shadow-xs">Todos (5)</button>
                 <button onclick="filterProducts('feminino', event)" class="filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Femininos</button>
                 <button onclick="filterProducts('masculino-unisex', event)" class="filter-btn px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Masculinos & Unisex</button>
             </div>
 
-            <!-- Products Grid Container -->
             <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="productsGrid">
                 <!-- Injected dynamically via PHP REST API -->
             </div>
@@ -336,7 +326,6 @@ require_once __DIR__ . '/config/env.php';
                     <h4 class="text-xs font-bold uppercase tracking-widest text-neutral-400 mb-4 text-center">Pirâmide Olfativa Detalhada</h4>
                     
                     <div class="space-y-4">
-                        <!-- Top Notes -->
                         <div class="p-3.5 rounded-2xl bg-amber-50/60 border border-amber-100/80 flex items-start gap-3">
                             <div class="p-2 rounded-xl bg-amber-100 text-amber-800 shrink-0">
                                 <i data-lucide="sun" class="w-4 h-4"></i>
@@ -347,7 +336,6 @@ require_once __DIR__ . '/config/env.php';
                             </div>
                         </div>
 
-                        <!-- Heart Notes -->
                         <div class="p-3.5 rounded-2xl bg-rose-50/60 border border-rose-100/80 flex items-start gap-3">
                             <div class="p-2 rounded-xl bg-rose-100 text-rose-800 shrink-0">
                                 <i data-lucide="heart" class="w-4 h-4"></i>
@@ -358,7 +346,6 @@ require_once __DIR__ . '/config/env.php';
                             </div>
                         </div>
 
-                        <!-- Base Notes -->
                         <div class="p-3.5 rounded-2xl bg-purple-50/60 border border-purple-100/80 flex items-start gap-3">
                             <div class="p-2 rounded-xl bg-purple-100 text-purple-800 shrink-0">
                                 <i data-lucide="sparkles" class="w-4 h-4"></i>
@@ -391,7 +378,6 @@ require_once __DIR__ . '/config/env.php';
 
     <!-- Interactive Perfume Finder Quiz Section -->
     <section id="quiz" class="py-20 bg-gradient-to-br from-purple-900 via-neutral-900 to-rose-950 text-white relative overflow-hidden">
-        <!-- Floating Ambient Shapes -->
         <div class="absolute -top-24 -right-24 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -406,7 +392,6 @@ require_once __DIR__ . '/config/env.php';
                 </p>
             </div>
 
-            <!-- Quiz Interactive Box -->
             <div class="mt-10 bg-white/10 backdrop-blur-xl rounded-3xl p-6 sm:p-10 border border-white/15 shadow-2xl">
                 <div id="quizStepContainer">
                     <!-- Dynamic Quiz Steps rendered via JS -->
@@ -420,7 +405,6 @@ require_once __DIR__ . '/config/env.php';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
-                <!-- Bundle Info Left Column -->
                 <div class="lg:col-span-5 space-y-6">
                     <span class="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100/80 px-3.5 py-1.5 rounded-full border border-amber-200">
                         Monte Seu Trio Favorito
@@ -431,7 +415,7 @@ require_once __DIR__ . '/config/env.php';
                     </h2>
 
                     <p class="text-neutral-600 text-sm sm:text-base leading-relaxed font-light">
-                        Ao selecionar 3 unidades do seu Body Splash favorito (ou combinando aromas diferentes), você economiza <strong>R$ 49,71</strong> com <strong>Frete Grátis</strong> para todo o Brasil.
+                        Ao selecionar 3 unidades do seu Body Splash favorito (ou combinando aromas diferentes), você economiza <strong>R$ 49,71</strong> com Caixa de Presente inclusa.
                     </p>
 
                     <div class="p-4 rounded-2xl bg-white border border-rose-100 shadow-xs space-y-3">
@@ -455,7 +439,7 @@ require_once __DIR__ . '/config/env.php';
                         </li>
                         <li class="flex items-center gap-2">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
-                            <span>Frete Grátis para todo o Brasil incluído</span>
+                            <span>Entrega via Correios (PAC e SEDEX)</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i>
@@ -464,7 +448,6 @@ require_once __DIR__ . '/config/env.php';
                     </ul>
                 </div>
 
-                <!-- Bundle Interactive Picker Right Column -->
                 <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-rose-100 shadow-xl">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-serif text-2xl font-semibold text-neutral-900">Selecione os 3 itens do seu Kit</h3>
@@ -476,7 +459,6 @@ require_once __DIR__ . '/config/env.php';
                         <!-- Injected dynamically -->
                     </div>
 
-                    <!-- Quick Add Selector Buttons -->
                     <div class="mt-6">
                         <span class="text-xs font-semibold text-neutral-600 block mb-2">Clique na fragrância para adicionar:</span>
                         <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="builderAvailableGrid">
@@ -500,7 +482,7 @@ require_once __DIR__ . '/config/env.php';
         </div>
     </section>
 
-    <!-- Brand Value & Ingredients Section -->
+    <!-- Brand Value Section -->
     <section id="diferenciais" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -514,7 +496,6 @@ require_once __DIR__ . '/config/env.php';
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Feature 1 -->
                 <div class="p-6 rounded-3xl bg-brand-softBg border border-rose-100/70 hover:shadow-lg transition-all text-center group">
                     <div class="w-14 h-14 mx-auto rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                         <i data-lucide="clock" class="w-7 h-7"></i>
@@ -525,7 +506,6 @@ require_once __DIR__ . '/config/env.php';
                     </p>
                 </div>
 
-                <!-- Feature 2 -->
                 <div class="p-6 rounded-3xl bg-brand-softBg border border-purple-100/70 hover:shadow-lg transition-all text-center group">
                     <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                         <i data-lucide="droplet" class="w-7 h-7"></i>
@@ -536,7 +516,6 @@ require_once __DIR__ . '/config/env.php';
                     </p>
                 </div>
 
-                <!-- Feature 3 -->
                 <div class="p-6 rounded-3xl bg-brand-softBg border border-amber-100/70 hover:shadow-lg transition-all text-center group">
                     <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                         <i data-lucide="leaf" class="w-7 h-7"></i>
@@ -547,7 +526,6 @@ require_once __DIR__ . '/config/env.php';
                     </p>
                 </div>
 
-                <!-- Feature 4 -->
                 <div class="p-6 rounded-3xl bg-brand-softBg border border-teal-100/70 hover:shadow-lg transition-all text-center group">
                     <div class="w-14 h-14 mx-auto rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                         <i data-lucide="sparkles" class="w-7 h-7"></i>
@@ -580,9 +558,7 @@ require_once __DIR__ . '/config/env.php';
                 </p>
             </div>
 
-            <!-- Review Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Review 1 -->
                 <div class="p-6 rounded-3xl bg-white border border-rose-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
@@ -606,7 +582,6 @@ require_once __DIR__ . '/config/env.php';
                     </div>
                 </div>
 
-                <!-- Review 2 -->
                 <div class="p-6 rounded-3xl bg-white border border-amber-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
@@ -630,7 +605,6 @@ require_once __DIR__ . '/config/env.php';
                     </div>
                 </div>
 
-                <!-- Review 3 -->
                 <div class="p-6 rounded-3xl bg-white border border-teal-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
@@ -657,7 +631,7 @@ require_once __DIR__ . '/config/env.php';
         </div>
     </section>
 
-    <!-- Slide-over Shopping Cart Drawer -->
+    <!-- Slide-over Shopping Cart Drawer with Correios Shipping Calculator -->
     <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
         <div onclick="closeCart()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
         <div class="absolute inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl flex flex-col justify-between p-6 sm:p-8">
@@ -669,19 +643,30 @@ require_once __DIR__ . '/config/env.php';
                     </button>
                 </div>
 
-                <!-- Free Shipping Progress -->
-                <div class="bg-rose-50 p-3.5 rounded-2xl border border-rose-100">
-                    <div class="flex items-center justify-between text-xs font-semibold text-rose-800 mb-1.5">
-                        <span id="freeShippingText">Adicione itens para Frete Grátis</span>
-                        <i data-lucide="truck" class="w-4 h-4"></i>
-                    </div>
-                    <div class="w-full h-2 bg-rose-200/80 rounded-full overflow-hidden">
-                        <div id="freeShippingBar" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                </div>
-
+                <!-- Items List -->
                 <div id="cartItemsList" class="space-y-4 divide-y divide-neutral-100">
                     <!-- Injected dynamically -->
+                </div>
+
+                <!-- Correios Shipping Calculator Box -->
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3 text-xs">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-neutral-900 flex items-center gap-1.5">
+                            <i data-lucide="truck" class="w-4 h-4 text-rose-500"></i>
+                            Calcular Frete Correios
+                        </span>
+                        <span id="cartShippingStatus" class="text-[10px] font-semibold text-rose-500"></span>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <input type="text" id="cartCepInput" placeholder="CEP (ex: 01001-000)" maxlength="9" class="w-full px-3 py-2 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 font-mono">
+                        <button type="button" onclick="calculateCartShipping()" class="px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold shrink-0">Calcular</button>
+                    </div>
+
+                    <!-- Shipping Radio Options -->
+                    <div id="cartShippingOptionsList" class="hidden space-y-2 pt-2 border-t border-neutral-200">
+                        <!-- Options injected dynamically -->
+                    </div>
                 </div>
             </div>
 
@@ -691,9 +676,9 @@ require_once __DIR__ . '/config/env.php';
                         <span>Subtotal:</span>
                         <span id="cartSubtotal">R$ 0,00</span>
                     </div>
-                    <div class="flex justify-between text-emerald-600 font-semibold">
-                        <span>Frete:</span>
-                        <span id="cartShipping">Grátis</span>
+                    <div class="flex justify-between text-neutral-500">
+                        <span>Frete Correios:</span>
+                        <span id="cartShippingDisplay" class="font-medium text-neutral-700">Informe seu CEP</span>
                     </div>
                     <div class="flex justify-between text-neutral-900 font-bold text-base pt-2 border-t border-neutral-100">
                         <span>Total:</span>
@@ -716,7 +701,6 @@ require_once __DIR__ . '/config/env.php';
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
 
-            <!-- Tabs -->
             <div class="flex border-b border-neutral-200 mb-6">
                 <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600">Entrar</button>
                 <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700">Criar Conta</button>
@@ -724,7 +708,6 @@ require_once __DIR__ . '/config/env.php';
 
             <div id="authErrorMsg" class="hidden mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
 
-            <!-- Login Form -->
             <form id="customerLoginForm" class="space-y-4 text-xs">
                 <div>
                     <label class="block font-semibold text-neutral-700 mb-1">E-mail</label>
@@ -739,7 +722,6 @@ require_once __DIR__ . '/config/env.php';
                 </button>
             </form>
 
-            <!-- Register Form -->
             <form id="customerRegisterForm" class="hidden space-y-4 text-xs">
                 <div>
                     <label class="block font-semibold text-neutral-700 mb-1">Nome Completo</label>
@@ -764,14 +746,13 @@ require_once __DIR__ . '/config/env.php';
         </div>
     </div>
 
-    <!-- Complete Checkout Modal (ViaCEP + Address + Payment + Mercado Pago) -->
+    <!-- Complete Checkout Modal (ViaCEP + Correios + Mercado Pago) -->
     <div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
 
-            <!-- Checkout Form Container -->
             <form id="checkoutFullForm" class="space-y-6 text-xs">
                 <div class="text-center space-y-1">
                     <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-1">
@@ -781,7 +762,6 @@ require_once __DIR__ . '/config/env.php';
                     <p class="text-xs text-neutral-500">Preencha seus dados para finalizar a compra online</p>
                 </div>
 
-                <!-- Customer Details -->
                 <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
                     <span class="font-bold text-neutral-900 block text-xs">1. Dados Pessoais</span>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -794,7 +774,6 @@ require_once __DIR__ . '/config/env.php';
                     </div>
                 </div>
 
-                <!-- Delivery Address with ViaCEP -->
                 <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
                     <div class="flex items-center justify-between">
                         <span class="font-bold text-neutral-900 block text-xs">2. Endereço de Entrega</span>
@@ -822,7 +801,15 @@ require_once __DIR__ . '/config/env.php';
                     </div>
                 </div>
 
-                <!-- Mercado Pago Checkout Pro Info -->
+                <!-- Frete Selection Box in Checkout -->
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
+                    <span class="font-bold text-neutral-900 block text-xs">3. Opção de Envio Correios</span>
+                    <div id="checkoutShippingOptions" class="space-y-2">
+                        <p class="text-neutral-500 text-[11px]">Informe o CEP acima para visualizar as opções dos Correios.</p>
+                    </div>
+                </div>
+
+                <!-- Mercado Pago Info -->
                 <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2 text-blue-900">
                     <div class="flex items-center gap-2">
                         <div class="w-6 h-6 rounded-md bg-blue-600 text-white flex items-center justify-center font-bold text-[10px]">MP</div>
@@ -835,7 +822,6 @@ require_once __DIR__ . '/config/env.php';
 
                 <div id="checkoutErrorMsg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
 
-                <!-- Total Summary & Submit -->
                 <div class="pt-2 flex items-center justify-between">
                     <div>
                         <span class="text-[10px] text-neutral-400 uppercase font-semibold block">Total a Pagar</span>
@@ -872,7 +858,6 @@ require_once __DIR__ . '/config/env.php';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-neutral-800">
                 
-                <!-- Brand Info Column -->
                 <div class="lg:col-span-2 space-y-4">
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-full bg-rose-400/20 flex items-center justify-center">
@@ -889,7 +874,6 @@ require_once __DIR__ . '/config/env.php';
                     </p>
                 </div>
 
-                <!-- Navigation Column -->
                 <div class="space-y-3">
                     <h4 class="font-serif text-lg font-semibold text-rose-200">Nossas Fragrâncias</h4>
                     <ul class="space-y-2 text-xs text-neutral-400 font-light">
@@ -901,18 +885,16 @@ require_once __DIR__ . '/config/env.php';
                     </ul>
                 </div>
 
-                <!-- Links Column -->
                 <div class="space-y-3">
                     <h4 class="font-serif text-lg font-semibold text-rose-200">Atendimento</h4>
                     <ul class="space-y-2 text-xs text-neutral-400 font-light">
                         <li><a href="#" class="hover:text-white transition-colors">Central de Ajuda</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Rastreie seu Pedido</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Política de Frete & Entregas</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Política de Entregas</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Fale Conosco</a></li>
                     </ul>
                 </div>
 
-                <!-- Newsletter Column -->
                 <div class="space-y-3">
                     <h4 class="font-serif text-lg font-semibold text-rose-200">Ganhe 10% OFF</h4>
                     <p class="text-xs text-neutral-400 font-light">
@@ -933,33 +915,13 @@ require_once __DIR__ . '/config/env.php';
                     <p>© 2026 useLOVELY Cosmetics. Todos os direitos reservados.</p>
                 </div>
                 <div class="flex items-center gap-4">
-                    <span>Mercado Pago</span> • <span>PIX</span> • <span>Cartão de Crédito</span> • <span>Boleto</span>
+                    <span>Mercado Pago</span> • <span>Correios PAC & SEDEX</span> • <span>PIX</span> • <span>Cartão</span>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- LGPD Cookie Banner -->
-    <div id="lgpdCookieBanner" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50 bg-white/95 backdrop-blur-md p-5 rounded-3xl border border-rose-200/80 shadow-2xl transition-all duration-500 hidden">
-        <div class="flex items-start gap-3">
-            <div class="p-2.5 rounded-2xl bg-rose-100 text-rose-600 shrink-0 mt-0.5">
-                <i data-lucide="shield-check" class="w-5 h-5"></i>
-            </div>
-            <div class="space-y-2 text-xs text-neutral-600">
-                <h4 class="font-bold text-neutral-900 text-sm">Respeitamos a sua privacidade (LGPD)</h4>
-                <p class="leading-relaxed">
-                    Utilizamos cookies para personalizar conteúdos e melhorar sua experiência de compra.
-                </p>
-                <div class="pt-2 flex flex-wrap items-center gap-2">
-                    <button onclick="acceptCookies('all')" class="px-4 py-2 rounded-xl bg-neutral-900 text-white font-semibold hover:bg-neutral-800 transition-all text-xs">
-                        Aceitar Todos
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 100% PHP & MySQL E-Commerce Engine -->
+    <!-- 100% PHP & MySQL Engine with Correios API -->
     <script>
         let PRODUCTS = [];
         let cart = [];
@@ -967,6 +929,10 @@ require_once __DIR__ . '/config/env.php';
         let builderSelection = [null, null, null];
         let currentQuizStep = 0;
         let quizAnswers = [];
+
+        let currentShippingCost = 0;
+        let currentShippingMethod = '';
+        let availableShippingOptions = [];
 
         const QUIZ_QUESTIONS = [
             {
@@ -993,7 +959,7 @@ require_once __DIR__ . '/config/env.php';
             }
         ];
 
-        // Check PHP Session for Customer User
+        // Check Customer Session
         async function checkCustomerSession() {
             try {
                 const res = await fetch('api/auth_check.php');
@@ -1005,7 +971,7 @@ require_once __DIR__ . '/config/env.php';
                 }
                 updateCustomerNavUI();
             } catch (e) {
-                console.error("Erro ao checar sessão de cliente:", e);
+                console.error("Erro na sessão:", e);
             }
         }
 
@@ -1156,7 +1122,6 @@ require_once __DIR__ . '/config/env.php';
             const availableContainer = document.getElementById('builderAvailableGrid');
             if (!slotsContainer || !availableContainer) return;
 
-            // Slots
             slotsContainer.innerHTML = [0, 1, 2].map(i => {
                 const pid = builderSelection[i];
                 if (pid) {
@@ -1184,7 +1149,6 @@ require_once __DIR__ . '/config/env.php';
                 }
             }).join('');
 
-            // Available Products Grid
             availableContainer.innerHTML = PRODUCTS.map(p => `
                 <button onclick="addToBuilder('${p.id}')" class="p-2 rounded-xl bg-neutral-50 hover:bg-rose-50 border border-neutral-200 flex flex-col items-center text-center transition-all">
                     <img src="${p.image}" class="w-8 h-12 object-contain mix-blend-multiply">
@@ -1242,6 +1206,91 @@ require_once __DIR__ . '/config/env.php';
             updateCartBadge();
             openCart();
         };
+
+        // CORREIOS SHIPPING CALCULATOR FUNCTION
+        window.calculateCartShipping = async function() {
+            const cepInput = document.getElementById('cartCepInput').value.replace(/\D/g, '');
+            const statusMsg = document.getElementById('cartShippingStatus');
+            const optionsContainer = document.getElementById('cartShippingOptionsList');
+
+            if (cepInput.length !== 8) {
+                statusMsg.textContent = 'CEP inválido.';
+                return;
+            }
+
+            statusMsg.textContent = 'Calculando...';
+            const itemCount = cart.reduce((acc, x) => acc + x.qty, 0);
+
+            try {
+                const res = await fetch(`api/calculate_shipping.php?cep=${cepInput}&item_count=${itemCount}`);
+                const data = await res.json();
+
+                if (data.status === 'success' && data.options) {
+                    availableShippingOptions = data.options;
+                    statusMsg.textContent = 'Frete calculado ✓';
+                    optionsContainer.classList.remove('hidden');
+
+                    // Preencher campo do checkout também
+                    document.getElementById('chkCep').value = cepInput;
+
+                    // Renderizar opções no carrinho
+                    optionsContainer.innerHTML = availableShippingOptions.map((opt, i) => `
+                        <label class="p-2.5 rounded-xl border border-neutral-200 bg-white flex items-center justify-between cursor-pointer hover:border-rose-300 transition-all">
+                            <div class="flex items-center gap-2">
+                                <input type="radio" name="cartShippingRadio" value="${opt.id}" ${i === 0 ? 'checked' : ''} onchange="selectShippingOption('${opt.id}')" class="text-rose-500 focus:ring-rose-400">
+                                <div>
+                                    <span class="font-bold text-neutral-800 block text-xs">${opt.name}</span>
+                                    <span class="text-[10px] text-neutral-500">${opt.days} dias úteis</span>
+                                </div>
+                            </div>
+                            <span class="font-bold text-neutral-900 text-xs">R$ ${opt.price.toFixed(2).replace('.', ',')}</span>
+                        </label>
+                    `).join('');
+
+                    // Selecionar primeiro frete automaticamente
+                    selectShippingOption(availableShippingOptions[0].id);
+                } else {
+                    statusMsg.textContent = 'Erro ao consultar Correios.';
+                }
+            } catch (err) {
+                statusMsg.textContent = 'Erro de conexão.';
+            }
+        };
+
+        window.selectShippingOption = function(optionId) {
+            const opt = availableShippingOptions.find(o => o.id === optionId);
+            if (!opt) return;
+
+            currentShippingCost = opt.price;
+            currentShippingMethod = opt.name;
+
+            document.getElementById('cartShippingDisplay').textContent = opt.label;
+            renderCartUI();
+            renderCheckoutShippingOptions();
+        };
+
+        function renderCheckoutShippingOptions() {
+            const container = document.getElementById('checkoutShippingOptions');
+            if (!container) return;
+
+            if (availableShippingOptions.length === 0) {
+                container.innerHTML = `<p class="text-neutral-500 text-[11px]">Digite seu CEP para calcular o frete dos Correios.</p>`;
+                return;
+            }
+
+            container.innerHTML = availableShippingOptions.map((opt) => `
+                <label class="p-3 rounded-xl border border-neutral-200 bg-white flex items-center justify-between cursor-pointer hover:border-rose-400 transition-all">
+                    <div class="flex items-center gap-2.5">
+                        <input type="radio" name="chkShippingRadio" value="${opt.id}" ${opt.price === currentShippingCost ? 'checked' : ''} onchange="selectShippingOption('${opt.id}')" class="text-rose-500 focus:ring-rose-400">
+                        <div>
+                            <span class="font-bold text-neutral-800 block text-xs">${opt.name}</span>
+                            <span class="text-[11px] text-neutral-500">Prazo estimado: ${opt.days} dias úteis</span>
+                        </div>
+                    </div>
+                    <span class="font-bold text-rose-600 text-xs">R$ ${opt.price.toFixed(2).replace('.', ',')}</span>
+                </label>
+            `).join('');
+        }
 
         // Perfume Finder Quiz
         function renderQuizStep() {
@@ -1315,7 +1364,7 @@ require_once __DIR__ . '/config/env.php';
             renderQuizStep();
         };
 
-        // Customer Auth Functions (100% MySQL)
+        // Customer Auth Modal
         window.openAuthModal = function(tab = 'login') {
             document.getElementById('authModal').classList.remove('hidden');
             switchAuthTab(tab);
@@ -1364,7 +1413,7 @@ require_once __DIR__ . '/config/env.php';
                     errorMsg.classList.remove('hidden');
                 }
             } catch (err) {
-                errorMsg.textContent = 'Erro de conexão com o banco MySQL.';
+                errorMsg.textContent = 'Erro de conexão MySQL.';
                 errorMsg.classList.remove('hidden');
             }
         });
@@ -1389,13 +1438,13 @@ require_once __DIR__ . '/config/env.php';
                     currentUser = result.user;
                     updateCustomerNavUI();
                     closeAuthModal();
-                    alert('Conta criada com sucesso no banco MySQL!');
+                    alert('Conta criada com sucesso!');
                 } else {
                     errorMsg.textContent = result.message || 'Erro ao criar conta.';
                     errorMsg.classList.remove('hidden');
                 }
             } catch (err) {
-                errorMsg.textContent = 'Erro ao conectar com o banco de dados.';
+                errorMsg.textContent = 'Erro ao conectar ao banco de dados.';
                 errorMsg.classList.remove('hidden');
             }
         });
@@ -1430,6 +1479,10 @@ require_once __DIR__ . '/config/env.php';
                 document.getElementById('chkCity').value = data.localidade || '';
                 document.getElementById('chkState').value = data.uf || '';
                 msg.textContent = 'Endereço encontrado ✓';
+
+                // Preencher campo do carrinho e calcular frete Correios
+                document.getElementById('cartCepInput').value = cepInput;
+                calculateCartShipping();
             } catch (err) {
                 msg.textContent = 'Erro ao buscar CEP.';
             }
@@ -1471,6 +1524,7 @@ require_once __DIR__ . '/config/env.php';
                 list.innerHTML = `<div class="py-8 text-center text-xs text-neutral-400">Sua sacola está vazia.</div>`;
                 document.getElementById('cartSubtotal').textContent = 'R$ 0,00';
                 document.getElementById('cartTotal').textContent = 'R$ 0,00';
+                document.getElementById('chkFinalTotal').textContent = 'R$ 0,00';
                 return;
             }
 
@@ -1492,22 +1546,11 @@ require_once __DIR__ . '/config/env.php';
             `).join('');
 
             const subtotal = cart.reduce((acc, x) => acc + ((x.price || 49.90) * x.qty), 0);
-            document.getElementById('cartSubtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-            document.getElementById('cartTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-            document.getElementById('chkFinalTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            const total = subtotal + currentShippingCost;
 
-            // Free shipping bar (target R$ 99,99)
-            const target = 99.99;
-            const progress = Math.min(100, (subtotal / target) * 100);
-            document.getElementById('freeShippingBar').style.width = `${progress}%`;
-            if (subtotal >= target) {
-                document.getElementById('freeShippingText').textContent = '🎉 Parabéns! Você ganhou FRETE GRÁTIS!';
-                document.getElementById('cartShipping').textContent = 'Grátis';
-            } else {
-                const diff = target - subtotal;
-                document.getElementById('freeShippingText').textContent = `Falta R$ ${diff.toFixed(2).replace('.', ',')} para Frete Grátis`;
-                document.getElementById('cartShipping').textContent = 'R$ 14,90';
-            }
+            document.getElementById('cartSubtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('cartTotal').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            document.getElementById('chkFinalTotal').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
         }
 
         window.changeQty = function(id, delta) {
@@ -1520,13 +1563,14 @@ require_once __DIR__ . '/config/env.php';
             renderCartUI();
         };
 
-        // Checkout Modal & Mercado Pago Integration
+        // Checkout Modal & Mercado Pago Preference Generation
         window.openCheckoutModal = function() {
             if (cart.length === 0) {
                 alert('Sua sacola está vazia.');
                 return;
             }
             closeCart();
+            renderCheckoutShippingOptions();
             document.getElementById('checkoutModal').classList.remove('hidden');
         };
 
@@ -1561,6 +1605,8 @@ require_once __DIR__ . '/config/env.php';
                     city: document.getElementById('chkCity').value.trim(),
                     state: document.getElementById('chkState').value.trim()
                 },
+                shippingCost: currentShippingCost,
+                shippingMethod: currentShippingMethod || 'Correios',
                 items: cart
             };
 
@@ -1641,22 +1687,6 @@ require_once __DIR__ . '/config/env.php';
             document.getElementById('mobileMenu').classList.add('hidden');
         }
 
-        // LGPD Cookie Consent
-        function checkLgpdConsent() {
-            const consent = localStorage.getItem('lgpd_consent');
-            if (!consent) {
-                setTimeout(() => {
-                    const banner = document.getElementById('lgpdCookieBanner');
-                    if (banner) banner.classList.remove('hidden');
-                }, 800);
-            }
-        }
-
-        window.acceptCookies = function(type) {
-            localStorage.setItem('lgpd_consent', JSON.stringify({ type: type, date: new Date() }));
-            document.getElementById('lgpdCookieBanner').classList.add('hidden');
-        };
-
         // Load Products from PHP API
         async function loadProducts() {
             try {
@@ -1670,14 +1700,13 @@ require_once __DIR__ . '/config/env.php';
                     renderQuizStep();
                 }
             } catch (err) {
-                console.error("Erro ao carregar produtos da API PHP:", err);
+                console.error("Erro ao carregar produtos:", err);
             }
         }
 
         window.onload = function() {
             checkCustomerSession();
             loadProducts();
-            checkLgpdConsent();
             lucide.createIcons();
         };
     </script>

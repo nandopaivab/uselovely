@@ -26,6 +26,8 @@ try {
     $customer = $input['customer'];
     $address = $input['address'] ?? [];
     $rawItems = $input['items'];
+    $shippingAmount = isset($input['shippingCost']) ? (float)$input['shippingCost'] : (isset($input['shipping_amount']) ? (float)$input['shipping_amount'] : 0.00);
+    $shippingMethod = $input['shippingMethod'] ?? ($input['shipping_method'] ?? 'Correios');
 
     // 1. RECALCULAR PREÇOS NO BACKEND (SEGURANÇA CONTRA FRAUDE DE PREÇO NO FRONTEND)
     $recalculatedItems = [];
@@ -44,6 +46,27 @@ try {
         $qty = max(1, (int)($item['qty'] ?? 1));
 
         if (!isset($dbProducts[$productId])) {
+            // Caso seja um item bundle customizado
+            if (isset($item['isBundle']) || strpos($productId, 'trio') !== false || strpos($productId, 'bundle') !== false) {
+                $bundlePrice = 99.99;
+                $subtotal += $bundlePrice * $qty;
+                $recalculatedItems[] = [
+                    'id' => $productId,
+                    'name' => $item['name'] ?? 'Combo Trio useLOVELY',
+                    'tagline' => $item['tagline'] ?? '',
+                    'price' => $bundlePrice,
+                    'qty' => $qty,
+                    'subtotal' => $bundlePrice * $qty
+                ];
+                $mpItems[] = [
+                    'id' => $productId,
+                    'title' => 'useLOVELY - Combo Trio (3 Frascos)',
+                    'quantity' => $qty,
+                    'currency_id' => 'BRL',
+                    'unit_price' => $bundlePrice
+                ];
+                continue;
+            }
             throw new Exception("Produto '{$productId}' não encontrado no catálogo.");
         }
 
@@ -71,7 +94,17 @@ try {
         ];
     }
 
-    $shippingAmount = 0.00; // Frete Grátis na oferta
+    // Adicionar Frete dos Correios aos Itens do Mercado Pago
+    if ($shippingAmount > 0) {
+        $mpItems[] = [
+            'id' => 'frete-correios',
+            'title' => 'Frete ' . $shippingMethod,
+            'quantity' => 1,
+            'currency_id' => 'BRL',
+            'unit_price' => $shippingAmount
+        ];
+    }
+
     $discountAmount = 0.00;
     $totalAmount = $subtotal + $shippingAmount - $discountAmount;
 
