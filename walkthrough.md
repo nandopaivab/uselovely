@@ -1,40 +1,41 @@
-# Walkthrough - Cadastro de Clientes, Endereço de Entrega (ViaCEP) & Pedidos Online
+# Walkthrough - Banco de Dados e Autenticação 100% em MySQL (Zero Firebase)
 
-Implementamos e disponibilizamos o fluxo completo de **Vendas Online com Cadastro de Clientes, Busca de CEP Automática via ViaCEP, Checkout e Gerenciamento de Pedidos**.
-
----
-
-## 🛍️ Recursos Implementados
-
-1. **Central da Conta do Cliente ("Entrar / Criar Conta")**:
-   - Modal com abas para **Login** e **Criar Conta (Cadastro)** conectado ao Firebase Auth.
-   - O cabeçalho exibe o estado do usuário logado e botão para acessar a central **"Meus Pedidos"**.
-
-2. **Endereço de Entrega Inteligente (ViaCEP)**:
-   - Digitação de CEP com preenchimento automático de Rua/Logradouro, Bairro, Cidade e Estado (UF) via integração com a API **ViaCEP** (`viacep.com.br`).
-   - Campos complementares para Número, Apto/Complemento e Ponto de Referência.
-
-3. **Checkout Completo & Gravação de Pedidos (`api/create_order.php`)**:
-   - Ao finalizar a compra pelo checkout (via **PIX com 5% OFF** ou **Cartão de Crédito em até 6x**), o pedido ganha um código único (ex: `#LV-84920`) e é salvo na tabela `orders` do seu banco de dados local (MySQL / SQLite).
-   - Limpa a sacola e exibe confirmação instantânea com atalho para a área do cliente.
-
-4. **"Meus Pedidos" (Histórico do Cliente)**:
-   - Permite que o cliente logado consulte todos os seus pedidos já realizados, acompanhe o status de entrega (`Em Separação`, `Enviado / Em Trânsito`, `Entregue`) e o endereço informado.
-
-5. **Gerenciador de Pedidos no Painel ADM (`admin.php`)**:
-   - Nova tabela em `admin.php` para os administradores visualizarem todos os pedidos realizados no e-commerce e **atualizarem o status de envio em tempo real**.
+Removemos qualquer dependência do Firebase do projeto. Todo o banco de dados (Produtos, Pedidos, Configurações) e todo o **sistema de Login e Cadastro de Usuários (Clientes e Administrador)** roda **100% no seu banco de dados MySQL local/hospedagem**.
 
 ---
 
-## 🌐 Como Testar no Servidor Local
+## 🗄️ Tabelas Criadas no MySQL
 
-- 🛍️ **Loja Pública & Checkout**: [http://localhost:3000/index.php](http://localhost:3000/index.php)
-- 🔑 **Painel ADM & Gestão de Pedidos**: [http://localhost:3000/admin.php](http://localhost:3000/admin.php)
+1. **`users`**:
+   - Tabela de usuários para clientes e administradores com senhas criptografadas em `password_hash()`.
+   - Admin inicial criado automaticamente: `admin@uselovely.com.br` / `F3rn@nd0P190983`.
+2. **`products`**:
+   - Cadastro completo das 5 fragrâncias de assinatura.
+3. **`orders`**:
+   - Registro dos pedidos dos clientes com endereço completo (ViaCEP), itens e status de entrega.
+4. **`site_config`**:
+   - Armazenamento das chaves da API do Mercado Pago.
+
+---
+
+## 🔌 APIs REST de Autenticação em PHP (`api/`)
+
+- **`api/auth_login.php`**: Autentica e-mail e senha no MySQL e cria a sessão PHP (`$_SESSION['user']`).
+- **`api/auth_register.php`**: Cadastra novos clientes na tabela `users` do MySQL com criptografia.
+- **`api/auth_check.php`**: Verifica se há uma sessão de usuário ativa no servidor PHP.
+- **`api/auth_logout.php`**: Destrói a sessão ativa.
+
+---
+
+## 🌐 Teste ao Vivo no Servidor Local PHP
+
+- 🛍️ **Loja Pública & Cadastro de Cliente**: [http://localhost:3000/index.php](http://localhost:3000/index.php)
+- 🔑 **Painel ADM (Login MySQL)**: [http://localhost:3000/admin.php](http://localhost:3000/admin.php)
 
 ---
 
 ## 📦 Repositório GitHub Atualizado
 
 - **URL**: [https://github.com/nandopaivab/uselovely.git](https://github.com/nandopaivab/uselovely.git)
-- **Commit**: `feat: add customer account creation, ViaCEP address lookup, online checkout, and admin order tracking`
+- **Commit**: `refactor: migrate authentication and user database 100% to MySQL (zero Firebase dependency)`
 - **Branch**: `main`

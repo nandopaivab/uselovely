@@ -83,6 +83,7 @@ function init_db_tables($pdo) {
         notes_heart TEXT NOT NULL,
         notes_base TEXT NOT NULL,
         sensation TEXT NOT NULL,
+        stock_quantity INT NOT NULL DEFAULT 100,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
@@ -93,26 +94,60 @@ function init_db_tables($pdo) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
-    // Create orders table
+    // Create orders table with Mercado Pago & Stock Idempotency fields
     $pdo->exec("CREATE TABLE IF NOT EXISTS orders (
         id VARCHAR(50) PRIMARY KEY,
-        user_email VARCHAR(100) NOT NULL,
-        user_name VARCHAR(100) NOT NULL,
-        user_phone VARCHAR(50) NOT NULL,
-        address_cep VARCHAR(20) NOT NULL,
-        address_street VARCHAR(255) NOT NULL,
-        address_number VARCHAR(50) NOT NULL,
-        address_complement VARCHAR(100),
-        address_neighborhood VARCHAR(100) NOT NULL,
-        address_city VARCHAR(100) NOT NULL,
-        address_state VARCHAR(10) NOT NULL,
-        payment_method VARCHAR(50) NOT NULL,
+        order_number VARCHAR(50) NOT NULL,
+        customer_name VARCHAR(100) NOT NULL,
+        customer_email VARCHAR(100) NOT NULL,
+        customer_phone VARCHAR(50) NOT NULL,
+        customer_cpf VARCHAR(20) NOT NULL DEFAULT '',
+        shipping_address TEXT NOT NULL,
+        items TEXT NOT NULL,
+        subtotal DECIMAL(10,2) NOT NULL,
+        shipping_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+        discount_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
         total_amount DECIMAL(10,2) NOT NULL,
-        order_items TEXT NOT NULL,
-        status VARCHAR(50) NOT NULL DEFAULT 'Em Separação',
-        tracking_code VARCHAR(100) DEFAULT '',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        payment_method VARCHAR(50) NOT NULL DEFAULT 'Mercado Pago',
+        payment_status VARCHAR(50) NOT NULL DEFAULT 'pending',
+        order_status VARCHAR(50) NOT NULL DEFAULT 'awaiting_payment',
+        mercado_pago_preference_id VARCHAR(100) DEFAULT '',
+        mercado_pago_payment_id VARCHAR(100) DEFAULT '',
+        external_reference VARCHAR(100) DEFAULT '',
+        stock_reduced TINYINT(1) DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
+
+    // Migration Check: If old SQLite/MySQL table lacks order_number, recreate or alter
+    try {
+        $pdo->query("SELECT order_number FROM orders LIMIT 1");
+    } catch (Exception $e) {
+        $pdo->exec("DROP TABLE IF EXISTS orders");
+        $pdo->exec("CREATE TABLE orders (
+            id VARCHAR(50) PRIMARY KEY,
+            order_number VARCHAR(50) NOT NULL,
+            customer_name VARCHAR(100) NOT NULL,
+            customer_email VARCHAR(100) NOT NULL,
+            customer_phone VARCHAR(50) NOT NULL,
+            customer_cpf VARCHAR(20) NOT NULL DEFAULT '',
+            shipping_address TEXT NOT NULL,
+            items TEXT NOT NULL,
+            subtotal DECIMAL(10,2) NOT NULL,
+            shipping_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+            discount_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+            total_amount DECIMAL(10,2) NOT NULL,
+            payment_method VARCHAR(50) NOT NULL DEFAULT 'Mercado Pago',
+            payment_status VARCHAR(50) NOT NULL DEFAULT 'pending',
+            order_status VARCHAR(50) NOT NULL DEFAULT 'awaiting_payment',
+            mercado_pago_preference_id VARCHAR(100) DEFAULT '',
+            mercado_pago_payment_id VARCHAR(100) DEFAULT '',
+            external_reference VARCHAR(100) DEFAULT '',
+            stock_reduced TINYINT(1) DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )");
+    }
 
     // Create users table for 100% MySQL authentication
     $pdo->exec("CREATE TABLE IF NOT EXISTS users (

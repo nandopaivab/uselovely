@@ -425,36 +425,49 @@
                 return;
             }
 
-            tbody.innerHTML = orders.map(o => `
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="py-4 px-6 font-medium text-slate-900">
-                        <span class="font-bold text-sm text-slate-900 block">${o.id}</span>
-                        <span class="text-[11px] text-slate-500">${new Date(o.createdAt).toLocaleString()}</span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="font-bold text-slate-900 block">${o.userName}</span>
-                        <span class="text-slate-500 block">${o.userEmail}</span>
-                        <span class="text-slate-500">${o.userPhone}</span>
-                    </td>
-                    <td class="py-4 px-4 text-slate-700 max-w-xs">
-                        <p class="truncate">${o.address.street}, ${o.address.number} ${o.address.complement || ''}</p>
-                        <p class="text-slate-500">${o.address.neighborhood} - ${o.address.city}/${o.address.state}</p>
-                        <p class="text-slate-400 font-mono text-[10px]">CEP: ${o.address.cep}</p>
-                    </td>
-                    <td class="py-4 px-4">
-                        <span class="font-bold text-slate-900 text-sm block">R$ ${o.totalAmount.toFixed(2).replace('.', ',')}</span>
-                        <span class="text-[10px] font-semibold text-rose-600">${o.paymentMethod}</span>
-                    </td>
-                    <td class="py-4 px-4">
-                        <select onchange="updateOrderStatus('${o.id}', this.value)" class="px-2.5 py-1 rounded-lg border border-slate-300 text-xs font-semibold bg-white text-slate-800 focus:outline-none">
-                            <option value="Em Separação" ${o.status === 'Em Separação' ? 'selected' : ''}>Em Separação</option>
-                            <option value="Enviado / Em Trânsito" ${o.status === 'Enviado / Em Trânsito' ? 'selected' : ''}>Enviado / Em Trânsito</option>
-                            <option value="Entregue" ${o.status === 'Entregue' ? 'selected' : ''}>Entregue</option>
-                            <option value="Cancelado" ${o.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
-                        </select>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = orders.map(o => {
+                const isPaid = o.paymentStatus === 'paid';
+                const pBadgeClass = isPaid ? 'bg-emerald-100 text-emerald-800' : (o.paymentStatus === 'rejected' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800');
+                const pLabel = isPaid ? 'Pago ✓' : (o.paymentStatus === 'rejected' ? 'Recusado' : 'Aguardando Pagamento');
+
+                const addr = o.address || {};
+
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-4 px-6 font-medium text-slate-900">
+                            <span class="font-bold text-sm text-slate-900 block">${o.orderNumber || o.id}</span>
+                            <span class="text-[11px] text-slate-500">${new Date(o.createdAt).toLocaleString()}</span>
+                            ${o.paymentId ? `<span class="text-[10px] text-slate-400 font-mono block">MP ID: ${o.paymentId}</span>` : ''}
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="font-bold text-slate-900 block">${o.customerName || 'Cliente'}</span>
+                            <span class="text-slate-500 block">${o.customerEmail}</span>
+                            <span class="text-slate-500 block">${o.customerPhone}</span>
+                            ${o.customerCpf ? `<span class="text-slate-400 font-mono text-[10px]">CPF: ${o.customerCpf}</span>` : ''}
+                        </td>
+                        <td class="py-4 px-4 text-slate-700 max-w-xs">
+                            <p class="truncate">${addr.street || ''}, ${addr.number || ''} ${addr.complement || ''}</p>
+                            <p class="text-slate-500">${addr.neighborhood || ''} - ${addr.city || ''}/${addr.state || ''}</p>
+                            <p class="text-slate-400 font-mono text-[10px]">CEP: ${addr.cep || ''}</p>
+                        </td>
+                        <td class="py-4 px-4">
+                            <span class="font-bold text-slate-900 text-sm block">R$ ${o.totalAmount.toFixed(2).replace('.', ',')}</span>
+                            <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${pBadgeClass}">
+                                ${pLabel}
+                            </span>
+                        </td>
+                        <td class="py-4 px-4">
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="px-2.5 py-1 rounded-lg border border-slate-300 text-xs font-semibold bg-white text-slate-800 focus:outline-none">
+                                <option value="awaiting_payment" ${o.orderStatus === 'awaiting_payment' ? 'selected' : ''}>Aguardando Pagamento</option>
+                                <option value="paid" ${o.orderStatus === 'paid' ? 'selected' : ''}>Em Preparação / Pago</option>
+                                <option value="shipped" ${o.orderStatus === 'shipped' ? 'selected' : ''}>Enviado / Em Trânsito</option>
+                                <option value="delivered" ${o.orderStatus === 'delivered' ? 'selected' : ''}>Entregue</option>
+                                <option value="cancelled" ${o.orderStatus === 'cancelled' ? 'selected' : ''}>Cancelado</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
             lucide.createIcons();
         }
 
@@ -462,11 +475,11 @@
             const res = await fetch('api/update_order_status.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: id, status: newStatus })
+                body: JSON.stringify({ id: id, orderStatus: newStatus })
             });
             const result = await res.json();
             if (result.status === 'success') {
-                alert(`Status do pedido ${id} atualizado para '${newStatus}'.`);
+                alert(`Status logístico do pedido atualizado para '${newStatus}'.`);
             } else {
                 alert('Erro ao atualizar status do pedido.');
             }

@@ -387,7 +387,10 @@
                         <input type="text" id="chkName" required placeholder="Nome Completo" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
                         <input type="email" id="chkEmail" required placeholder="E-mail" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
                     </div>
-                    <input type="tel" id="chkPhone" required placeholder="Telefone / WhatsApp" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="tel" id="chkPhone" required placeholder="Telefone / WhatsApp" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="chkCpf" required placeholder="CPF (ex: 000.000.000-00)" maxlength="14" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 font-mono">
+                    </div>
                 </div>
 
                 <!-- Delivery Address with ViaCEP -->
@@ -418,26 +421,18 @@
                     </div>
                 </div>
 
-                <!-- Payment Selection -->
-                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
-                    <span class="font-bold text-neutral-900 block text-xs">3. Forma de Pagamento</span>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label class="p-3 rounded-xl border border-emerald-300 bg-emerald-50/60 flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="chkPayment" value="PIX" checked class="accent-emerald-600">
-                            <div>
-                                <span class="font-bold text-neutral-900 block">PIX (5% OFF)</span>
-                                <span class="text-[10px] text-emerald-700 font-medium">Aprovação Imediata</span>
-                            </div>
-                        </label>
-                        <label class="p-3 rounded-xl border border-neutral-300 bg-white flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="chkPayment" value="Cartão de Crédito" class="accent-rose-600">
-                            <div>
-                                <span class="font-bold text-neutral-900 block">Cartão de Crédito</span>
-                                <span class="text-[10px] text-neutral-500">Até 6x sem juros</span>
-                            </div>
-                        </label>
+                <!-- Mercado Pago Checkout Pro Info -->
+                <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-2 text-blue-900">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-md bg-blue-600 text-white flex items-center justify-center font-bold text-[10px]">MP</div>
+                        <span class="font-bold text-xs">Pagamento Seguro via Mercado Pago</span>
                     </div>
+                    <p class="text-[11px] text-blue-700 leading-relaxed font-light">
+                        Você poderá pagar via <strong>PIX</strong>, <strong>Cartão de Crédito em até 6x</strong>, Boleto ou Saldo do Mercado Pago no ambiente 100% seguro do Checkout Pro.
+                    </p>
                 </div>
+
+                <div id="checkoutErrorMsg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
 
                 <!-- Total Summary & Submit -->
                 <div class="pt-2 flex items-center justify-between">
@@ -446,9 +441,9 @@
                         <span id="chkFinalTotal" class="font-serif text-2xl font-bold text-rose-600">R$ 0,00</span>
                     </div>
 
-                    <button type="submit" class="px-8 py-3.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl transition-all shadow-lg flex items-center gap-2">
-                        <i data-lucide="check" class="w-4 h-4"></i>
-                        <span>Finalizar e Pagar Pedido</span>
+                    <button type="submit" id="submitCheckoutBtn" class="px-8 py-3.5 bg-rose-500 hover:bg-rose-600 disabled:bg-neutral-400 text-white font-bold rounded-2xl transition-all shadow-lg flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span id="submitCheckoutBtnText">IR PARA PAGAMENTO</span>
                     </button>
                 </div>
             </form>
@@ -732,40 +727,59 @@
         document.getElementById('checkoutFullForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const total = cart.reduce((acc, x) => acc + (x.price * x.qty), 0);
-            const orderPayload = {
-                email: document.getElementById('chkEmail').value,
-                name: document.getElementById('chkName').value,
-                phone: document.getElementById('chkPhone').value,
-                address: {
-                    cep: document.getElementById('chkCep').value,
-                    street: document.getElementById('chkStreet').value,
-                    number: document.getElementById('chkNumber').value,
-                    complement: document.getElementById('chkComplement').value,
-                    neighborhood: document.getElementById('chkNeighborhood').value,
-                    city: document.getElementById('chkCity').value,
-                    state: document.getElementById('chkState').value
+            const submitBtn = document.getElementById('submitCheckoutBtn');
+            const submitBtnText = document.getElementById('submitCheckoutBtnText');
+            const errorMsg = document.getElementById('checkoutErrorMsg');
+
+            errorMsg.classList.add('hidden');
+
+            // Feedback visual de carregamento
+            submitBtn.disabled = true;
+            submitBtnText.textContent = "Preparando seu pagamento...";
+
+            const checkoutPayload = {
+                customer: {
+                    name: document.getElementById('chkName').value.trim(),
+                    email: document.getElementById('chkEmail').value.trim(),
+                    phone: document.getElementById('chkPhone').value.trim(),
+                    cpf: document.getElementById('chkCpf').value.trim()
                 },
-                paymentMethod: document.querySelector('input[name="chkPayment"]:checked').value,
-                totalAmount: total,
+                address: {
+                    cep: document.getElementById('chkCep').value.trim(),
+                    street: document.getElementById('chkStreet').value.trim(),
+                    number: document.getElementById('chkNumber').value.trim(),
+                    complement: document.getElementById('chkComplement').value.trim(),
+                    neighborhood: document.getElementById('chkNeighborhood').value.trim(),
+                    city: document.getElementById('chkCity').value.trim(),
+                    state: document.getElementById('chkState').value.trim()
+                },
                 items: cart
             };
 
-            const res = await fetch('api/create_order.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderPayload)
-            });
+            try {
+                const res = await fetch('api/mercadopago/create-preference.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(checkoutPayload)
+                });
 
-            const result = await res.json();
-            if (result.status === 'success') {
-                cart = [];
-                updateCartBadge();
-                closeCheckoutModal();
-                alert(`Pedido ${result.orderId} realizado com sucesso!\nVocê pode acompanhar a entrega em 'Meus Pedidos'.`);
-                openUserOrdersModal();
-            } else {
-                alert('Erro ao gravar pedido: ' + result.message);
+                const result = await res.json();
+                if (result.status === 'success' && result.initPoint) {
+                    cart = [];
+                    updateCartBadge();
+                    // Redireciona o cliente para o Checkout Pro do Mercado Pago
+                    window.location.href = result.initPoint;
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtnText.textContent = "IR PARA PAGAMENTO";
+                    errorMsg.textContent = result.message || 'Não conseguimos iniciar o pagamento. Tente novamente em alguns instantes.';
+                    errorMsg.classList.remove('hidden');
+                }
+            } catch (err) {
+                submitBtn.disabled = false;
+                submitBtnText.textContent = "IR PARA PAGAMENTO";
+                errorMsg.textContent = 'Não conseguimos conectar ao servidor de pagamento. Tente novamente em alguns instantes.';
+                errorMsg.classList.remove('hidden');
             }
         });
 

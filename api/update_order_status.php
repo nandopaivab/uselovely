@@ -22,15 +22,23 @@ try {
     $pdo = get_db_connection();
 
     $id = $input['id'];
-    $status = $input['status'] ?? 'Em Separação';
-    $trackingCode = $input['trackingCode'] ?? '';
+    $orderStatus = $input['orderStatus'] ?? ($input['status'] ?? 'awaiting_payment');
+    $paymentStatus = $input['paymentStatus'] ?? null;
 
-    $stmt = $pdo->prepare("UPDATE orders SET status = :status, tracking_code = :trackingCode WHERE id = :id");
-    $stmt->execute([
-        ':status' => $status,
-        ':trackingCode' => $trackingCode,
-        ':id' => $id
-    ]);
+    if ($paymentStatus !== null) {
+        $stmt = $pdo->prepare("UPDATE orders SET order_status = :orderStatus, payment_status = :paymentStatus, updated_at = CURRENT_TIMESTAMP WHERE id = :id OR order_number = :id");
+        $stmt->execute([
+            ':orderStatus' => $orderStatus,
+            ':paymentStatus' => $paymentStatus,
+            ':id' => $id
+        ]);
+    } else {
+        $stmt = $pdo->prepare("UPDATE orders SET order_status = :orderStatus, updated_at = CURRENT_TIMESTAMP WHERE id = :id OR order_number = :id");
+        $stmt->execute([
+            ':orderStatus' => $orderStatus,
+            ':id' => $id
+        ]);
+    }
 
     echo json_encode(['status' => 'success', 'message' => 'Status do pedido atualizado com sucesso.'], JSON_UNESCAPED_UNICODE);
 } catch (Exception $e) {

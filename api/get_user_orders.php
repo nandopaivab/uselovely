@@ -13,31 +13,27 @@ if (empty($email)) {
 
 try {
     $pdo = get_db_connection();
-    $stmt = $pdo->prepare("SELECT * FROM orders WHERE user_email = :email ORDER BY created_at DESC");
+    $stmt = $pdo->prepare("SELECT * FROM orders WHERE customer_email = :email OR user_email = :email ORDER BY created_at DESC");
     $stmt->execute([':email' => $email]);
     $rows = $stmt->fetchAll();
 
     $orders = [];
     foreach ($rows as $r) {
+        $address = json_decode($r['shipping_address'] ?? '{}', true) ?: [];
+        $items = json_decode($r['items'] ?? '{}', true) ?: [];
+
         $orders[] = [
             'id' => $r['id'],
-            'userEmail' => $r['user_email'],
-            'userName' => $r['user_name'],
-            'userPhone' => $r['user_phone'],
-            'address' => [
-                'cep' => $r['address_cep'],
-                'street' => $r['address_street'],
-                'number' => $r['address_number'],
-                'complement' => $r['address_complement'],
-                'neighborhood' => $r['address_neighborhood'],
-                'city' => $r['address_city'],
-                'state' => $r['address_state']
-            ],
-            'paymentMethod' => $r['payment_method'],
-            'totalAmount' => (float)$r['total_amount'],
-            'items' => json_decode($r['order_items'], true),
-            'status' => $r['status'],
-            'trackingCode' => $r['tracking_code'],
+            'orderNumber' => $r['order_number'] ?? $r['id'],
+            'customerName' => $r['customer_name'] ?? $r['user_name'] ?? '',
+            'customerEmail' => $r['customer_email'] ?? $r['user_email'] ?? '',
+            'customerPhone' => $r['customer_phone'] ?? $r['user_phone'] ?? '',
+            'address' => $address,
+            'items' => $items,
+            'totalAmount' => (float)($r['total_amount'] ?? 0.0),
+            'paymentMethod' => $r['payment_method'] ?? 'Mercado Pago',
+            'paymentStatus' => $r['payment_status'] ?? 'pending',
+            'orderStatus' => $r['order_status'] ?? 'awaiting_payment',
             'createdAt' => $r['created_at']
         ];
     }
