@@ -97,6 +97,15 @@ function init_db_tables($pdo) {
         } catch (Exception $ex) {}
     }
 
+    // Migration Check for stock_quantity column
+    try {
+        $pdo->query("SELECT stock_quantity FROM products LIMIT 1");
+    } catch (Exception $e) {
+        try {
+            $pdo->exec("ALTER TABLE products ADD COLUMN stock_quantity INT NOT NULL DEFAULT 100");
+        } catch (Exception $ex) {}
+    }
+
     // Create site_config table
     $pdo->exec("CREATE TABLE IF NOT EXISTS site_config (
         config_key VARCHAR(50) PRIMARY KEY,
