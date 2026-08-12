@@ -148,26 +148,27 @@
 
                     <!-- Hero Render Image -->
                     <div class="lg:col-span-7 flex flex-col items-center justify-center">
-                        <div class="relative w-full max-w-md h-[400px] sm:h-[460px] flex items-center justify-center">
-                            <img id="heroImage" src="assets/images/velvet_bloom.jpg" alt="Velvet Bloom" class="max-h-full max-w-full object-contain drop-shadow-2xl transition-all duration-500 hover:scale-105">
+                        <div class="relative w-full max-w-md h-[400px] sm:h-[460px] flex items-center justify-center p-6 rounded-3xl bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200/90 shadow-2xl border border-pink-200/60 overflow-hidden group">
+                            <div id="heroImageBgGlow" class="absolute inset-0 bg-rose-200/50 rounded-full blur-2xl pointer-events-none transition-all duration-700"></div>
+                            <img id="heroImage" src="assets/images/velvet_bloom.jpg" alt="Velvet Bloom" class="relative z-10 max-h-full max-w-full object-contain mix-blend-multiply drop-shadow-2xl transition-all duration-500 group-hover:scale-105">
                         </div>
 
                         <!-- Scent Selector Miniatures -->
                         <div class="mt-6 flex items-center justify-center gap-3 flex-wrap">
                             <button onclick="switchHeroScent(0)" class="scent-thumb-btn active border-2 border-rose-500 p-1.5 rounded-2xl bg-white shadow-md transition-all scale-110" title="Velvet Bloom">
-                                <img src="assets/images/velvet_bloom.jpg" class="w-10 h-10 object-contain">
+                                <img src="assets/images/velvet_bloom.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
                             </button>
                             <button onclick="switchHeroScent(1)" class="scent-thumb-btn border-2 border-transparent p-1.5 rounded-2xl bg-white shadow-xs hover:border-purple-300 transition-all" title="Purple Kiss">
-                                <img src="assets/images/purple_kiss.jpg" class="w-10 h-10 object-contain">
+                                <img src="assets/images/purple_kiss.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
                             </button>
                             <button onclick="switchHeroScent(2)" class="scent-thumb-btn border-2 border-transparent p-1.5 rounded-2xl bg-white shadow-xs hover:border-amber-300 transition-all" title="Golden Glow">
-                                <img src="assets/images/golden_glow.jpg" class="w-10 h-10 object-contain">
+                                <img src="assets/images/golden_glow.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
                             </button>
                             <button onclick="switchHeroScent(3)" class="scent-thumb-btn border-2 border-transparent p-1.5 rounded-2xl bg-white shadow-xs hover:border-teal-300 transition-all" title="Fresh Muse">
-                                <img src="assets/images/fresh_muse.jpg" class="w-10 h-10 object-contain">
+                                <img src="assets/images/fresh_muse.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
                             </button>
                             <button onclick="switchHeroScent(4)" class="scent-thumb-btn border-2 border-transparent p-1.5 rounded-2xl bg-white shadow-xs hover:border-slate-300 transition-all" title="Midnight Pulse">
-                                <img src="assets/images/midnight_pulse.jpg" class="w-10 h-10 object-contain">
+                                <img src="assets/images/midnight_pulse.jpg" class="w-10 h-10 object-contain mix-blend-multiply">
                             </button>
                         </div>
                     </div>
@@ -321,7 +322,7 @@
                     </div>
 
                     <div class="w-full h-72 flex items-center justify-center p-4 rounded-2xl bg-gradient-to-b ${p.bgGradient} relative overflow-hidden">
-                        <img src="${p.image}" alt="${p.name}" class="h-60 max-w-full object-contain drop-shadow-xl transition-transform duration-500 group-hover:scale-108">
+                        <img src="${p.image}" alt="${p.name}" class="h-60 max-w-full object-contain mix-blend-multiply drop-shadow-xl transition-transform duration-500 group-hover:scale-108">
                     </div>
 
                     <div class="mt-6 space-y-3">
@@ -387,7 +388,7 @@
             const available = document.getElementById('builderAvailableGrid');
             available.innerHTML = PRODUCTS.map(p => `
                 <button onclick="addToCart('${p.id}')" class="p-2.5 rounded-xl border border-neutral-200 hover:border-rose-400 bg-white text-center text-xs font-semibold hover:shadow-md transition-all">
-                    <img src="${p.image}" class="w-12 h-12 object-contain mx-auto mb-1">
+                    <img src="${p.image}" class="w-12 h-12 object-contain mix-blend-multiply mx-auto mb-1">
                     <span class="block text-[11px] truncate">${p.name}</span>
                 </button>
             `).join('');
