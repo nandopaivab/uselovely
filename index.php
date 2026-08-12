@@ -946,6 +946,12 @@ $formatPrice = function($price) {
                         <span id="cepStatusMsg" class="text-[10px] font-semibold text-rose-500"></span>
                     </div>
 
+                    <div id="checkoutSavedAddressesContainer" class="hidden mb-1">
+                        <select id="checkoutSavedAddresses" onchange="fillSavedAddress(this.value)" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 text-sm bg-white cursor-pointer hover:border-rose-300 transition-colors">
+                            <option value="">Usar um endereço salvo...</option>
+                        </select>
+                    </div>
+
                     <div class="flex gap-2">
                         <input type="text" id="chkCep" required placeholder="CEP (ex: 01001-000)" maxlength="9" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 font-mono">
                         <button type="button" onclick="lookupCep()" class="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold shrink-0">Buscar CEP</button>
@@ -1780,8 +1786,10 @@ $formatPrice = function($price) {
             renderCartUI();
         };
 
+        let checkoutSavedAddressesList = [];
+
         // Checkout Modal & Mercado Pago Preference Generation
-        window.openCheckoutModal = function() {
+        window.openCheckoutModal = async function() {
             if (cart.length === 0) {
                 alert('Sua sacola está vazia.');
                 return;
@@ -1789,6 +1797,46 @@ $formatPrice = function($price) {
             closeCart();
             renderCheckoutShippingOptions();
             document.getElementById('checkoutModal').classList.remove('hidden');
+
+            if (currentUser) {
+                try {
+                    const res = await fetch('api/get_user_addresses.php');
+                    const result = await res.json();
+                    const container = document.getElementById('checkoutSavedAddressesContainer');
+                    const select = document.getElementById('checkoutSavedAddresses');
+                    
+                    if (result.status === 'success' && result.data.length > 0) {
+                        checkoutSavedAddressesList = result.data;
+                        
+                        select.innerHTML = '<option value="">Usar um endereço salvo...</option>' + 
+                            result.data.map((addr, idx) => 
+                                `<option value="${idx}">${addr.street}, ${addr.number} - ${addr.neighborhood}</option>`
+                            ).join('');
+                        
+                        container.classList.remove('hidden');
+                    } else {
+                        container.classList.add('hidden');
+                    }
+                } catch (e) {
+                    console.error("Erro ao buscar endereços no checkout:", e);
+                }
+            }
+        };
+
+        window.fillSavedAddress = function(indexStr) {
+            if (indexStr === "") return;
+            const idx = parseInt(indexStr);
+            const addr = checkoutSavedAddressesList[idx];
+            if (addr) {
+                document.getElementById('chkCep').value = addr.cep || '';
+                document.getElementById('chkStreet').value = addr.street || '';
+                document.getElementById('chkNumber').value = addr.number || '';
+                document.getElementById('chkComplement').value = addr.complement || '';
+                document.getElementById('chkNeighborhood').value = addr.neighborhood || '';
+                document.getElementById('chkCity').value = addr.city || '';
+                document.getElementById('chkState').value = addr.state || '';
+                lookupCep(); // Recalculate shipping based on new CEP
+            }
         };
 
         window.closeCheckoutModal = function() {
