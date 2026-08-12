@@ -47,6 +47,26 @@ INSERT INTO `products` (`id`, `name`, `category`, `gender_group`, `gender_tag`, 
 ('midnight-pulse', 'Midnight Pulse', 'doce', 'masculino-unisex', 'Masculino & Unisex Noturno', 'bg-slate-200 text-slate-800 font-semibold', 'Sensual & Noturno', 'Uma fragrância intensa e sedutora com notas de figo escuro, íris noturna e baunilha defumada.', 49.90, '236 mL / 8 fl oz', 'assets/images/midnight_pulse.jpg', 'navy', 'from-slate-200 via-slate-100 to-blue-200', 'bg-slate-800 hover:bg-slate-900 text-white', 'shadow-glow-navy', '#3B4861', 'text-slate-800', 'Figo Escuro, Anís Estrelado, Pimenta Rosa', 'Íris Noturna, Jasmin da Meia-Noite, Orquídea', 'Baunilha Defumada, Patchouli Suave, Âmbar Profundo', 'Marcante, elegante e extremamente sedutor.');
 
 -- --------------------------------------------------------
+-- Tabela `users`
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` varchar(50) DEFAULT '',
+  `role` varchar(20) NOT NULL DEFAULT 'customer',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Admin inicial: admin@uselovely.com.br / F3rn@nd0P190983
+INSERT INTO `users` (`name`, `email`, `password`, `phone`, `role`) VALUES
+('Administrador', 'admin@uselovely.com.br', '$2y$10$wK6k3c.vK00/nUqN.2S4sOXgU/w6lX3kGk4pW6t2g6a6v6a6v6a6v', '(11) 99999-9999', 'admin');
+
+-- --------------------------------------------------------
 -- Tabela `site_config`
 -- --------------------------------------------------------
 DROP TABLE IF EXISTS `site_config`;

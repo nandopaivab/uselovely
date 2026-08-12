@@ -471,38 +471,35 @@
         </div>
     </div>
 
-    <!-- Firebase App & Store JavaScript Engine -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDhtQmSm-ERQKoEyVheeCfmXj_j1LGBgH0",
-            authDomain: "uselovelybr-d213e.firebaseapp.com",
-            projectId: "uselovelybr-d213e",
-            storageBucket: "uselovelybr-d213e.firebasestorage.app",
-            messagingSenderId: "909064598174",
-            appId: "1:909064598174:web:6027f3eb3f38a41f72018f",
-            measurementId: "G-4ESW88LQYS"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
+    <!-- 100% PHP & MySQL Store Engine (Zero Firebase Dependency) -->
+    <script>
         let PRODUCTS = [];
         let cart = [];
         let currentUser = null;
 
-        // Customer Auth State Listener
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            updateCustomerNavUI();
-        });
+        // Check PHP Session for Customer User
+        async function checkCustomerSession() {
+            try {
+                const res = await fetch('api/auth_check.php');
+                const result = await res.json();
+                if (result.loggedIn && result.user) {
+                    currentUser = result.user;
+                } else {
+                    currentUser = null;
+                }
+                updateCustomerNavUI();
+            } catch (e) {
+                console.error("Erro ao checar sessão de cliente:", e);
+            }
+        }
 
         function updateCustomerNavUI() {
             const container = document.getElementById('customerAuthContainer');
             if (currentUser) {
                 document.getElementById('chkEmail').value = currentUser.email;
+                if (currentUser.name) document.getElementById('chkName').value = currentUser.name;
+                if (currentUser.phone) document.getElementById('chkPhone').value = currentUser.phone;
+
                 container.innerHTML = `
                     <div class="flex items-center gap-2">
                         <button onclick="openUserOrdersModal()" class="px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold transition-all border border-rose-200">
@@ -550,45 +547,71 @@
             }
         };
 
-        // Handle Customer Login
+        // Handle Customer Login (100% MySQL via PHP API)
         document.getElementById('customerLoginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('custLoginEmail').value.trim();
-            const pass = document.getElementById('custLoginPassword').value;
+            const password = document.getElementById('custLoginPassword').value;
             const errorMsg = document.getElementById('authErrorMsg');
 
             try {
-                await signInWithEmailAndPassword(auth, email, pass);
-                closeAuthModal();
+                const res = await fetch('api/auth_login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await res.json();
+                if (result.status === 'success') {
+                    currentUser = result.user;
+                    updateCustomerNavUI();
+                    closeAuthModal();
+                } else {
+                    errorMsg.textContent = result.message || 'Erro ao realizar login no MySQL.';
+                    errorMsg.classList.remove('hidden');
+                }
             } catch (err) {
-                errorMsg.textContent = 'Erro ao realizar login. Verifique seu e-mail e senha.';
+                errorMsg.textContent = 'Erro de conexão com o banco MySQL.';
                 errorMsg.classList.remove('hidden');
             }
         });
 
-        // Handle Customer Register
+        // Handle Customer Register (100% MySQL via PHP API)
         document.getElementById('customerRegisterForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('custRegEmail').value.trim();
-            const pass = document.getElementById('custRegPassword').value;
+            const password = document.getElementById('custRegPassword').value;
             const name = document.getElementById('custRegName').value;
             const phone = document.getElementById('custRegPhone').value;
             const errorMsg = document.getElementById('authErrorMsg');
 
             try {
-                await createUserWithEmailAndPassword(auth, email, pass);
-                document.getElementById('chkName').value = name;
-                document.getElementById('chkPhone').value = phone;
-                closeAuthModal();
-                alert('Conta criada com sucesso na useLOVELY!');
+                const res = await fetch('api/auth_register.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, phone })
+                });
+
+                const result = await res.json();
+                if (result.status === 'success') {
+                    currentUser = result.user;
+                    updateCustomerNavUI();
+                    closeAuthModal();
+                    alert('Conta criada com sucesso no banco MySQL!');
+                } else {
+                    errorMsg.textContent = result.message || 'Erro ao criar conta no MySQL.';
+                    errorMsg.classList.remove('hidden');
+                }
             } catch (err) {
-                errorMsg.textContent = 'Erro ao criar conta: ' + err.message;
+                errorMsg.textContent = 'Erro ao conectar com o banco de dados.';
                 errorMsg.classList.remove('hidden');
             }
         });
 
-        window.logoutCustomer = function() {
-            signOut(auth);
+        window.logoutCustomer = async function() {
+            await fetch('api/auth_logout.php');
+            currentUser = null;
+            updateCustomerNavUI();
         };
 
         // ViaCEP Lookup
@@ -804,6 +827,7 @@
         }
 
         window.onload = function() {
+            checkCustomerSession();
             loadProducts();
             lucide.createIcons();
         };

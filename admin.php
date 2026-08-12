@@ -314,42 +314,34 @@
         </div>
     </div>
 
-    <!-- Firebase App (EXCLUSIVELY FOR AUTH LOGIN) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        // Firebase Configuration (USED FOR AUTHENTICATION ACCESS ONLY)
-        const firebaseConfig = {
-            apiKey: "AIzaSyDhtQmSm-ERQKoEyVheeCfmXj_j1LGBgH0",
-            authDomain: "uselovelybr-d213e.firebaseapp.com",
-            projectId: "uselovelybr-d213e",
-            storageBucket: "uselovelybr-d213e.firebasestorage.app",
-            messagingSenderId: "909064598174",
-            appId: "1:909064598174:web:6027f3eb3f38a41f72018f",
-            measurementId: "G-4ESW88LQYS"
-        };
-
-        // Initialize Firebase Auth
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
+    <!-- 100% PHP & MySQL Engine (Zero Firebase Dependency) -->
+    <script>
         let loadedProducts = [];
+        let currentUser = null;
 
-        // Auth Listener (Firebase Auth controls login access)
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('loginView').classList.add('hidden');
-                document.getElementById('dashboardView').classList.remove('hidden');
-                document.getElementById('userEmailBadge').textContent = user.email;
-                fetchLocalData();
-            } else {
+        // Check PHP session on load
+        async function checkAdminSession() {
+            try {
+                const res = await fetch('api/auth_check.php');
+                const result = await res.json();
+                if (result.loggedIn && result.user) {
+                    currentUser = result.user;
+                    document.getElementById('loginView').classList.add('hidden');
+                    document.getElementById('dashboardView').classList.remove('hidden');
+                    document.getElementById('userEmailBadge').textContent = currentUser.email;
+                    fetchLocalData();
+                } else {
+                    document.getElementById('loginView').classList.remove('hidden');
+                    document.getElementById('dashboardView').classList.add('hidden');
+                }
+            } catch (e) {
+                console.error("Erro ao verificar sessão PHP:", e);
                 document.getElementById('loginView').classList.remove('hidden');
                 document.getElementById('dashboardView').classList.add('hidden');
             }
-        });
+        }
 
-        // Login Handler (Firebase Auth Access ONLY)
+        // Login Handler (100% MySQL Authentication via PHP API)
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
@@ -359,16 +351,35 @@
             errorMsg.classList.add('hidden');
 
             try {
-                await signInWithEmailAndPassword(auth, email, password);
+                const res = await fetch('api/auth_login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await res.json();
+                if (result.status === 'success') {
+                    currentUser = result.user;
+                    document.getElementById('loginView').classList.add('hidden');
+                    document.getElementById('dashboardView').classList.remove('hidden');
+                    document.getElementById('userEmailBadge').textContent = currentUser.email;
+                    fetchLocalData();
+                } else {
+                    errorMsg.textContent = result.message || 'Erro ao realizar login no MySQL.';
+                    errorMsg.classList.remove('hidden');
+                }
             } catch (err) {
-                errorMsg.textContent = 'Erro ao realizar login no Firebase: Verifique seu e-mail e senha.';
+                errorMsg.textContent = 'Erro ao conectar ao servidor MySQL.';
                 errorMsg.classList.remove('hidden');
             }
         });
 
         // Logout Handler
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            signOut(auth);
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('api/auth_logout.php');
+            currentUser = null;
+            document.getElementById('loginView').classList.remove('hidden');
+            document.getElementById('dashboardView').classList.add('hidden');
         });
 
         // Fetch Data from Local PHP APIs
@@ -595,6 +606,7 @@
         });
 
         window.onload = () => {
+            checkAdminSession();
             lucide.createIcons();
         };
     </script>

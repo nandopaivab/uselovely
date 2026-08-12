@@ -114,6 +114,26 @@ function init_db_tables($pdo) {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
+    // Create users table for 100% MySQL authentication
+    $pdo->exec("CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        phone VARCHAR(50) DEFAULT '',
+        role VARCHAR(20) NOT NULL DEFAULT 'customer',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+
+    // Seed default admin user if not exists
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE role = 'admin'");
+    $stmt->execute();
+    if ($stmt->fetchColumn() == 0) {
+        $adminPass = password_hash('F3rn@nd0P190983', PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, phone, role) VALUES ('Administrador', 'admin@uselovely.com.br', :pass, '(11) 99999-9999', 'admin')");
+        $stmt->execute([':pass' => $adminPass]);
+    }
+
     // Check if products table has data, if not seed default 5 products
     $stmt = $pdo->query("SELECT COUNT(*) FROM products");
     if ($stmt->fetchColumn() == 0) {
