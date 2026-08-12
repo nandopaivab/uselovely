@@ -168,6 +168,37 @@
                 </form>
             </div>
 
+            <!-- Customer Orders Management Section -->
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden space-y-4">
+                <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+                    <div>
+                        <h2 class="font-serif text-2xl font-bold text-slate-900">Gerenciador de Pedidos dos Clientes</h2>
+                        <p class="text-xs text-slate-500">Acompanhe e atualize os pedidos realizados no e-commerce</p>
+                    </div>
+                    <button onclick="fetchAdminOrders()" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-all flex items-center gap-1.5">
+                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                        <span>Atualizar Pedidos</span>
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                                <th class="py-3.5 px-6">Pedido / Data</th>
+                                <th class="py-3.5 px-4">Cliente / Contato</th>
+                                <th class="py-3.5 px-4">Endereço de Entrega</th>
+                                <th class="py-3.5 px-4">Pagamento & Total</th>
+                                <th class="py-3.5 px-4">Status do Envio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersTable" class="divide-y divide-slate-100 text-xs">
+                            <!-- Injected dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- Products Management Section -->
             <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -357,10 +388,78 @@
                     document.getElementById('mpStatusBadge').textContent = 'Conectado ✓';
                     document.getElementById('mpStatusBadge').className = 'text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700';
                 }
+
+                fetchAdminOrders();
             } catch (e) {
                 console.error("Erro ao buscar dados locais:", e);
             }
         }
+
+        window.fetchAdminOrders = async function() {
+            try {
+                const res = await fetch('api/get_all_orders.php');
+                const result = await res.json();
+                if (result.status === 'success') {
+                    renderAdminOrdersTable(result.data);
+                }
+            } catch (err) {
+                console.error("Erro ao buscar pedidos:", err);
+            }
+        };
+
+        function renderAdminOrdersTable(orders) {
+            const tbody = document.getElementById('adminOrdersTable');
+            if (!orders || orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400">Nenhum pedido realizado ainda.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = orders.map(o => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-4 px-6 font-medium text-slate-900">
+                        <span class="font-bold text-sm text-slate-900 block">${o.id}</span>
+                        <span class="text-[11px] text-slate-500">${new Date(o.createdAt).toLocaleString()}</span>
+                    </td>
+                    <td class="py-4 px-4">
+                        <span class="font-bold text-slate-900 block">${o.userName}</span>
+                        <span class="text-slate-500 block">${o.userEmail}</span>
+                        <span class="text-slate-500">${o.userPhone}</span>
+                    </td>
+                    <td class="py-4 px-4 text-slate-700 max-w-xs">
+                        <p class="truncate">${o.address.street}, ${o.address.number} ${o.address.complement || ''}</p>
+                        <p class="text-slate-500">${o.address.neighborhood} - ${o.address.city}/${o.address.state}</p>
+                        <p class="text-slate-400 font-mono text-[10px]">CEP: ${o.address.cep}</p>
+                    </td>
+                    <td class="py-4 px-4">
+                        <span class="font-bold text-slate-900 text-sm block">R$ ${o.totalAmount.toFixed(2).replace('.', ',')}</span>
+                        <span class="text-[10px] font-semibold text-rose-600">${o.paymentMethod}</span>
+                    </td>
+                    <td class="py-4 px-4">
+                        <select onchange="updateOrderStatus('${o.id}', this.value)" class="px-2.5 py-1 rounded-lg border border-slate-300 text-xs font-semibold bg-white text-slate-800 focus:outline-none">
+                            <option value="Em Separação" ${o.status === 'Em Separação' ? 'selected' : ''}>Em Separação</option>
+                            <option value="Enviado / Em Trânsito" ${o.status === 'Enviado / Em Trânsito' ? 'selected' : ''}>Enviado / Em Trânsito</option>
+                            <option value="Entregue" ${o.status === 'Entregue' ? 'selected' : ''}>Entregue</option>
+                            <option value="Cancelado" ${o.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        window.updateOrderStatus = async function(id, newStatus) {
+            const res = await fetch('api/update_order_status.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, status: newStatus })
+            });
+            const result = await res.json();
+            if (result.status === 'success') {
+                alert(`Status do pedido ${id} atualizado para '${newStatus}'.`);
+            } else {
+                alert('Erro ao atualizar status do pedido.');
+            }
+        };
 
         // Save Mercado Pago keys to local DB
         document.getElementById('mpConfigForm').addEventListener('submit', async (e) => {

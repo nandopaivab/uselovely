@@ -1,5 +1,5 @@
 <?php
-// Main useLOVELY Public Store Entrypoint (PHP + Local Database + Mercado Pago)
+// Main useLOVELY Public Store Entrypoint (PHP + Local Database + Mercado Pago + Customer Accounts + ViaCEP)
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -87,15 +87,17 @@
                     <a href="#hero" class="hover:text-rose-600 transition-colors">Destaque</a>
                     <a href="#fragrances" class="hover:text-rose-600 transition-colors">Coleção</a>
                     <a href="#builder" class="hover:text-rose-600 transition-colors flex items-center gap-1 text-rose-600 font-bold"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Monte seu Trio</a>
-                    <a href="#quiz" class="hover:text-rose-600 transition-colors">Perfume Finder</a>
                 </nav>
             </div>
 
-            <div class="flex items-center gap-4">
-                <button onclick="toggleQuizModal()" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold transition-all border border-rose-100">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                    <span>Descubra seu Aroma</span>
-                </button>
+            <div class="flex items-center gap-3">
+                <!-- Customer Account Button -->
+                <div id="customerAuthContainer">
+                    <button onclick="openAuthModal('login')" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-semibold transition-all">
+                        <i data-lucide="user" class="w-4 h-4 text-rose-600"></i>
+                        <span class="hidden sm:inline">Entrar / Criar Conta</span>
+                    </button>
+                </div>
 
                 <button onclick="openCart()" class="relative p-2.5 rounded-full hover:bg-neutral-100 transition-colors" aria-label="Sacola de Compras">
                     <i data-lucide="shopping-bag" class="w-5 h-5 text-neutral-800"></i>
@@ -135,7 +137,7 @@
                         </div>
 
                         <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                            <button id="heroBuyBtn" onclick="addToCart(PRODUCTS[0].id)" class="w-full sm:w-auto px-8 py-4 rounded-full bg-rose-500 hover:bg-rose-600 text-white font-semibold text-sm shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2">
+                            <button id="heroBuyBtn" onclick="addToCart('velvet-bloom')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-rose-500 hover:bg-rose-600 text-white font-semibold text-sm shadow-lg transition-all hover:scale-105 flex items-center justify-center gap-2">
                                 <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                                 <span>Adicionar por R$ 49,90</span>
                             </button>
@@ -180,7 +182,6 @@
         <!-- Products Collection Grid -->
         <section id="fragrances" class="py-20 bg-white border-t border-neutral-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                
                 <div class="text-center max-w-2xl mx-auto space-y-3">
                     <span class="text-xs uppercase font-bold tracking-widest text-rose-500">Coleção de Fragrâncias</span>
                     <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-neutral-900">Nossa Linha Signature</h2>
@@ -192,24 +193,18 @@
                     <button onclick="filterProducts('all', event)" class="filter-btn active px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all bg-neutral-900 text-white shadow-xs">Todos (5)</button>
                     <button onclick="filterProducts('feminino', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Femininos</button>
                     <button onclick="filterProducts('masculino-unisex', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Masculinos & Unisex</button>
-                    <button onclick="filterProducts('floral', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Florais</button>
-                    <button onclick="filterProducts('doce', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Adocicados</button>
-                    <button onclick="filterProducts('ensolarado', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Ensolarados</button>
-                    <button onclick="filterProducts('fresco', event)" class="filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">Refrescantes</button>
                 </div>
 
                 <!-- Products Grid Container -->
                 <div id="productsGrid" class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Injected dynamically via PHP REST API -->
                 </div>
-
             </div>
         </section>
 
         <!-- Custom Kit Builder Section (Monte Seu Trio R$ 99,99) -->
         <section id="builder" class="py-20 bg-gradient-to-b from-[#FAF8F5] to-rose-50/40">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                
                 <div class="text-center max-w-2xl mx-auto space-y-3">
                     <span class="text-xs uppercase font-bold tracking-widest text-rose-600 bg-rose-100 px-3 py-1 rounded-full">Oferta Promocional</span>
                     <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-neutral-900">Monte Seu Trio por R$ 99,99</h2>
@@ -217,7 +212,6 @@
                 </div>
 
                 <div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <!-- Selection Slots Container -->
                     <div class="lg:col-span-8 bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200 shadow-sm space-y-6">
                         <h3 class="font-serif text-xl font-bold text-neutral-900 flex items-center gap-2">
                             <span>Seus 3 Frascos Selecionados</span>
@@ -236,7 +230,6 @@
                         </div>
                     </div>
 
-                    <!-- Trio Bundle Summary Box -->
                     <div class="lg:col-span-4 bg-neutral-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl space-y-6">
                         <div>
                             <span class="text-xs font-bold uppercase tracking-widest text-rose-400">Resumo da Promoção</span>
@@ -256,10 +249,6 @@
                                 <span>Frete:</span>
                                 <span class="text-emerald-400 font-bold">GRÁTIS</span>
                             </div>
-                            <div class="flex justify-between text-neutral-300">
-                                <span>Caixa Gift Box:</span>
-                                <span class="text-rose-400 font-semibold">INCLUSA</span>
-                            </div>
                         </div>
 
                         <div>
@@ -273,94 +262,533 @@
                         </button>
                     </div>
                 </div>
-
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-neutral-900 text-white py-12 border-t border-neutral-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-neutral-400 space-y-4">
-            <p>© 2026 useLOVELY Cosmetics • Todos os direitos reservados.</p>
-            <p>THREE COMÉRCIO E SERVIÇOS LTDA • CNPJ 21.610.150/0001-97</p>
+    <!-- Slide-over Shopping Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+        <div onclick="closeCart()" class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="absolute inset-y-0 right-0 max-w-md w-full bg-white shadow-2xl flex flex-col justify-between p-6 sm:p-8">
+            <div class="space-y-6 overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-neutral-100 pb-4">
+                    <h3 class="font-serif text-2xl font-bold text-neutral-900">Sua Sacola de Compras</h3>
+                    <button onclick="closeCart()" class="p-2 text-neutral-400 hover:text-neutral-700">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <div id="cartItemsList" class="space-y-4 divide-y divide-neutral-100">
+                    <!-- Injected dynamically -->
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-neutral-100 space-y-4">
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between text-neutral-500">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">R$ 0,00</span>
+                    </div>
+                    <div class="flex justify-between text-emerald-600 font-semibold">
+                        <span>Frete:</span>
+                        <span id="cartShipping">Grátis</span>
+                    </div>
+                    <div class="flex justify-between text-neutral-900 font-bold text-base pt-2 border-t border-neutral-100">
+                        <span>Total:</span>
+                        <span id="cartTotal">R$ 0,00</span>
+                    </div>
+                </div>
+
+                <button onclick="openCheckoutModal()" class="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white font-semibold text-sm rounded-2xl transition-all shadow-md flex items-center justify-center gap-2">
+                    <i data-lucide="credit-card" class="w-4 h-4"></i>
+                    <span>Ir para o Checkout</span>
+                </button>
+            </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- Firebase / PHP Bridge Engine -->
+    <!-- Customer Auth Modal (Criar Conta & Login) -->
+    <div id="authModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-neutral-200 mb-6">
+                <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600">Entrar</button>
+                <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700">Criar Conta</button>
+            </div>
+
+            <div id="authErrorMsg" class="hidden mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 font-semibold"></div>
+
+            <!-- Login Form -->
+            <form id="customerLoginForm" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">E-mail</label>
+                    <input type="email" id="custLoginEmail" required placeholder="seu@email.com" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">Senha</label>
+                    <input type="password" id="custLoginPassword" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <button type="submit" class="w-full py-3 bg-neutral-900 hover:bg-neutral-800 text-white font-semibold rounded-xl transition-all shadow-md">
+                    Entrar na Minha Conta
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="customerRegisterForm" class="hidden space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">Nome Completo</label>
+                    <input type="text" id="custRegName" required placeholder="Maria Silva" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">E-mail</label>
+                    <input type="email" id="custRegEmail" required placeholder="seu@email.com" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">Telefone / WhatsApp</label>
+                    <input type="tel" id="custRegPhone" required placeholder="(11) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <div>
+                    <label class="block font-semibold text-neutral-700 mb-1">Senha</label>
+                    <input type="password" id="custRegPassword" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+                <button type="submit" class="w-full py-3 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-xl transition-all shadow-md">
+                    Criar Minha Conta
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Complete Checkout Modal (ViaCEP + Address + Payment + Create Order) -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Checkout Form Container -->
+            <form id="checkoutFullForm" class="space-y-6 text-xs">
+                <div class="text-center space-y-1">
+                    <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-1">
+                        <i data-lucide="truck" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-neutral-900">Endereço de Entrega & Pagamento</h3>
+                    <p class="text-xs text-neutral-500">Preencha seus dados para finalizar a compra online</p>
+                </div>
+
+                <!-- Customer Details -->
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
+                    <span class="font-bold text-neutral-900 block text-xs">1. Dados Pessoais</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="chkName" required placeholder="Nome Completo" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="email" id="chkEmail" required placeholder="E-mail" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                    <input type="tel" id="chkPhone" required placeholder="Telefone / WhatsApp" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                </div>
+
+                <!-- Delivery Address with ViaCEP -->
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-neutral-900 block text-xs">2. Endereço de Entrega</span>
+                        <span id="cepStatusMsg" class="text-[10px] font-semibold text-rose-500"></span>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <input type="text" id="chkCep" required placeholder="CEP (ex: 01001-000)" maxlength="9" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 font-mono">
+                        <button type="button" onclick="lookupCep()" class="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold shrink-0">Buscar CEP</button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="chkStreet" required placeholder="Rua / Logradouro" class="col-span-2 px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="chkNumber" required placeholder="Número" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="chkComplement" placeholder="Complemento / Apto" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="chkNeighborhood" required placeholder="Bairro" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="chkCity" required placeholder="Cidade" class="col-span-2 px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500">
+                        <input type="text" id="chkState" required placeholder="UF" maxlength="2" class="px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:border-rose-500 uppercase">
+                    </div>
+                </div>
+
+                <!-- Payment Selection -->
+                <div class="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3">
+                    <span class="font-bold text-neutral-900 block text-xs">3. Forma de Pagamento</span>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="p-3 rounded-xl border border-emerald-300 bg-emerald-50/60 flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="chkPayment" value="PIX" checked class="accent-emerald-600">
+                            <div>
+                                <span class="font-bold text-neutral-900 block">PIX (5% OFF)</span>
+                                <span class="text-[10px] text-emerald-700 font-medium">Aprovação Imediata</span>
+                            </div>
+                        </label>
+                        <label class="p-3 rounded-xl border border-neutral-300 bg-white flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="chkPayment" value="Cartão de Crédito" class="accent-rose-600">
+                            <div>
+                                <span class="font-bold text-neutral-900 block">Cartão de Crédito</span>
+                                <span class="text-[10px] text-neutral-500">Até 6x sem juros</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Total Summary & Submit -->
+                <div class="pt-2 flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] text-neutral-400 uppercase font-semibold block">Total a Pagar</span>
+                        <span id="chkFinalTotal" class="font-serif text-2xl font-bold text-rose-600">R$ 0,00</span>
+                    </div>
+
+                    <button type="submit" class="px-8 py-3.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl transition-all shadow-lg flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                        <span>Finalizar e Pagar Pedido</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Customer Orders History Modal -->
+    <div id="userOrdersModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeUserOrdersModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-neutral-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <h3 class="font-serif text-2xl font-bold text-neutral-900 mb-1">Meus Pedidos Realizados</h3>
+            <p class="text-xs text-neutral-500 mb-6">Acompanhe o status e a entrega de todas as suas compras online na useLOVELY</p>
+
+            <div id="userOrdersList" class="space-y-4">
+                <!-- Injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App & Store JavaScript Engine -->
     <script type="module">
-        let PRODUCTS = [];
-        let selectedBundle = [];
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Global function bindings
-        window.switchHeroScent = function(idx) {
-            if (!PRODUCTS[idx]) return;
-            const p = PRODUCTS[idx];
-            document.getElementById('heroTitle').textContent = p.name;
-            document.getElementById('heroTagline').textContent = p.tagline;
-            document.getElementById('heroDescription').textContent = p.description;
-            document.getElementById('heroPrice').textContent = `R$ ${p.price.toFixed(2).replace('.', ',')}`;
-            document.getElementById('heroImage').src = p.image;
+        const firebaseConfig = {
+            apiKey: "AIzaSyDhtQmSm-ERQKoEyVheeCfmXj_j1LGBgH0",
+            authDomain: "uselovelybr-d213e.firebaseapp.com",
+            projectId: "uselovelybr-d213e",
+            storageBucket: "uselovelybr-d213e.firebasestorage.app",
+            messagingSenderId: "909064598174",
+            appId: "1:909064598174:web:6027f3eb3f38a41f72018f",
+            measurementId: "G-4ESW88LQYS"
         };
 
-        window.filterProducts = function(cat, evt) {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-            const filtered = cat === 'all' 
-                ? PRODUCTS 
-                : PRODUCTS.filter(p => p.category === cat || p.genderGroup === cat);
+        let PRODUCTS = [];
+        let cart = [];
+        let currentUser = null;
 
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = `glass-card rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between border border-rose-100/70 relative group`;
-                card.innerHTML = `
-                    <div class="absolute top-4 left-4 z-10">
-                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border border-black/5 shadow-2xs ${p.genderBadge}">
-                            ${p.genderTag}
-                        </span>
-                    </div>
+        // Customer Auth State Listener
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            updateCustomerNavUI();
+        });
 
-                    <div class="w-full h-72 flex items-center justify-center p-4 rounded-2xl bg-gradient-to-b ${p.bgGradient} relative overflow-hidden">
-                        <img src="${p.image}" alt="${p.name}" class="h-60 max-w-full object-contain mix-blend-multiply drop-shadow-xl transition-transform duration-500 group-hover:scale-108">
-                    </div>
-
-                    <div class="mt-6 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[11px] font-bold uppercase tracking-wider ${p.accentText}">${p.tagline}</span>
-                            <span class="text-xs font-medium text-neutral-400">${p.volume}</span>
-                        </div>
-
-                        <h3 class="font-serif text-2xl font-semibold text-neutral-900">${p.name}</h3>
-                        <p class="text-xs text-neutral-600 line-clamp-2 leading-relaxed font-light">${p.description}</p>
-
-                        <div class="pt-3 border-t border-neutral-100 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] text-neutral-400 block uppercase font-medium">Preço</span>
-                                <span class="font-serif text-xl font-bold text-neutral-900">R$ ${p.price.toFixed(2).replace('.', ',')}</span>
-                            </div>
-
-                            <button onclick="addToCart('${p.id}')" class="px-4 py-2.5 rounded-2xl ${p.btnBg} text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all hover:scale-105">
-                                <i data-lucide="plus" class="w-4 h-4"></i>
-                                <span>Comprar</span>
-                            </button>
-                        </div>
+        function updateCustomerNavUI() {
+            const container = document.getElementById('customerAuthContainer');
+            if (currentUser) {
+                document.getElementById('chkEmail').value = currentUser.email;
+                container.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <button onclick="openUserOrdersModal()" class="px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold transition-all border border-rose-200">
+                            Meus Pedidos
+                        </button>
+                        <button onclick="logoutCustomer()" class="p-2 text-neutral-400 hover:text-neutral-700" title="Sair">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 `;
-                grid.appendChild(card);
-            });
+            } else {
+                container.innerHTML = `
+                    <button onclick="openAuthModal('login')" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-semibold transition-all">
+                        <i data-lucide="user" class="w-4 h-4 text-rose-600"></i>
+                        <span class="hidden sm:inline">Entrar / Criar Conta</span>
+                    </button>
+                `;
+            }
             lucide.createIcons();
+        }
+
+        // Global functions
+        window.openAuthModal = function(tab = 'login') {
+            document.getElementById('authModal').classList.remove('hidden');
+            switchAuthTab(tab);
+        };
+        window.closeAuthModal = function() {
+            document.getElementById('authModal').classList.add('hidden');
+        };
+
+        window.switchAuthTab = function(tab) {
+            const errorMsg = document.getElementById('authErrorMsg');
+            errorMsg.classList.add('hidden');
+
+            if (tab === 'login') {
+                document.getElementById('customerLoginForm').classList.remove('hidden');
+                document.getElementById('customerRegisterForm').classList.add('hidden');
+                document.getElementById('tabLoginBtn').className = 'flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600';
+                document.getElementById('tabRegisterBtn').className = 'flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700';
+            } else {
+                document.getElementById('customerLoginForm').classList.add('hidden');
+                document.getElementById('customerRegisterForm').classList.remove('hidden');
+                document.getElementById('tabRegisterBtn').className = 'flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600';
+                document.getElementById('tabLoginBtn').className = 'flex-1 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-neutral-400 hover:text-neutral-700';
+            }
+        };
+
+        // Handle Customer Login
+        document.getElementById('customerLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('custLoginEmail').value.trim();
+            const pass = document.getElementById('custLoginPassword').value;
+            const errorMsg = document.getElementById('authErrorMsg');
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                closeAuthModal();
+            } catch (err) {
+                errorMsg.textContent = 'Erro ao realizar login. Verifique seu e-mail e senha.';
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        // Handle Customer Register
+        document.getElementById('customerRegisterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('custRegEmail').value.trim();
+            const pass = document.getElementById('custRegPassword').value;
+            const name = document.getElementById('custRegName').value;
+            const phone = document.getElementById('custRegPhone').value;
+            const errorMsg = document.getElementById('authErrorMsg');
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, pass);
+                document.getElementById('chkName').value = name;
+                document.getElementById('chkPhone').value = phone;
+                closeAuthModal();
+                alert('Conta criada com sucesso na useLOVELY!');
+            } catch (err) {
+                errorMsg.textContent = 'Erro ao criar conta: ' + err.message;
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        window.logoutCustomer = function() {
+            signOut(auth);
+        };
+
+        // ViaCEP Lookup
+        window.lookupCep = async function() {
+            const cepInput = document.getElementById('chkCep').value.replace(/\D/g, '');
+            const msg = document.getElementById('cepStatusMsg');
+
+            if (cepInput.length !== 8) {
+                msg.textContent = 'CEP inválido.';
+                return;
+            }
+
+            msg.textContent = 'Buscando CEP...';
+            try {
+                const res = await fetch(`https://viacep.com.br/ws/${cepInput}/json/`);
+                const data = await res.json();
+                if (data.erro) {
+                    msg.textContent = 'CEP não encontrado.';
+                    return;
+                }
+
+                document.getElementById('chkStreet').value = data.logradouro || '';
+                document.getElementById('chkNeighborhood').value = data.bairro || '';
+                document.getElementById('chkCity').value = data.localidade || '';
+                document.getElementById('chkState').value = data.uf || '';
+                msg.textContent = 'Endereço encontrado ✓';
+            } catch (err) {
+                msg.textContent = 'Erro ao buscar CEP.';
+            }
+        };
+
+        document.getElementById('chkCep').addEventListener('blur', lookupCep);
+
+        // Cart Drawer
+        window.openCart = function() {
+            document.getElementById('cartDrawer').classList.remove('hidden');
+            renderCartUI();
+        };
+        window.closeCart = function() {
+            document.getElementById('cartDrawer').classList.add('hidden');
         };
 
         window.addToCart = function(id) {
-            alert(`Produto adicionado à sacola de compras!`);
+            const p = PRODUCTS.find(item => item.id === id);
+            if (!p) return;
+
+            const existing = cart.find(x => x.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...p, qty: 1 });
+            }
+            updateCartBadge();
+            openCart();
         };
 
-        window.addBundleToCart = function() {
-            alert(`Trio Promocional (3 frascos) por R$ 99,99 adicionado com sucesso!`);
+        function updateCartBadge() {
+            const count = cart.reduce((acc, x) => acc + x.qty, 0);
+            document.getElementById('cartCountBadge').textContent = count;
+        }
+
+        function renderCartUI() {
+            const list = document.getElementById('cartItemsList');
+            if (cart.length === 0) {
+                list.innerHTML = `<div class="py-8 text-center text-xs text-neutral-400">Sua sacola está vazia.</div>`;
+                document.getElementById('cartSubtotal').textContent = 'R$ 0,00';
+                document.getElementById('cartTotal').textContent = 'R$ 0,00';
+                return;
+            }
+
+            list.innerHTML = cart.map(item => `
+                <div class="py-3 flex items-center justify-between gap-4 text-xs">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-16 object-contain mix-blend-multiply border rounded-lg">
+                        <div>
+                            <span class="font-bold text-neutral-900 block">${item.name}</span>
+                            <span class="text-neutral-500">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 rounded-md bg-neutral-100 text-neutral-700 font-bold">-</button>
+                        <span class="font-bold text-neutral-900">${item.qty}</span>
+                        <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 rounded-md bg-neutral-100 text-neutral-700 font-bold">+</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((acc, x) => acc + (x.price * x.qty), 0);
+            document.getElementById('cartSubtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('cartTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('chkFinalTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+        }
+
+        window.changeQty = function(id, delta) {
+            const idx = cart.findIndex(x => x.id === id);
+            if (idx !== -1) {
+                cart[idx].qty += delta;
+                if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            }
+            updateCartBadge();
+            renderCartUI();
         };
 
-        // Fetch products from PHP Local API
+        // Checkout Modal & Full Form Handler
+        window.openCheckoutModal = function() {
+            if (cart.length === 0) {
+                alert('Sua sacola está vazia.');
+                return;
+            }
+            closeCart();
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        };
+
+        window.closeCheckoutModal = function() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        };
+
+        document.getElementById('checkoutFullForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const total = cart.reduce((acc, x) => acc + (x.price * x.qty), 0);
+            const orderPayload = {
+                email: document.getElementById('chkEmail').value,
+                name: document.getElementById('chkName').value,
+                phone: document.getElementById('chkPhone').value,
+                address: {
+                    cep: document.getElementById('chkCep').value,
+                    street: document.getElementById('chkStreet').value,
+                    number: document.getElementById('chkNumber').value,
+                    complement: document.getElementById('chkComplement').value,
+                    neighborhood: document.getElementById('chkNeighborhood').value,
+                    city: document.getElementById('chkCity').value,
+                    state: document.getElementById('chkState').value
+                },
+                paymentMethod: document.querySelector('input[name="chkPayment"]:checked').value,
+                totalAmount: total,
+                items: cart
+            };
+
+            const res = await fetch('api/create_order.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderPayload)
+            });
+
+            const result = await res.json();
+            if (result.status === 'success') {
+                cart = [];
+                updateCartBadge();
+                closeCheckoutModal();
+                alert(`Pedido ${result.orderId} realizado com sucesso!\nVocê pode acompanhar a entrega em 'Meus Pedidos'.`);
+                openUserOrdersModal();
+            } else {
+                alert('Erro ao gravar pedido: ' + result.message);
+            }
+        });
+
+        // User Orders History Modal
+        window.openUserOrdersModal = async function() {
+            if (!currentUser) {
+                openAuthModal('login');
+                return;
+            }
+
+            document.getElementById('userOrdersModal').classList.remove('hidden');
+            const list = document.getElementById('userOrdersList');
+            list.innerHTML = `<div class="py-4 text-center text-xs text-neutral-400">Carregando seus pedidos...</div>`;
+
+            const res = await fetch(`api/get_user_orders.php?email=${encodeURIComponent(currentUser.email)}`);
+            const result = await res.json();
+
+            if (result.status === 'success' && result.data.length > 0) {
+                list.innerHTML = result.data.map(o => `
+                    <div class="p-5 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-3 text-xs">
+                        <div class="flex items-center justify-between border-b border-neutral-200 pb-3">
+                            <div>
+                                <span class="font-bold text-neutral-900 text-sm block">${o.id}</span>
+                                <span class="text-[11px] text-neutral-400">${new Date(o.createdAt).toLocaleString()}</span>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">
+                                ${o.status}
+                            </span>
+                        </div>
+                        <div class="text-neutral-600 space-y-1">
+                            <p><strong>Entrega:</strong> ${o.address.street}, ${o.address.number} - ${o.address.neighborhood}, ${o.address.city}/${o.address.state} (CEP: ${o.address.cep})</p>
+                            <p><strong>Pagamento:</strong> ${o.paymentMethod}</p>
+                            <p><strong>Total:</strong> R$ ${o.totalAmount.toFixed(2).replace('.', ',')}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                list.innerHTML = `<div class="py-8 text-center text-xs text-neutral-400">Nenhum pedido realizado ainda.</div>`;
+            }
+        };
+
+        window.closeUserOrdersModal = function() {
+            document.getElementById('userOrdersModal').classList.add('hidden');
+        };
+
+        // Load Products from PHP Local API
         async function loadProducts() {
             try {
                 const res = await fetch('api/get_products.php');
@@ -369,29 +797,10 @@
                     PRODUCTS = result.data;
                     window.switchHeroScent(0);
                     window.filterProducts('all');
-                    renderBundlePicker();
                 }
             } catch (err) {
                 console.error("Erro ao carregar produtos da API PHP:", err);
             }
-        }
-
-        function renderBundlePicker() {
-            const slots = document.getElementById('builderSlots');
-            slots.innerHTML = [0, 1, 2].map(i => `
-                <div class="h-32 rounded-2xl border-2 border-dashed border-rose-200 flex flex-col items-center justify-center p-2 bg-rose-50/20 text-center">
-                    <span class="text-[11px] font-semibold text-rose-500">Frasco ${i+1}</span>
-                    <span class="text-[10px] text-neutral-400">Selecione abaixo</span>
-                </div>
-            `).join('');
-
-            const available = document.getElementById('builderAvailableGrid');
-            available.innerHTML = PRODUCTS.map(p => `
-                <button onclick="addToCart('${p.id}')" class="p-2.5 rounded-xl border border-neutral-200 hover:border-rose-400 bg-white text-center text-xs font-semibold hover:shadow-md transition-all">
-                    <img src="${p.image}" class="w-12 h-12 object-contain mix-blend-multiply mx-auto mb-1">
-                    <span class="block text-[11px] truncate">${p.name}</span>
-                </button>
-            `).join('');
         }
 
         window.onload = function() {

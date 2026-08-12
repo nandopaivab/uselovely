@@ -93,6 +93,27 @@ function init_db_tables($pdo) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
+    // Create orders table
+    $pdo->exec("CREATE TABLE IF NOT EXISTS orders (
+        id VARCHAR(50) PRIMARY KEY,
+        user_email VARCHAR(100) NOT NULL,
+        user_name VARCHAR(100) NOT NULL,
+        user_phone VARCHAR(50) NOT NULL,
+        address_cep VARCHAR(20) NOT NULL,
+        address_street VARCHAR(255) NOT NULL,
+        address_number VARCHAR(50) NOT NULL,
+        address_complement VARCHAR(100),
+        address_neighborhood VARCHAR(100) NOT NULL,
+        address_city VARCHAR(100) NOT NULL,
+        address_state VARCHAR(10) NOT NULL,
+        payment_method VARCHAR(50) NOT NULL,
+        total_amount DECIMAL(10,2) NOT NULL,
+        order_items TEXT NOT NULL,
+        status VARCHAR(50) NOT NULL DEFAULT 'Em Separação',
+        tracking_code VARCHAR(100) DEFAULT '',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+
     // Check if products table has data, if not seed default 5 products
     $stmt = $pdo->query("SELECT COUNT(*) FROM products");
     if ($stmt->fetchColumn() == 0) {
