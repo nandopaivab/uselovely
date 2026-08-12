@@ -373,7 +373,7 @@
                                     <th class="px-6 py-4">Código</th>
                                     <th class="px-6 py-4">Tipo & Valor</th>
                                     <th class="px-6 py-4">Cliente Específico</th>
-                                    <th class="px-6 py-4 text-center">Usos</th>
+                                    <th class="px-6 py-4 text-center">Usos & Validade</th>
                                     <th class="px-6 py-4 text-right">Ações</th>
                                 </tr>
                             </thead>
@@ -428,10 +428,71 @@
                     </div>
                 </div>
 
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Data de Validade (Opcional)</label>
+                    <input type="datetime-local" id="couponExpiresAt" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 text-slate-500">
+                </div>
+
                 <div class="pt-4 flex justify-end gap-3">
                     <button type="button" onclick="closeCouponModal()" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">Cancelar</button>
                     <button type="submit" class="px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold flex items-center gap-2 shadow-md">
                         <i data-lucide="check" class="w-4 h-4"></i> Criar Cupom
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Coupon Modal -->
+    <div id="editCouponModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeEditCouponModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 class="font-serif text-2xl font-bold text-slate-900 mb-1">Editar Cupom</h3>
+            <p class="text-xs text-slate-500 mb-6">Altere as regras e validade do cupom selecionado.</p>
+
+            <form id="editCouponForm" class="space-y-4 text-xs">
+                <input type="hidden" id="editCouponId">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Código Promocional</label>
+                    <input type="text" id="editCouponCode" disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-400 focus:outline-none uppercase cursor-not-allowed">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Tipo de Desconto</label>
+                        <select id="editCouponType" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 bg-white">
+                            <option value="percentage">Porcentagem (%)</option>
+                            <option value="fixed">Valor Fixo (R$)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Valor do Desconto</label>
+                        <input type="number" step="0.01" id="editCouponValue" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Limite de Usos (Total)</label>
+                        <input type="number" id="editCouponLimit" value="1" min="1" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">E-mail Cliente Específico</label>
+                        <input type="email" id="editCouponUserEmail" placeholder="Deixe em branco p/ todos" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Data de Validade (Opcional)</label>
+                    <input type="datetime-local" id="editCouponExpiresAt" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 text-slate-500">
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="closeEditCouponModal()" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">Cancelar</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold flex items-center gap-2 shadow-md">
+                        <i data-lucide="save" class="w-4 h-4"></i> Salvar Cupom
                     </button>
                 </div>
             </form>
@@ -1082,17 +1143,20 @@
             }
         });
 
+        let allCoupons = [];
+
         async function fetchCoupons() {
             try {
                 const res = await fetch('../api/admin_get_coupons.php');
                 const result = await res.json();
                 
                 if (result.status === 'success') {
+                    allCoupons = result.data;
                     const tbody = document.getElementById('couponsTableBody');
-                    if (result.data.length === 0) {
+                    if (allCoupons.length === 0) {
                         tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-slate-400">Nenhum cupom encontrado no banco.</td></tr>`;
                     } else {
-                        tbody.innerHTML = result.data.map(c => `
+                        tbody.innerHTML = allCoupons.map(c => `
                             <tr class="hover:bg-slate-50/50 transition-colors">
                                 <td class="px-6 py-4 font-mono font-bold text-slate-900">${c.code}</td>
                                 <td class="px-6 py-4">
@@ -1101,12 +1165,16 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-slate-500">${c.user_email ? c.user_email : '<span class="text-slate-300 italic">Todos</span>'}</td>
-                                <td class="px-6 py-4 text-center">
-                                    <span class="font-bold ${c.usage_count >= c.usage_limit ? 'text-rose-500' : 'text-slate-700'}">
+                                <td class="px-6 py-4 text-center space-y-1">
+                                    <div class="font-bold ${c.usage_count >= c.usage_limit ? 'text-rose-500' : 'text-slate-700'}">
                                         ${c.usage_count} / ${c.usage_limit}
-                                    </span>
+                                    </div>
+                                    ${c.expires_at ? `<div class="text-[10px] text-slate-400">Exp: ${new Date(c.expires_at).toLocaleDateString('pt-BR')}</div>` : '<div class="text-[10px] text-slate-400">Sem validade</div>'}
                                 </td>
                                 <td class="px-6 py-4 text-right">
+                                    <button onclick="openEditCouponModal(${c.id})" class="p-1.5 mr-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <i data-lucide="edit-2" class="w-4 h-4"></i>
+                                    </button>
                                     <button onclick="deleteCoupon(${c.id})" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
@@ -1119,8 +1187,33 @@
             } catch (err) {}
         }
 
-        window.openCouponModal = () => document.getElementById('addCouponModal').classList.remove('hidden');
+        window.openCouponModal = () => {
+            document.getElementById('addCouponForm').reset();
+            document.getElementById('addCouponModal').classList.remove('hidden');
+        };
         window.closeCouponModal = () => document.getElementById('addCouponModal').classList.add('hidden');
+        window.closeEditCouponModal = () => document.getElementById('editCouponModal').classList.add('hidden');
+
+        window.openEditCouponModal = (id) => {
+            const c = allCoupons.find(x => x.id === id);
+            if(c) {
+                document.getElementById('editCouponId').value = c.id;
+                document.getElementById('editCouponCode').value = c.code;
+                document.getElementById('editCouponType').value = c.type;
+                document.getElementById('editCouponValue').value = c.value;
+                document.getElementById('editCouponLimit').value = c.usage_limit;
+                document.getElementById('editCouponUserEmail').value = c.user_email || '';
+                
+                if (c.expires_at) {
+                    // Format for datetime-local: YYYY-MM-DDThh:mm
+                    document.getElementById('editCouponExpiresAt').value = c.expires_at.replace(' ', 'T');
+                } else {
+                    document.getElementById('editCouponExpiresAt').value = '';
+                }
+
+                document.getElementById('editCouponModal').classList.remove('hidden');
+            }
+        };
 
         document.getElementById('addCouponForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1129,7 +1222,8 @@
                 type: document.getElementById('couponType').value,
                 value: document.getElementById('couponValue').value,
                 usage_limit: document.getElementById('couponLimit').value,
-                user_email: document.getElementById('couponUserEmail').value
+                user_email: document.getElementById('couponUserEmail').value,
+                expires_at: document.getElementById('couponExpiresAt').value
             };
             
             try {
@@ -1141,13 +1235,41 @@
                 const result = await res.json();
                 if (result.status === 'success') {
                     closeCouponModal();
-                    document.getElementById('addCouponForm').reset();
                     fetchCoupons();
                 } else {
                     alert('Erro: ' + result.message);
                 }
             } catch (err) {
                 alert('Erro ao criar cupom.');
+            }
+        });
+
+        document.getElementById('editCouponForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                id: document.getElementById('editCouponId').value,
+                type: document.getElementById('editCouponType').value,
+                value: document.getElementById('editCouponValue').value,
+                usage_limit: document.getElementById('editCouponLimit').value,
+                user_email: document.getElementById('editCouponUserEmail').value,
+                expires_at: document.getElementById('editCouponExpiresAt').value
+            };
+            
+            try {
+                const res = await fetch('../api/admin_update_coupon.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    closeEditCouponModal();
+                    fetchCoupons();
+                } else {
+                    alert('Erro: ' + result.message);
+                }
+            } catch (err) {
+                alert('Erro ao atualizar cupom.');
             }
         });
 
