@@ -1,0 +1,11 @@
+# Apache configuration for useLOVELY
+DirectoryIndex index.php index.html
+
+RewriteEngine On
+
+# Redirect /admin to /admin/
+RewriteRule ^admin$ /admin/ [R=301,L]
+
+# Serve existing files and directories directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
