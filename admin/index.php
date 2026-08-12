@@ -114,6 +114,10 @@
                     <i data-lucide="settings" class="w-4 h-4"></i>
                     <span>Configurações da Loja</span>
                 </button>
+                <button id="tabBtnCoupons" onclick="switchTab('coupons')" class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                    <i data-lucide="tag" class="w-4 h-4"></i>
+                    <span>Gestão de Cupons</span>
+                </button>
             </div>
         </header>
 
@@ -348,7 +352,90 @@
                 </div>
             </div>
 
+            <!-- TAB: COUPONS -->
+            <div id="tabContentCoupons" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                    <div>
+                        <h2 class="font-serif text-2xl font-bold text-slate-900 mb-1">Cupons de Desconto</h2>
+                        <p class="text-xs text-slate-500">Crie e gerencie os códigos promocionais da sua loja.</p>
+                    </div>
+                    <button onclick="openCouponModal()" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl shadow-md flex items-center gap-2 transition-all">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>Novo Cupom</span>
+                    </button>
+                </div>
+                
+                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs whitespace-nowrap">
+                            <thead class="bg-slate-50 text-slate-600 font-semibold uppercase tracking-wider border-b border-slate-200">
+                                <tr>
+                                    <th class="px-6 py-4">Código</th>
+                                    <th class="px-6 py-4">Tipo & Valor</th>
+                                    <th class="px-6 py-4">Cliente Específico</th>
+                                    <th class="px-6 py-4 text-center">Usos</th>
+                                    <th class="px-6 py-4 text-right">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="couponsTableBody" class="divide-y divide-slate-100 text-slate-700">
+                                <!-- JS injected -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </main>
+    </div>
+
+    <!-- Add Coupon Modal -->
+    <div id="addCouponModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeCouponModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 class="font-serif text-2xl font-bold text-slate-900 mb-1">Novo Cupom</h3>
+            <p class="text-xs text-slate-500 mb-6">Crie um código de desconto personalizado.</p>
+
+            <form id="addCouponForm" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Código Promocional</label>
+                    <input type="text" id="couponCode" required placeholder="Ex: INVERNO20" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 uppercase">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Tipo de Desconto</label>
+                        <select id="couponType" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500 bg-white">
+                            <option value="percentage">Porcentagem (%)</option>
+                            <option value="fixed">Valor Fixo (R$)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Valor do Desconto</label>
+                        <input type="number" step="0.01" id="couponValue" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Limite de Usos (Total)</label>
+                        <input type="number" id="couponLimit" value="1" min="1" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">E-mail Cliente Específico (Opcional)</label>
+                        <input type="email" id="couponUserEmail" placeholder="Deixe em branco p/ todos" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-rose-500">
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="closeCouponModal()" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">Cancelar</button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold flex items-center gap-2 shadow-md">
+                        <i data-lucide="check" class="w-4 h-4"></i> Criar Cupom
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Edit & Add Product Modal -->
@@ -524,19 +611,25 @@
         });
 
         // Tab Switcher
-        window.switchTab = function(tabName) {
-            ['crm', 'orders', 'products', 'config'].forEach(t => {
-                document.getElementById(`tabContent${t.charAt(0).toUpperCase() + t.slice(1)}`).classList.add('hidden');
-                const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
-                btn.className = 'px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2';
+        function switchTab(tabId) {
+            const tabs = ['crm', 'orders', 'products', 'config', 'coupons'];
+            tabs.forEach(t => {
+                document.getElementById('tabContent' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('hidden');
+                
+                const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+                btn.classList.remove('border-rose-500', 'text-rose-600');
+                btn.classList.add('border-transparent', 'text-slate-500');
             });
 
-            document.getElementById(`tabContent${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`).classList.remove('hidden');
-            document.getElementById(`tabBtn${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`).className = 'px-4 py-2.5 text-xs font-bold uppercase tracking-wider border-b-2 border-rose-500 text-rose-600 flex items-center gap-2';
+            document.getElementById('tabContent' + tabId.charAt(0).toUpperCase() + tabId.slice(1)).classList.remove('hidden');
+            const activeBtn = document.getElementById('tabBtn' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+            activeBtn.classList.add('border-rose-500', 'text-rose-600');
+            activeBtn.classList.remove('border-transparent', 'text-slate-500');
 
-            if (tabName === 'crm') loadCrmStats();
-            if (tabName === 'orders') fetchAdminOrders();
-            if (tabName === 'products') fetchLocalData();
+            if (tabId === 'crm') loadCrmStats();
+            if (tabId === 'orders') fetchAdminOrders();
+            if (tabId === 'products') fetchLocalData();
+            if (tabId === 'coupons') fetchCoupons();
         };
 
         // Load CRM Analytics & Stats
@@ -700,21 +793,6 @@
                     renderAdminProductsTable();
                 }
 
-                const cfgRes = await fetch('../api/get_config.php');
-                const cfgResult = await cfgRes.json();
-                if (cfgResult.status === 'success') {
-                    if (cfgResult.data.publicKey) {
-                        document.getElementById('mpPublicKey').value = cfgResult.data.publicKey;
-                        document.getElementById('mpStatusBadge').textContent = 'Conectado ✓';
-                        document.getElementById('mpStatusBadge').className = 'text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700';
-                    }
-                    if (cfgResult.data.promoSinglePrice) {
-                        document.getElementById('promoSinglePrice').value = cfgResult.data.promoSinglePrice.replace('.', ',');
-                    }
-                    if (cfgResult.data.promoComboPrice) {
-                        document.getElementById('promoComboPrice').value = cfgResult.data.promoComboPrice.replace('.', ',');
-                    }
-                }
             } catch (e) {
                 console.error("Erro ao carregar dados locais:", e);
             }
@@ -1003,6 +1081,89 @@
                 fetchLocalData();
             }
         });
+
+        async function fetchCoupons() {
+            try {
+                const res = await fetch('../api/admin_get_coupons.php');
+                const result = await res.json();
+                
+                if (result.status === 'success') {
+                    const tbody = document.getElementById('couponsTableBody');
+                    if (result.data.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-slate-400">Nenhum cupom encontrado no banco.</td></tr>`;
+                    } else {
+                        tbody.innerHTML = result.data.map(c => `
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-4 font-mono font-bold text-slate-900">${c.code}</td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold ${c.type === 'percentage' ? 'bg-indigo-50 text-indigo-700' : 'bg-emerald-50 text-emerald-700'}">
+                                        ${c.type === 'percentage' ? c.value + '%' : 'R$ ' + c.value}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500">${c.user_email ? c.user_email : '<span class="text-slate-300 italic">Todos</span>'}</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="font-bold ${c.usage_count >= c.usage_limit ? 'text-rose-500' : 'text-slate-700'}">
+                                        ${c.usage_count} / ${c.usage_limit}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button onclick="deleteCoupon(${c.id})" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('');
+                    }
+                    lucide.createIcons();
+                }
+            } catch (err) {}
+        }
+
+        window.openCouponModal = () => document.getElementById('addCouponModal').classList.remove('hidden');
+        window.closeCouponModal = () => document.getElementById('addCouponModal').classList.add('hidden');
+
+        document.getElementById('addCouponForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                code: document.getElementById('couponCode').value,
+                type: document.getElementById('couponType').value,
+                value: document.getElementById('couponValue').value,
+                usage_limit: document.getElementById('couponLimit').value,
+                user_email: document.getElementById('couponUserEmail').value
+            };
+            
+            try {
+                const res = await fetch('../api/admin_create_coupon.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (result.status === 'success') {
+                    closeCouponModal();
+                    document.getElementById('addCouponForm').reset();
+                    fetchCoupons();
+                } else {
+                    alert('Erro: ' + result.message);
+                }
+            } catch (err) {
+                alert('Erro ao criar cupom.');
+            }
+        });
+
+        window.deleteCoupon = async (id) => {
+            if(!confirm('Deseja excluir este cupom permanentemente?')) return;
+            try {
+                const res = await fetch('../api/admin_delete_coupon.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({id})
+                });
+                const result = await res.json();
+                if(result.status === 'success') fetchCoupons();
+                else alert('Erro: ' + result.message);
+            } catch(e) {}
+        };
 
         window.onload = () => {
             checkAdminSession();
