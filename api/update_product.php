@@ -26,6 +26,7 @@ try {
     $tagline = $input['tagline'] ?? '';
     $description = $input['description'] ?? '';
     $price = (float)($input['price'] ?? 49.90);
+    $stockQuantity = isset($input['stockQuantity']) ? (int)$input['stockQuantity'] : (isset($input['stock_quantity']) ? (int)$input['stock_quantity'] : 100);
     $genderTag = $input['genderTag'] ?? 'Feminino';
     $image = $input['image'] ?? '';
     $notesTop = $input['notes']['top'] ?? '';
@@ -46,6 +47,7 @@ try {
         tagline = :tagline,
         description = :description,
         price = :price,
+        stock_quantity = :stock_quantity,
         gender_group = :gender_group,
         gender_tag = :gender_tag,
         gender_badge = :gender_badge,
@@ -61,6 +63,7 @@ try {
         ':tagline' => $tagline,
         ':description' => $description,
         ':price' => $price,
+        ':stock_quantity' => $stockQuantity,
         ':gender_group' => $genderGroup,
         ':gender_tag' => $genderTag,
         ':gender_badge' => $genderBadge,
@@ -73,7 +76,7 @@ try {
 
     echo json_encode([
         'status' => 'success',
-        'message' => 'Produto atualizado com sucesso no banco de dados local.'
+        'message' => 'Produto e estoque atualizados com sucesso.'
     ], JSON_UNESCAPED_UNICODE);
 } catch (Exception $e) {
     http_response_code(500);
